@@ -1,7 +1,20 @@
 # Table of contents
 
-- [README](README.md)
-- [Interview Question1](yujin/q1.md)
-- [Interview Question2](yujin/q2.md)
-- [Chapter 1](yujin/ch1.md)
-- [Chapter 2](yujin/ch2.md)
+- [Modern React Deep Dive Study](README.md)
+- 시은
+  - [Interview Qs](sgoldenbird/interview/question-list.md)
+  - Ch.1
+    - [Takeaways](sgoldenbird/ch1.md)
+    - [Interview](sgoldenbird/interview/ch1.md)
+- 인성
+  - Ch.1
+    - [Chapter 1](Insung-Jo/ch1.md)
+    - [Interview Questions](Insung-Jo/quiz.md)
+- 수진 
+- 유진
+  - Ch.1
+    - [Interview Question1](yujin/q1.md)
+    - [Chapter 1](yujin/ch1.md)
+  - Ch.2
+    - [Interview Question2](yujin/q2.md)
+    - [Chapter 2](yujin/ch2.md)
