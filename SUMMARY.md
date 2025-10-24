@@ -12,4 +12,9 @@
     - [Interview Questions](Insung-Jo/quiz.md)
 - 수진 
 - 유진
-
+  - Ch.1
+    - [Interview Question1](yujin/q1.md)
+    - [Chapter 1](yujin/ch1.md)
+  - Ch.2
+    - [Interview Question2](yujin/q2.md)
+    - [Chapter 2](yujin/ch2.md)
