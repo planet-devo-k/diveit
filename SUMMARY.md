@@ -10,7 +10,7 @@
   - Ch.1
     - [Chapter 1](Insung-Jo/ch1.md)
     - [Interview Questions](Insung-Jo/quiz.md)
-- 수진 
+- 수진
 - 유진
   - Ch.1
     - [Interview Question1](yujin/q1.md)
@@ -18,3 +18,9 @@
   - Ch.2
     - [Interview Question2](yujin/q2.md)
     - [Chapter 2](yujin/ch2.md)
+  - Ch.3
+    - [Interview Question3](yujin/q3.md)
+    - [Chapter 3](yujin/ch3.md)
+  - Ch.4
+    - [Interview Question4](yujin/q4.md)
+    - [Chapter 4](yujin/ch4.md)
