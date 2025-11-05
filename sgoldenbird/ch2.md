@@ -23,6 +23,7 @@ export default function App() {
 
 // 그 이유는 Babel이 JSX를 이런 식으로 변환했기 때문
 import React from "react";
+
 export default function App() {
   return React.createElement("h1", null, "Hello");
 }
