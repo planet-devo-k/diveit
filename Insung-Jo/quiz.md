@@ -29,3 +29,15 @@ JSX는 왜 필요한가요?
 리액트의 렌더링(Rendering)은 어떻게 일어나나요?
 
 메모이제이션은 언제 사용하는 게 좋을까요?
+
+## ch3
+
+useState는 왜 함수가 끝나도 값이 유지돼요?
+
+useEffect와 useLayoutEffect의 차이는?
+
+useMemo와 useCallback의 차이는?
+
+useRef와 useState의 차이는?
+
+사용자 정의 훅 vs 고차 컴포넌트 언제 써요?
