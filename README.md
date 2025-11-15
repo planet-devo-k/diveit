@@ -61,7 +61,7 @@
       <td>5</td>
       <td>11/13</td>
       <td>4.3 ~ Ch5</td>
-      <td></td>
+      <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
