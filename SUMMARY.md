@@ -15,6 +15,9 @@
   - Ch.4
     - [Takeaways](sgoldenbird/ch4.md)
     - [Interview](sgoldenbird/interviewQA/ch4.md)
+  - Ch.5
+    - [Takeaways](sgoldenbird/ch5.md)
+    - [Interview](sgoldenbird/interviewQA/ch5.md)
 - 인성
   - Ch.1
     - [Chapter 1](Insung-Jo/ch1.md)
