@@ -1,4 +1,4 @@
-# Ch1
+# Takeaways
 
 ## 1.0 왜 리액트인가?
 
@@ -118,9 +118,9 @@ Object.is(NaN, 0 / 0); //true
 * 화살표 함수는 함수 자체의 바인딩을 갖지 않는다.
 * <mark style="background-color:yellow;">화살표 함수 내부에서 this를 참조하면 상위 스코프의 this를 그대로 따르게 된다.</mark>
 * 별도의 작업을 추가로 하지 않고 this에 접근할 수 있는 방법이 바로 화살표 함수.
-* 화살표 함수가 디버깅이 어려운 이유&#x20;
+* 화살표 함수가 디버깅이 어려운 이유
   * 주로 **에러 스택 추적(stack trace)**&#xC774;나 **디버거에서 함수 이름이 어떻게 보이는가**랑 관련
-  * 일반 기명함수는 에러 스택에 함수 이름이 나와서  어디서 문제인지 바로 알 수 있음
+  * 일반 기명함수는 에러 스택에 함수 이름이 나와서 어디서 문제인지 바로 알 수 있음
   * 화살표 함수는 변수에 할당하기 때문에 내부적으로는 익명 함수라서 스택 트레이스에 함수명이 안뜨거나 anonymous로 표시(무기명 함수처럼)
 
 ### this 바인딩
@@ -152,21 +152,20 @@ Object.is(NaN, 0 / 0); //true
     * DOM 직접 조작 (스크롤 위치, 포커스)
     * 이벤트 등록/해제
     * setTimeout / setInterval
-    * 콘솔 출력, 로그 기록\
-
+    * 콘솔 출력, 로그 기록\\
 * <mark style="background-color:yellow;">순수 함수</mark>: 부수효과 없는 함수. 동일한 인수를 받으면 항상 동일한 결과를 반환 → 예측가능, 안정적
 * 부수효과는 피할 수 없지만 최소화.
   * API 호출 → HTTP request로 서버 상태를 바꾸거나(POST/PUT/DELETE) 외부 상태에 의존해 결과가 달라질 수 있음(GET)
   * console.log → 브라우저 콘솔 창이라는 외부에 영향
 * 부수효과를 처리하는 useEffect 훅의 작동을 최소화 → 함수의 역할을 좁히고 버그를 줄이고 컴포넌트의 안정성을 높임
   * useEffect가 부수효과 처리 훅이라고 불리는 이유는 의존성 배열 때문이 아니라, **그 안에서 하는 일이 렌더링 외적인 작업**이기 때문
-  *   React는 함수 컴포넌트를 순수 함수처럼 다루려고 한다.&#x20;
+  *   React는 함수 컴포넌트를 순수 함수처럼 다루려고 한다.
 
       * 입력(props, state) → 출력(JSX)
       * 이 안에서는 예측 가능한 동작만 일어나야 함
 
-      하지만 실제로 앱을 만들다 보면 위에서 말한 부수효과가 필요하다. \
-      그래서 React가 부수효과 전용 훅인 useEffect를 따로 제공하는 것.&#x20;
+      하지만 실제로 앱을 만들다 보면 위에서 말한 부수효과가 필요하다.\
+      그래서 React가 부수효과 전용 훅인 useEffect를 따로 제공하는 것.
 
 ### 함수를 만들 때 주의해야 할 사항
 
@@ -204,11 +203,8 @@ Object.is(NaN, 0 / 0); //true
         console.log(x);
       }
 
-      return innerFunction;
-    }
-
-    const innerFunction = outerFunction();
-    innerFunction(); // "hello"
+      const innerFunction = outerFunction();
+      innerFunction(); // "hello"
     ```
 
     * counter 변수를 직접적으로 노출하지 않음으로써 사용자가 직접 수정하는 것을 막고, 접근하는 경우를 제한해 로그를 남길 수도 있음
@@ -232,7 +228,6 @@ Object.is(NaN, 0 / 0); //true
       };
     }
 
-    var c = Counter();
     ```
 * 주의: <mark style="background-color:yellow;">클로저는 생성될 때마다 그 선언적 환경을 기억해야 하므로 추가 비용</mark>이 든다. (메모리 저장 용량에 영향). 적절한 스코프로 가둬야함.
 
@@ -248,7 +243,7 @@ Object.is(NaN, 0 / 0); //true
   * 프로그램을 구동해 프로그램의 상태가 메모리상에서 실행되는 작업 단위
   * 하나의 운영체제에는 수백 개의 프로세스가 동시에 존재
   * 하나의 프로그램 실행은 하나의 프로세스를 가지고 그 프로세스 내부에서 모든 작업이 처리
-    * 크롬 chrome.exe 라는 실행 파일이 메모리에 올라가면서 프로세스가 됨&#x20;
+    * 크롬 chrome.exe 라는 실행 파일이 메모리에 올라가면서 프로세스가 됨
     * 크롬, 디스코드, VSCode 같은 실행 프로그램 하나하나가 최소 1개의 프로세스로 동작
       * 어떤 프로그램은 프로세스 1개만 실행할 수도 있고 (단일 프로세스)
       * 어떤 프로그램은 자체적으로 여러 프로세스를 띄울 수도 있다. (멀티 프로세스)
@@ -456,3 +451,268 @@ const {[key]} = object // SayntaxError
 * forEach내부의 콜백함수는 무조건 0(n)만큼 실행
 
 ## 1.7 선택이 아닌 필수, 타입스크립트
+
+* 타입스크립트는 자바스크립트의 슈퍼셋(어떤 집합을 완전히 포함하는 더 큰 집합)
+* 자바스크립트는 런타임에만 타입을 체크할 수 있다. 대부분의 에러코드도 실행 했을 때만 확인 가능.
+* 타입스크립트는 타입체크를 정적으로, 런타임이 아닌 빌드(트랜스파일)타임에 수행.
+* TypeScript의 목표는 “런타임 오류를 예방할 확률을 높이는 것”이지, “런타임 오류를 100% 없애는 것”이 아니다.
+
+#### any 대신 unknown 사용
+
+* any를 사용하는건 타입스크립트가 제공하는 정적 타이핑의 이점을 모두 버리는 것.
+* any는 자바스크립트에서 타입스크립트로 넘어가는 과도기 같은 예외적인 경우에만 사용할 것.
+* 불가피하게 아직 타입을 단정할 수 없는 경우에는 unknown을 사용.
+* unknown은 top type(모든 값을 할당할 수 있다)
+* 그러나 unknown은 any와는 다르게 값을 바로 사용하는 것은 불가능. <mark style="background-color:yellow;">unknown으로 선언된 변수를 사용하기 위해서는 type narrowing이 필요.</mark>
+
+```ts
+// unknown은 “narrowing 없이 사용하면 안 된다”를 컴파일러가 강제
+// JS에서는 이런 실수를 그냥 실행해버림
+function doSomething(callback: unknown) {
+  callback(); // 'callback' is of type 'unknown'
+}
+```
+
+```ts
+// callback은 모든 타입이 올 수 있는 unknown
+// if 조건 안에서만 타입스크립트가 "아 여기선 function이구나" 하고 타입을 좁혀줌.
+// 하지만 결국 이것도 함수를 인수로 넣어 호출했는지는 런타임에 알 수 있음.
+// 런타임 에러는 막을 수 없지만, “검증이 빠진 코드 자체”를 컴파일 타임에 차단할 수 있다.
+// 타입스크립트는 런타임 오류가 날 수 있는 코드 구조 자체를 컴파일 시점에 설계적으로 막아준다 라고 생각해야 함.
+function doSomething(callback: unknown) {
+  if (typeof callback === "function") {
+    callback();
+    return;
+  }
+  throw new Error("callback은 함수여야 합니다.");
+}
+
+doSomething(123); // 런타임에서만 에러
+```
+
+#### never
+
+* 어떠한 타입도 들어올 수 없음(bottom type)
+* 코드상으로 존재가 불가능한 타입을 나타냄
+
+### 타입 가드를 적극 활용하자
+
+* 타입 내로잉이 개념적으로 더 넓은 범위. <mark style="background-color:yellow;">타입 가드는 그 내로잉을 수행하는 도구 중 하나</mark>
+
+```
+Type Narrowing (타입 좁히기)
+ ├── Built-in guards (typeof, instanceof, in 등)
+ ├── Equality guards (===, !==, ==, !=)
+ ├── Truthiness narrowing (if(value) { ... })
+ ├── Custom type guards (value is Type)
+ └── Control flow analysis (return, throw 등으로 좁히기)
+
+```
+
+* in은 property in object. 어떤 객체에 키가 존재하는지 확인하는 용도로 사용. 타입에 여러가지 객체가 존재할 수 있는 경우 유용. 예를 들어 조건문으로 두 객체에 겹치지 않는 프로퍼티를 확인하는 것 만으로 해당 변수가 어떤 타입으로부터 내려오는지 확인해준다.
+* 타입스크립트는 e의 타입을 unknown으로 추론한다. 그래서 바로 접근이 불가능하고 instanceof같은 타입 가드를 써야함.
+
+```ts
+catch (e) {
+  console.log(e.message); //  Error: Object is of type 'unknown'
+}
+
+catch (e) {
+  if (e instanceof Error) {
+    console.error(e.message);
+  } else {
+    console.error('Unknown error', e);
+  }
+}
+
+```
+
+### 제네릭
+
+* 제네릭(generic) 은 타입을 변수처럼 받는 함수나 클래스
+* 함수나 클래스 내부에서 단일 타입이 아닌 다양한 타입에 대응할 수 있도록 도와주는 도구
+* 제네릭을 사용하면 타입만 다른 비슷한 작업을 하는 컴포넌트를 단일 제네릭 컴포넌트로 선언해 간결하게 작성할 수 있다.
+* 제네릭을 하나 이상 사용할 수도 있다.
+
+```ts
+function merge<T, U>(a: T, b: U): T & U {
+  return { ...a, ...b };
+}
+
+// Left, Right같은 적절한 네이밍 중요
+function mergeObjects<Left, Right>(a: Left, b: Right): Left & Right {
+  return { ...a, ...b };
+}
+```
+
+#### useState도 제네릭 함수다.
+
+```ts
+// useState는 S라는 타입을 전달받아 그에 맞는 state와 setter를 반환하는 제네릭 함수
+function useState<S>(
+  initialState: S | (() => S)
+): [S, Dispatch<SetStateAction<S>>];
+```
+
+* useState 자체는 제네릭 함수. `useState<string>()`는 제네릭을 구체화한 호출
+* 기본값을 넘기지 않고 사용하면 값을 S = undefined 로 추론해버림. `const [value, setValue] = useState();`
+* value와 setValue의 타입이 undefined가 됨.
+* 값을 나중에 정하겠다는 의도와 달리, undefined로 고정된 state가 돼버리는 게 문제
+* `const [value, setValue] = useState<string>('');`
+
+### 인덱스 시그니처
+
+```ts
+type Hello = {
+  [key: string]: string;
+};
+
+const hello: Hello = {
+  hello: "hello",
+  hi: "hi",
+};
+
+hello["hi"]; // hi
+hello["안녕"]; // undefined
+```
+
+* 객체가 어떤 타입의 키를 가질 수 있고, 그 키에 어떤 타입의 값이 매핑되는지를 정의하는 문법이다. `[key: string]: string`
+* 동적인 객체를 정의할 때 유용
+* 인덱스 시그니처의 키 범위가 너무 크면 TypeScript가 “존재하지 않는 키 접근”을 미리 막아주지 못해서, 런타임에 가서야 undefined가 나오는 문제가 있다.
+* 따라서 **객체의 키는 동적으로 선언되는 경우를 최대한 지양**하고 **객체의 타입도 필요에 따라 좁혀야 한다.**
+
+#### 객체의 키를 좁히는 방법 1: Record\<K, T> 사용
+
+* Record\<K, T>는 키가 K 타입이고, 값이 T 타입인 객체(object)를 만드는 제네릭 타입
+
+```ts
+type UserRole = "admin" | "user" | "guest";
+
+type UserPermissions = Record<UserRole, number>;
+```
+
+```ts
+type UserPermissions = {
+  admin: number;
+  user: number;
+  guest: number;
+};
+```
+
+```ts
+type Hello = Record<'hello' | 'hi'. string>;
+
+const hello: Hello = {
+  hello: 'hello',
+  hi: 'hi',
+}
+
+```
+
+#### 객체의 키를 좁히는 방법 2: 타입을 사용한 인덱스 시그니처
+
+```ts
+
+// 두 개의 키('hello', 'hi')가 각각 string 값을 가지는 객체 타입
+// 여기서 in은 타입가드가 아니라 타입 선언 안에서 유니온을 순회하며 새로운 객체 타입을 만드는 연산자.
+type Hello = {[key in 'hello' ¦ 'hi']: string};
+
+const hello: Hello = {
+  hello: 'hello',
+  hi: 'hi',
+}
+
+```
+
+#### duck typing
+
+* 객체의 타입이 클래스 상속, 인터페이스 구현 등으로 결정되는 것이 아니고 어떤 객체가 필요한 변수와 메서드만 지니고 있다면 그냥 해당 타입에 속하도록 인정해 주는것
+* 타입스크립트의 핵심 원칙은 타입 체크를 할 때 그 값이 가진 형태에 집중한다는 것이다. 이러한 것을 덕타이핑 또는 구조적 서브타이핑이라고 한다.
+* 자바스크립트는 객체의 타입에 구애받지 않고 객체의 타입에 열려있으므로 타입스크립트도 이러한 자바스크립트의 특징을 맞춰줘야 한다. 즉, 타입스크립트는 이렇게 모든 키가 들어올 수 있는 가능성이 열려 있는 객체의 키에 포괄적으로 대응하기 위해 string\[ ]으로 타입을 제공하는 것이다.
+* Object.keys()의 반환 타입은 항상 string\[ ]. 즉, key의 타입은 string이라고 추론됨.
+* 하지만 Hello타입의 키는 'hello' | 'hi'
+
+```ts
+
+
+type Hello = {[key in 'hello' ¦ 'hi']: string};
+
+const hello: Hello = {
+  hello: 'hello',
+  hi: 'hi',
+}
+
+Object.keys(hello).map((key)=> {
+  // Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'Hello'.
+  // No index signature with a parameter of type 'string' was found on type 'Hello'
+  const value = hello[key];
+  return value;
+})
+
+```
+
+* 해결방법 1: Object.keys()에 대한 반환 타입을 string\[ ]대신 as를 사용해 개발자가 단언한 타입으로 강제.
+
+```ts
+(Object.keys(hello) as Array<keyof Hello>).map((key) => {
+  const value = hello[key];
+  return value;
+});
+```
+
+* 해결방법 2: 타입 가드 함수 생성
+
+```ts
+// keysOf라는 Object.keys를 대신할 함수 생성.
+// 객체의 키를 가지고 오면서 동시에 가져온 배열에 대해서도 타입 단언으로 처리
+function keysOf<T extends Object>(obj: T): Array<keyof T> {
+  return Array.from(Object.keys(obj)) as Array<keyof T>;
+}
+
+keyOf(hello).map((key) => {
+  const value = hello[key];
+  return value;
+});
+```
+
+* 해결방법 3: 가져온 key를 단언하는 방법
+
+```ts
+Object.keys(hello).map((key) => {
+  const value = hello[key as keyof Hello];
+  return value;
+});
+```
+
+### 타입스크립트 전환 가이드
+
+#### tsconfig.json 먼저 작성하기
+
+* 최상위 디렉터리에 tsconfig.json 생성
+
+```ts
+{
+"compilerOptions": {
+  "outDir": "./dist",  // tsc를 사용하면 결과물이 outDir로 넘어간다. tsc는 타입스크립트를 자바스크립트로 변환하는 명령어
+  "allowJs": true,
+  "target": "es5",
+},
+"include": [",.src.**/*"]
+}
+
+```
+
+#### JSDoc과 @ts-check를 활용해 점진적으로 전환하기
+
+* 자바스크립트 파일을 타입스크립트로 전환하지 않더라도 타입을 체크할 수 있다.
+* 파일 최상단에 //@ts-check를 선언하고, JSDoc을 활용해 변수나 함수에 타입을 제공하면 타입스크립트 컴파일러가 자바스크립트 파일의 타입을 확인한다.
+
+#### 타입 기반 라이브러리 사용을 위해 @types 모듈 설치하기
+
+* 자바스크립트 기반으로 작성된 라이브러리를 타입스크립트에서 정상적으로 사용하려면 @types라 불리는 DefinitelyTyped를 설치해야 한다.
+* DefinitelyTyped는 타입스크립트로 작성되지 않은 코드에 대한 타입을 제공하는 라이브러리다.
+* 리액트를 타입스크립트에서 사용하기 위해서도 이 모듈을 설치해야 한다. 리액트에 대한 타입은 @types/react와 @types/react-dom 등에 정의되어 있다.
+* 만약 파일을 .ts로 전환했는데 import에 "Cannot find module 'lodash' or its corresponding type declarations" 라는 오류 메시지가 출력된다면 @types 라이브러리를 설치해야 한다. 이 에러는 Lodash라는 라이브러리 내부에서 별도의 d.ts와 같은 타입 파일을 제공하지 않기 때문에 발생하는 에러다.
+* Next.js와 같이 비교적 최근에 만들어진 라이브러리들은 이미 자체적으로 타입스크립트 지원 기능이 라이브러리에 내장되어 있다.
+
+#### 별도의 의존성을 가지고 있지 않은 유틸이나 상수 파일 먼저 전환해보기
