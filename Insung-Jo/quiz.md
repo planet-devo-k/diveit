@@ -41,3 +41,15 @@ useMemo와 useCallback의 차이는?
 useRef와 useState의 차이는?
 
 사용자 정의 훅 vs 고차 컴포넌트 언제 써요?
+
+## ch4
+
+SPA와 SSR의 차이와 각각의 장단점을 설명하세요.
+
+React SSR에서 renderToString과 hydrate의 역할은 무엇인가요?
+
+Next.js에서 \_app.tsx와 \_document.tsx의 차이는?
+
+Next.js의 주요 데이터 패칭 함수의 차이를 말해보세요.
+
+a 태그 vs Link / API Routes
