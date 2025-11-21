@@ -53,3 +53,15 @@ Next.js에서 \_app.tsx와 \_document.tsx의 차이는?
 Next.js의 주요 데이터 패칭 함수의 차이를 말해보세요.
 
 a 태그 vs Link / API Routes
+
+## ch5
+
+리액트에서 Flux 패턴과 Redux가 등장하게 된 이유는 무엇인가요?
+
+useState와 useReducer만 사용했을 때 발생하는 한계는 무엇인가요?
+
+외부 스토어(createStore) 방식의 기본 원리는 무엇인가요?
+
+Context + Provider 패턴으로 “동일한 구조의 스토어 여러 개”를 만들 수 있는 이유는 무엇인가요?
+
+Recoil, Jotai, Zustand 각각의 특징과 차이점을 간단히 설명해보세요.
