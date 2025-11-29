@@ -1,35 +1,50 @@
 # Table of contents
 
 - [Modern React Deep Dive Study](README.md)
-- 시은
-  - [Interview Qs](sgoldenbird/interviewQA/question-list.md)
-  - Ch.1
+- [시은](undefined/README.md)
+  - [Interview Qs](sgoldenbird/interviewQA/questions-list.md)
+  - [Ch.1](undefined/ch.1/README.md)
     - [Takeaways](sgoldenbird/ch1.md)
     - [Interview](sgoldenbird/interviewQA/ch1.md)
-  - Ch.2
+  - [Ch.2](undefined/ch.2/README.md)
     - [Takeaways](sgoldenbird/ch2.md)
-    - [Interview](sgoldenbird/interviewQA/ch2.md)
-  - Ch.3
+    - [Interview](undefined/ch.2/interview.md)
+  * Ch.3
     - [Takeaways](sgoldenbird/ch3.md)
     - [Interview](sgoldenbird/interviewQA/ch3.md)
-  - Ch.4
+  * Ch.4
     - [Takeaways](sgoldenbird/ch4.md)
     - [Interview](sgoldenbird/interviewQA/ch4.md)
-  - Ch.5
+  * Ch.5
     - [Takeaways](sgoldenbird/ch5.md)
     - [Interview](sgoldenbird/interviewQA/ch5.md)
-- 인성
-  - Ch.1
+  * Ch.6
+    - [Takeaways](sgoldenbird/ch6.md)
+    - [Interview](sgoldenbird/interviewQA/ch6.md)
+  * Ch.7
+    - [Takeaways](sgoldenbird/ch7.md)
+    - [Interview](sgoldenbird/interviewQA/ch7.md)
+  * Ch.8
+    - [Takeaways](sgoldenbird/ch8.md)
+    - [Interview](sgoldenbird/interviewQA/ch8.md)
+- [인성](undefined-1/README.md)
+  - [Ch.1](undefined-1/ch.1/README.md)
     - [Chapter 1](Insung-Jo/ch1.md)
     - [Interview Questions](Insung-Jo/quiz.md)
-  - Ch.2
+  - [Ch.2](undefined-1/ch.2/README.md)
     - [Chapter 2](Insung-Jo/ch2.md)
     - [Interview Questions](Insung-Jo/quiz.md)
-- 수진
-- 유진
-  - Ch.1
+- [수진](undefined-2.md)
+- [유진](undefined-3/README.md)
+  - [Ch.1](undefined-3/ch.1/README.md)
     - [Interview Question1](yujin/q1.md)
     - [Chapter 1](yujin/ch1.md)
-  - Ch.2
+  - [Ch.2](undefined-3/ch.2/README.md)
     - [Interview Question2](yujin/q2.md)
     - [Chapter 2](yujin/ch2.md)
+  * Ch.3
+    - [Interview Question3](yujin/q3.md)
+    - [Chapter 3](yujin/ch3.md)
+  * Ch.4
+    - [Interview Question4](yujin/q4.md)
+    - [Chapter 4](yujin/ch4.md)
