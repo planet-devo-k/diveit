@@ -112,7 +112,7 @@
 
 - 렌더커밋별로 어떤 작업이 일어났는지 나타낸다.
   - 렌더 커밋: React가 변경 사항을 실제 DOM에 적용하는 하나의 배치(batch) 단위(렌더단계 + 커밋단계)
-    ![프로파일링 예시](profiling.png)
+    ![프로파일링 예시](/sgoldenbird/assets/profiling.png)
 - 렌더링이 일어난 컴포넌트의 렌더링 정보, 해당 컴포넌트가 렌더링된 이유, 전체 렌더링에서 소요된 시간 확인
 - 개발자가 의도한대로 메모이제이션이 작동하고 있는지, 특정 상태 변화에 따라 렌더링이 의도한대로 제한적으로 발생하고 있는지 확인하는데 많은 도움을 얻을 수 있다.
 
@@ -141,13 +141,13 @@
   (너비가 넓을수록 해당컴포넌트를 렌더링하는 데 오래 걸렸다는 의미.
   노란색에 가까울수록 렌더링에 오래 걸린 컴포넌트. 녹색에 가까울수록 빠르게 렌더링된 컴포넌트)
 - 이번 업데이트에서 렌더링되지 않은 컴포넌트는 회색. Did not render라고 표시 (did not client render)
-  ![did not client render](did_not_client_render.png)
+  ![did not client render](/sgoldenbird/assets/did_not_client_render.png)
 
 **세로 막대 그래프**
 
 - 세로 막대 그래프를 클릭하면 각 렌더 커밋별로 리액트 트리에서 발생한 렌더링 정보를 확인할 수 있다.
 - 렌더링 횟수도 확인할 수 있어,
-  ![세로 막대 그래프 예시](vertical_graph_eg.png)
+  ![세로 막대 그래프 예시](/sgoldenbird/assets/vertical_graph_eg.png)
 
 **Ranked**
 
@@ -166,7 +166,7 @@
     - 유휴시간이 짧다: 계속 렌더가 일어나고 있음 = “리렌더 폭격” 상태일 가능성 = 불필요한 렌더링이 너무 많이 발생하고 있다
 
 - 고급 성능 지표( timestamp, duration, batch duration, lanes )
-  ![고급 성능 지표](timeline.png)
+  ![고급 성능 지표](/sgoldenbird/assets/timeline.png)
   - Timestamp
     - 이 렌더 커밋이 언제 발생했는지(프로파일링 시작 기준 + 상대적 시간) 즉, 제 발생한 업데이트인가
     - 예) Timestamp: 135.6ms

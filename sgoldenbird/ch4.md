@@ -371,4 +371,247 @@ Promise(비동기)을 기다리는 동안 보여줄 UI를 정하는 React API
 | **웹 앱**         | 브라우저에서 HTML/CSS/JS로 렌더링                              | 모바일 웹사이트, m.naver.com                      |
 | **하이브리드 앱** | 네이티브 앱 안에 WebView를 넣고 그 안에서 HTML 페이지를 렌더링 | 배민·쿠팡 결제/이벤트 페이지, 앱 약관/공지 페이지 |
 
-## Next.js 톺아보기
+## Next.js 톺아보기 (페이지 라우터)
+
+- Next.js: 디렉터리 구조가 곧 URL로 변환; 디렉터리 기반 라우팅. 라우팅 구조는 /pages 디렉터리를 기초로 구성. 각 페이지에 있는 default export로 내보낸 함수가 해당 페이지의 루트 컴포넌트가 된다.
+- create-next-app: scaffolding tool `npx create-next-app@latest --ls`
+- package.json: 프로젝트 구동에 필요한 모든 명령어 및 의존성.
+  - eslint-config-next: Next.js 기반 프로젝트에서 사용하도록 만들어진 ESLint설정. core web vital에 도움되는 규칙들이 내장.
+    eslint-config-airbnb와 같은 기존에 사용하던 규칙이 있다면 이에 추가로 함께 사용하는 것을 추천
+- next.config.js: Next.js 프로젝트 환경 설정
+  - swcMinify: SWC를 기반으로 코드 최소화 작업을 할지 여부 설정
+- pages/\_app.tsx
+  - pages폴더가 src 하단에 존재할수도 있고, 프로젝트 루트에 있을 수도 있다.
+  - app.tsx
+    - \_app.tsx와 내부에 있는 default export로 내보낸 함수는 애플리케이션 전체 페이지의 시작점.
+    - 공통으로 설정해야 하는 것들을 여기에서 실행
+      - 전역 에러 바운더리
+      - reset.css같은 전역 CSS
+      - 모든 페이지에 공통으로 사용 또는 제공해야 하는 데이터 제공
+    - \_app.tsx의 render()내부의 console.log는 브라우저 콘솔창이 아닌 Next.js를 실행한 터미널에 기록된다. 만약 여기서 페이지를 전환했을때 더 이상 서버에서 로깅되지 않고 브라우저에서 로깅된다면 최초에는 SSR을, 이후에는 CSR을 한다는 것을 알 수 있다.
+- pages/\_document.tsx
+  - \_document.tsx는 없어도 실행에 지장은 없다.
+  - 애플리케이션의 HTML을 초기화 하는 곳(\_app.tsx는 애플리케이션 페이지 전체를 초기화하는 곳)
+  - <html>이나 <body>에 DOM속성을 추가하고 싶을 때 _document.tsx를 사용
+  - \_document는 무조건 서버에서 실행(\_app.tsx는 렌더링이나 라우팅에 따라 서버나 클라이언트에서 실행). 따라서 이 파일에서 이벤트핸들러 추가 불가능.
+  - Next.js에는 두가지 <head> 존재(next/document에서 제공하는 head, next/head에서 기본적으로 제공하는 head)하는데, next/document는 오직 \_document.tsx에서만 사용할 수 있다.
+    - next/document의 <Head/>내부에서는 <title/>을 사용할 수 없다.
+    - next/head는 페이지에서 사용할 수 있으며 SEO에 필요한 정보나 title 등을 담을 수 있다.
+    - 웹 애플리케이션에 공통적인 제목이 필요하면 \_app.tsx에, 페이지별 제목이 필요하면 페이지 파일 내부에서 next/head 사용하면 된다.
+  - getServerSideProps, getStaticProps 등 서버에서 사용 가능한 데이터 불러오기 함수는 \_document.tsx에서 사용할 수 없다. \_document.tsx는 Next.js가 HTML을 렌더링하기 위한 템플릿 파일일 뿐, 페이지의 데이터 흐름과는 완전히 분리된 영역이기 때문이다.
+  - \_document.tsx 에서만 할 수 있는 작업으로 CSS-in-JS 스타일을 서버에서 모아 HTML로 제공하는 작업이 있다.
+  - \_app.tsx vs \_document.tsx
+    - \_app.tsx
+      - Next.js를 초기화하는 파일
+      - Next.js설정과 관련된 코드를 모아둠
+      - 경우에 따라 서버와 클라이언트 모두에서 렌더링 가능
+    - \_document.tsx
+      - Next.js로 만드는 웹사이트의 뼈대가 되는 HTML설정과 관련된 코드를 추가하는 곳
+      - 반드시 서버에서만 렌더링된다.
+- pages/\_error.tsx
+  - 클라이언트에서 발생하는 500에러 처리(전역 에러)
+  - 개발모드에서는 이 페이지에 방물 불가(개발모드에서 에러 발생하면, Next.js가 제공하는 개발자 에러 팝업 나타남). 이 페이지 작동은 프로덕션으로 빌드해 확인해야함.
+- pages/500.tsx
+  - 서버에서 발생하는 에러를 핸들링하는 페이지
+  - \_error.tsx와 500.tsx가 모두 있다면, 500.tsx가 우선으로 실행
+- pages/index.tsx
+  - pages/index.tsx: 웹사이트의 루트. localhost:3000과 같은 루트 주소
+  - pages/hello.tsx: localhost:3000/hello
+  - pages/hello/world.tsx: 디렉터리 깊이만큼 주소 설정. localhost:3000/hello/world
+  - pages/hello/[greeting].tsx:
+    - `[]`의 의미는 여기에 어떠한 문자도 올 수 있다는 뜻.`[]`안의 내용은 변수로 처리.
+    - greeting이라는 변수에 사용자가 접속한 주소명이 오게된다.
+  - pages/hello/[...props].tsx:
+    - /hello 하위의 모든 주소가 여기로 온다.
+    - 작동이 전개연산자와 동일. 전개 연산자로 선언한 모든 주소는 배열로 들어간다.
+    - [...props] 값은 props라는 변수에 배열로 오게 된다.
+    - 예) /hello/1/2/my/name → ['1', '2', 'my', 'name'] 주소에 숫자를 입력해도 숫자로 형변환 되지 않는다.
+    - 예) /hello/1 → ['1']주소에 하나만 들어가도, string 1이 아닌 string[][1]이 들어간다.
+- pages/api/hello.ts
+  - api디렉터리는 서버의 API를 정의하는 폴더.
+  - pages/api/hello.ts는 /api/hello로 호출.
+  - 다른 pages 파일과 다르게 HTML요청을 하는게 아니라 단순히 서버 요청을 주고받는다.
+  - 페이지와 마찬가지로 default export로 내보낸 함수가 실행
+  - 이 폴더에 있는 코드는 오직 서버에서만 실행. window나 document 등 브라우저에서만 접근할 수 있는 코드를 작성하면 당연히 문제 발생
+  - 서버에서 내려주는 데이터를 조합해 BFF형태로 활용하거나, 완전한 풀스택 애플리케이션을 구축하고 싶을때, 혹은 CORS(Cross-Origin Resource Sharing)문제를 우회할 때 사용
+
+### 서버 라우팅과 클라이언트 라우팅 차이(페이지 이동)
+
+- Next.js는 최초 페이지 렌더링이 서버에서 수행된다.
+- Next.js는 서버사이드 렌더링의 장점, 즉 사용자가 빠르게 볼 수 있는 최초 페이지를 제공하면서, SPA의 장점인 자연스러운 라우팅 두가지 장점을 모두 살린다.
+  - 내부 페이지 이동시 a태그 대신 Link태그를 사용
+  - window.location.href 대신 router.push 사용
+
+#### next/link vs a
+
+- a태그
+
+  - 페이지를 이동할 때 모든 리소스를 처음부터 다시 받는다
+  - 잠시 깜박인 후에 페이지 라우팅
+  - 렌더링이 어디에서 일어났는지 판단하기 위해 console.log를 실행하면, 서버와 클라이언트 각각 동시에 기록. 즉, 서버에서 렌더링을 수행하고 클라이언트에서 hydrate하는 과정에서 한번 더 실행된다.
+
+- next/link
+
+  - Next.js에서 제공하는 라우팅 컴포넌트
+  - 모든 리소스가 아닌 이동한 해당 페이지에 필요한 내용만 받는다.(네트워크 탭 확인)
+  - console.log가 클라이언트에 기록.
+  - Next.js는 <Link>가 화면에 보이면(또는 보이기 직전) 해당 페이지의 데이터를 미리 불러온다(자동 prefetch).
+
+  ```jsx
+    <Link href="/dashboard">Go</Link>
+
+    <Link>가 렌더링되고 뷰포트 안에 들어오거나 근처에 있게 되면
+    Next.js가 백그라운드에서 자동으로 /dashboard 페이지의 코드 + 데이터 번들을 캐싱
+
+  ```
+
+#### router.push vs window.location.href/assign
+
+| 기능           | router.push                              | window.location.href / assign                   |
+| -------------- | ---------------------------------------- | ----------------------------------------------- |
+| 동작 방식      | 클라이언트 사이드 라우팅(SPA)            | 브라우저 전체 페이지 새로고침                   |
+| 속도           | 빠름 (JS로 화면만 교체)                  | 느림 (전체 페이지 리로드)                       |
+| 상태 유지      | 유지됨 (state, context, query client 등) | 모두 초기화됨                                   |
+| Next.js 최적화 | 적용됨                                   | 적용 안 됨                                      |
+| 사용 시점      | Next.js 앱 내부 이동에 권장              | 외부 URL 이동, 강제 리프레시가 필요할 때        |
+| 히스토리       | push / replace 모두 가능                 | 브라우저 기본 동작 (assign/replace로 제어 가능) |
+
+- router.push (SPA 라우팅 / React 상태 유지)
+
+```js
+import { useRouter } from "next/router";
+
+const router = useRouter();
+router.push("/dashboard");
+```
+
+- window.location.href (전체 페이지 리로드)
+  `window.location.href = '/dashboard';`
+
+- window.location.assign (히스토리에 추가되며 이동)
+  `window.location.assign('/dashboard');`
+
+- window.location.replace (히스토리 대체 후 이동)
+  `window.location.replace('/dashboard');`
+
+#### Link vs router.push
+
+| 기능      | <Link>                                                         | router.push()                                                                                  |
+| --------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| 목적      | 사용자 클릭 기반 네비게이션                                    | 코드(이벤트) 기반 네비게이션                                                                   |
+| 동작 방식 | SPA 이동 + **자동 prefetch**                                   | SPA 이동 (기본적으로 prefetch 없음)                                                            |
+| UX        | a 태그처럼 동작 (접근성 좋음)                                  | 프로그래밍 라우팅 (onClick 등에서 사용)                                                        |
+| 사용 위치 | **JSX 안에서만** 사용 가능                                     | JS 코드 어디서든 실행 가능                                                                     |
+| 권장 시점 | 화면에 링크 UI가 있을 때                                       | 조건/이벤트 기반 자동 이동이 필요할 때                                                         |
+| SEO       | `<a>` 역할이라 검색엔진 인식 용이. a태크는 HTML 네이티브 이동. | JS 라우팅이라 SEO 영향 없음(JavaScript로 실행되는 이동이기 때문에 검색엔진이 링크로 인식 못함) |
+
+#### <Link replace> vs router.replace()
+
+- 기능은 완전히 같다. 둘 다 현재 페이지를 히스토리에 남기지 않고 이동
+
+### Data Fetching: SSR 지원을 위한 Next.js의 데이터 불러오기 전략들
+
+- 이 함수는 pages/ 하위 라우팅이 되는 파일에서만 사용할 수 있다.
+- 예약어로 지정되어 반드시 정해진 함수명으로 export 해야한다.
+- 이를 활용하면 서버에서 미리 필요한 페이지를 만들어서 제공하거나 (SSG: Static Site Generation, getStaticProps())
+- 해당 페이지에 요청이 있을 때마다 서버에서 데이터를 조회해서 미리 페이지를 만들어서 제공할 수 있다. (SSR, getServerSideProps())
+
+#### getStaticPaths와 getStaticProps (SSG)
+
+- CMS나 블로그, 게시판과 같이 사용자와 관계없이 정적으로 결정된 페이지를 보여줄 때 사용하는 함수
+- getStaticPaths와 getStaticProps는 반드시 함께 있어야 사용 가능
+- 이 두 함수를 사용하면 빌드 시점에 미리 데이터를 불러온 다음, 정적인 HTML페이지를 만들수 있다. (SSG)
+  - 이 두 함수를 사용해 next build를 수행하면 ./next/server에 해당 페이지에 필요한 HTML과 JSON데이터가 모두 준비돼 있다.
+- 예를 들어 /pages/post/[id] 페이지가 있고, 해당 페이지에 두 함수를 사용했을때,
+
+  - getStaticPaths는 해당페이지에서(/pages/post/[id]) 접근 가능한 주소를(페이지를) 정의하는 함수다.
+  - 아래 예제에서 이 페이지는 /post/1, /post/2만 접근 가능하다. 예를 들어 /post/3 등은 404를 반환한다.
+  - getStaticProps는 getStaticPaths에서 정의한 페이지를 기준으로 해당 페이지로 요청이 왔을 때 제공할 props를 반환하는 함수다.
+  - 아래 예제에서는 id가 각각 1과 2로 제한돼 있기 때문에(getStaticsPaths에서 해당 페이지는 id를 각각 1,2만 허용) fetchPost(1), fetchPost(2)를 기준으로 각각 함수의 응답 결과를 변수로 가져와 props의 {post}로 반환하게 된다.(getStaticProps는 1과2에 대한 데이터 요청을 수행해 props로 반환)
+
+  ```ts
+  import { GetStaticPaths, GetStaticProps } from "next";
+
+  export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+      paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
+      fallback: false,
+    };
+  };
+
+  export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const { id } = params;
+    const post = await fetchPost(id);
+    return {
+      props: { post },
+    };
+  };
+
+  export default function Post({ post }: { post: Post }) {
+    // post함수는 앞서 getStaticProps가 반환한 post를 렌더링한다.
+  }
+  ```
+
+- getStaticPaths 함수의 반환값 중 하나인 fallback옵션은 미리 빌드해야(SSG)할 페이지가 너무 많은 경우 사용.
+
+  - paths에 미리 빌드해 둘 몇개의 페이지만 리스트로 반환하고, true나 blocking으로 값을 선언
+  - 이렇게 하면 next build를 실행할 때 미리반환해 둔 paths에 기재돼 있는 페이지만 미리 빌드하고 나머지 페이지의 경우에는 다음과 같이 작동
+
+    - true: 사용자가 미리 빌드하지 않은 페이지에 접근할 경우, 빌드되기 전까지는 fallback컴포넌트를 보여주고, 빌드가 완료된 이후에 해당 페이지를 보여주는 옵션
+    - blocking: 별도의 로딩과 같은 처리를 하지 않고, 단순히 빌드가 완료될 때까지 사용자를 기다리게 하는 옵션. SSR할때까지 대기한 다음, 렌더링이 완료되면 해당 페이지 제공.
+    - false vs blocking
+      - false
+        - getStaticPaths에서 반환한 paths만 SSG. 그 외 경로 접근 → 바로 404. 절대로 동적 생성 안 함
+      - blocking
+        - 정해지지 않은 경로라도 처음 요청 시 서버가 동적 생성해준다. 404가 아니라 SSR처럼 작동하면서 생성된 결과를 SSG로 캐싱한다.
+        - 빌드되지 않은 경로로 접근하면 페이지가 준비될 때까지 서버에서 가로막고 기다림
+        - 서버가 페이지 HTML을 생성해서 완성되면 → 그걸 바로 클라이언트에게 보내줌 → 로딩 UI 없음 (서버가 다 만들어서 주기 때문)
+
+  - fallback이 true이거나 blocking이면 페이지 렌더링 흐름이 달라지기 때문에(클라이언트가 로딩 UI를 직접 보여줘야 하기 때문에) useRouter를 쓴다. router.isFallback은 오직 getStaticPaths의 fallback이 true일 때만 의미 있게 동작
+
+```js
+export async function getStaticPaths() {
+  return {
+    paths: [{ params: { id: "1" } }], // 1번 페이지만 미리 생성
+    fallback: "blocking", // or true
+  };
+}
+```
+
+```js
+import { useRouter } from "next/router";
+
+export default function PostPage({ post }) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <p>Loading...</p>;
+  }
+
+  return <div>{post.title}</div>;
+}
+```
+
+#### getServerSideProps (SSR)
+
+#### getInitialProps
+
+### 기타
+
+- getServerSideProps가 없으면 서버에서 실행하지 않아도 되는 페이지로 처리하고 typeof window의 처리를 모두 object로 바꾼 다음 빌드 시점에 미리 트리쉐이킹을 해버린다.
+- SWC
+  - 번들링과 컴파일을 더욱 빠르게 수행. 바벨의 대안. 특별한 이유가 없다면 SWC 쓰는것 권장
+  - 바벨보다 빠른 이유
+    - 자바스크립트 기반의 바벨과는 다르게 러스트라는 언어로 작성(Rust는 C/C++과 동등한 수준의 빠른 속도)
+    - 병렬로 작업 처리
+- 언더스코어(\_) 의미: 이건 일반 페이지가 아니라 시스템 파일이야
+  - 언더스코어(\_)는 "이 파일은 페이지가 아니라 Next.js가 내부적으로 특정 역할을 위해 자동으로 불러오는 특별한 파일"
+- CMS(Contents Management System)
+  - 프로그래밍 없이도 콘텐츠(글·이미지·페이지·상품 등)를 만들고 관리할 수 있게 해주는 시스템
+    | 종류 | 설명 |
+    |--------------------------|------------------------------------------|
+    | WordPress | 전 세계 1위 CMS. 웹사이트 + 블로그 관리 최강 |
+    | Wix / Squarespace | 페이지 빌더 겸 CMS |
+    | Notion (CMS처럼 활용) | 문서 관리 + 데이터 관리 |
+    | Contentful / Strapi / Sanity | Headless CMS (API로 데이터 제공) |
+    | Shopify | 전자상거래 전용 CMS |
