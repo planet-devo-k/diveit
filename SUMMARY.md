@@ -2,13 +2,22 @@
 
 - [Modern React Deep Dive Study](README.md)
 - [시은](undefined/README.md)
-  - [Interview Qs](undefined/interview-qs.md)
+  - [Interview Qs](sgoldenbird/interviewQA/questions-list.md)
   - [Ch.1](undefined/ch.1/README.md)
     - [Takeaways](sgoldenbird/ch1.md)
     - [Interview](sgoldenbird/interviewQA/ch1.md)
   - [Ch.2](undefined/ch.2/README.md)
     - [Takeaways](sgoldenbird/ch2.md)
     - [Interview](undefined/ch.2/interview.md)
+  * Ch.3
+    - [Takeaways](sgoldenbird/ch3.md)
+    - [Interview](sgoldenbird/interviewQA/ch3.md)
+  * Ch.4
+    - [Takeaways](sgoldenbird/ch4.md)
+    - [Interview](sgoldenbird/interviewQA/ch4.md)
+  * Ch.5
+    - [Takeaways](sgoldenbird/ch5.md)
+    - [Interview](sgoldenbird/interviewQA/ch5.md)
 - [인성](undefined-1/README.md)
   - [Ch.1](undefined-1/ch.1/README.md)
     - [Chapter 1](Insung-Jo/ch1.md)
