@@ -33,16 +33,14 @@
 
 #### JavaScript만 사용하는 것과 비교해 TypeScript를 사용하는 이유에 대해 설명해주세요.
 
-#### type을 선언하는 키워드들에는 무엇이 있는지.
-
 #### TypeScript의 동작 원리에 대해 설명해 주세요.
+
+#### type을 선언하는 키워드들에는 무엇이 있는지.
 
 </details>
 
 <details>
 <summary>Ch.2</summary>
-
-#### 브라우저 렌더링 과정을 설명해주세요.
 
 #### 리액트에서 Virtual DOM이 무엇인지, 이를 사용하는 이유는 무엇인지 설명해 주세요.
 
@@ -55,5 +53,47 @@
 #### React Fiber란 무엇인가요?
 
 #### 메모이제이션을 섣불리 사용하는 것은 독이라고 하는 주장과, 렌더링이 비싸니 가능한 모든 곳에서 메모이제이션을 적용해야 한다는 주장이 있습니다. 두 의견 중 어느 쪽에 더 동의하나요? 그리고 그 이유를 설명해주세요.
+
+</details>
+
+<details>
+<summary>Ch.3</summary>
+
+#### 훅을 사용할 때 지켜야 할 규칙은 무엇인가요?
+
+#### 훅의 호출 순서가 왜 중요한가요?
+
+#### useState는 어떤 원리로 상태를 유지하나요?
+
+#### useState의 초깃값으로 함수를 넣는 이유는?
+
+#### useEffect의 실행 시점은 언제인가요?
+
+#### useEffect와 useLayoutEffect의 차이는?
+
+#### useEffect와 일반 함수 실행의 차이는 무엇인가요?
+
+#### Context API를 사용할 때 주의할 점?
+
+#### Zustand나 Redux 같은 상태관리 라이브러리와 Context 차이?
+
+#### useReducer를 사용하는 이유는?
+
+#### useMemo와 useCallback의 차이를 설명해보세요.
+
+#### 커스텀 훅과 고차컴포넌트(HOC)의 차이와 각각 언제 사용하면 좋을지?
+
+#### useMemo와 React.memo의 차이는 무엇인가요?
+
+#### React.memo는 어떤 원리로 리렌더링을 방지하나요?
+
+</details>
+
+<details>
+<summary>Ch.4</summary>
+
+#### 웹 페이지 렌더링 방식 CSR, SSR, SSG 각각의 특징과 각 방식을 어떤 상황에 사용하면 좋을지 설명해 주세요.
+
+#### 서버 상태와 클라이언트 상태의 차이에 대해 설명해 주세요.
 
 </details>
