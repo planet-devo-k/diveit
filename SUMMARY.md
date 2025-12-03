@@ -42,3 +42,12 @@
   - Ch.5
     - [Interview Question4](yujin/q5.md)
     - [Chapter 5](yujin/ch5.md)
+  - Ch.6
+    - [Interview Question4](yujin/q6.md)
+    - [Chapter 6](yujin/ch6.md)
+  - Ch.7
+    - [Interview Question4](yujin/q7.md)
+    - [Chapter 7](yujin/ch7.md)
+  - Ch.8
+    - [Interview Question4](yujin/q8.md)
+    - [Chapter 8](yujin/ch8.md)
