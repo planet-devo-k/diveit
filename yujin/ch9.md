@@ -12,9 +12,9 @@
 | 영역            | 핵심 설정 내용                                                             | 💡 실질적인 팁                                                                                                                                         |
 | :-------------- | :------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **성능 최적화** | `next.config.js`에 **`styledComponents: true`** 추가.                      | **SWC 컴파일러 활용**: Next.js의 Rust 기반 SWC가 `styled-components`를 더 빠르게 처리하도록 명시해 빌드 속도를 최적화합니다.                           |
-| **품질/린팅**   | **`@titicaca/eslint-config-triple`**을 `next/core-web-vitals`와 함께 적용. | **고수준 린팅 규칙 도입**: AirBnb보다 최신이며 한국 커뮤니티에서 유지보수 되는 설정을 도입해 코드 스타일 및 잠재적 문제를 일관성 있게 관리합니다.      |
+| **품질/린팅**   | `@titicaca/eslint-config-triple`을 `next/core-web-vitals`와 함께 적용.     | **고수준 린팅 규칙 도입**: AirBnb보다 최신이며 한국 커뮤니티에서 유지보수 되는 설정을 도입해 코드 스타일 및 잠재적 문제를 일관성 있게 관리합니다.      |
 | **CI 효율화**   | `next.config.js`에 **`eslint.ignoreDuringBuilds: true`** 설정.             | **로컬 빌드 시간 단축**: 무거운 린팅 작업을 CI 환경으로 완전히 분리하여 로컬 개발 환경의 빌드 속도를 높입니다.                                         |
-| **SSR 안정성**  | `pages/_document.tsx`에서 **`ServerStyleSheet`**를 적용.                   | **SSR Critical Path 확보**: SSR 환경에서 `styled-components`의 스타일이 누락되지 않도록 서버에서 미리 추출하여 초기 로딩 시 깜빡임(FOUC)을 방지합니다. |
+| **SSR 안정성**  | `pages/_document.tsx`에서 `ServerStyleSheet`를 적용.                       | **SSR Critical Path 확보**: SSR 환경에서 `styled-components`의 스타일이 누락되지 않도록 서버에서 미리 추출하여 초기 로딩 시 깜빡임(FOUC)을 방지합니다. |
 | **재사용성**    | 수동 설정 후 재사용을 위해 GitHub에서 **`Template repository`** 옵션 체크. | **Boilerplate화**: 수동 설정의 노력을 보존하고 향후 프로젝트의 일관된 구조 및 설정을 빠르게 복제할 수 있습니다.                                        |
 
 ---
@@ -34,6 +34,7 @@ GitHub는 **CI/CD 자동화** 및 **보안 점검**을 위한 강력한 플랫�
 
 ### 9-2.2. 유용한 액션과 깃허브 앱 활용
 
+![alt text](image-3.png)
 GitHub **Marketplace**에서 다른 사용자가 만든 유용한 액션을 사용할 수 있습니다.
 
 - 기본 액션: `actions/checkout`, `actions/setup-node`, `actions/stale`, `actions/dependency-review`, `github/codeql-action` 등 주요 액션 존재
