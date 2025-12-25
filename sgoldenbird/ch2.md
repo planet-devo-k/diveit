@@ -2,15 +2,15 @@
 
 ## JSX란?
 
-- 자바스크립트 코드 내부에 HTML과 같은 트리 구조를 가진 컴포넌트로 표현
-- 반드시 트랜스파일러를 거쳐야 자바스크립트 런타임이 이해할 수 있는 의미있는 자바스크립트 코드로 변환된다.
-- JSXElement, JSXAttributes, JSXChildren, JSXStrings 라는 4가지 컴포넌트를 기반으로 구성
+* 자바스크립트 코드 내부에 HTML과 같은 트리 구조를 가진 컴포넌트로 표현
+* 반드시 트랜스파일러를 거쳐야 자바스크립트 런타임이 이해할 수 있는 의미있는 자바스크립트 코드로 변환된다.
+* JSXElement, JSXAttributes, JSXChildren, JSXStrings 라는 4가지 컴포넌트를 기반으로 구성
 
 ### JSX는 어떻게 자바스크립트로 변환될까?
 
 **React 16까지(Classic Runtime)**
 
-- JSX → React.createElement(...) 로 바꾸는 변환
+* JSX → React.createElement(...) 로 바꾸는 변환
 
 ```jsx
 
@@ -32,7 +32,7 @@ export default function App() {
 
 **React 17부터(Automatic Runtime)**
 
-- React 17부터는 Babel 플러그인이 새 옵션을 지원하기 시작. 즉, react/jsx-runtime 모듈을 통해 JSX가 자동 처리. 이게 바로 “자동 JSX 런타임”
+* React 17부터는 Babel 플러그인이 새 옵션을 지원하기 시작. 즉, react/jsx-runtime 모듈을 통해 JSX가 자동 처리. 이게 바로 “자동 JSX 런타임”
 
 ```js
 
@@ -51,13 +51,13 @@ export default function App() {
 
 ```
 
-- 때문에 현재(리액트19)는 createElement가 레거시 API. createElement 쓰는 대신 JSX를 쓰는 것을 권장.
+* 때문에 현재(리액트19)는 createElement가 레거시 API. createElement 쓰는 대신 JSX를 쓰는 것을 권장.
 
 ## 가상 DOM과 리액트 파이버
 
 ### DOM과 브라우저 렌더링 과정
 
-- DOM: 웹페이지에 대한 인터페이스. 브라우저가 웹페이지의 콘텐츠와 구조를 어떻게 보여줄지에 대한 정보를 담고 있다.
+* DOM: 웹페이지에 대한 인터페이스. 브라우저가 웹페이지의 콘텐츠와 구조를 어떻게 보여줄지에 대한 정보를 담고 있다.
 
 1. 브라우저가 사용자가 요청한 주소를 방문해 HTML 파일을 다운로드
 2. 브라우저의 렌더링 엔진은 HTML을 파싱해 DOM노드로 구성된 트리 DOM을 만든다.
@@ -382,54 +382,40 @@ React (전체 시스템)
     render() {
       return (
         <div>
-          <p>{this.state.count}</p>
-          <button onClick={() => this.setState({ count: this.state.count + 1 })}>
-            +
-          </button>
+          <p>{count}</p>
+          <button onClick={() => setCount(count + 1)}>+</button>
         </div>
       );
     }
-  }
 
-    // 함수 컴포넌트는 “클로저(closure)” 기반
-    function Counter() {
-    const [count, setCount] = useState(0);
-    return (
-      <div>
-        <p>{count}</p>
-        <button onClick={() => setCount(count + 1)}>+</button>
-      </div>
-    );
-  }
+    - useState는 React 내부의 “상태 저장소”에 접근하는 클로저를 생성.
+    - 즉, “이 Counter 함수와 연결된 상태가 여기에 저장돼 있다”는 정보를 React가 기억하고, 함수가 다시 실행되더라도 그 상태를 계속 유지.
+    - 이 덕분에 코드가 수정돼서 Counter 함수 자체가 새로 정의되어도 React는 “이건 같은 컴포넌트 인스턴스야”라고 판단하고 클로저로 연결된 상태값을 그대로 재사용
+    - 그래서 핫 리로딩 후에도 state가 유지
 
-  - useState는 React 내부의 “상태 저장소”에 접근하는 클로저를 생성.
-  - 즉, “이 Counter 함수와 연결된 상태가 여기에 저장돼 있다”는 정보를 React가 기억하고, 함수가 다시 실행되더라도 그 상태를 계속 유지.
-  - 이 덕분에 코드가 수정돼서 Counter 함수 자체가 새로 정의되어도 React는 “이건 같은 컴포넌트 인스턴스야”라고 판단하고 클로저로 연결된 상태값을 그대로 재사용
-  - 그래서 핫 리로딩 후에도 state가 유지
+    ```
 
-  ```
+    * 클로저 = useState 내부의 상태 저장 메커니즘
 
-  - 클로저 = useState 내부의 상태 저장 메커니즘
+    ```js
+      // useState의 간단한 개념적 모형
 
-  ```js
-    // useState의 간단한 개념적 모형
+      let state; // 함수 밖에 저장됨
 
-    let state; // 함수 밖에 저장됨
-
-    function useState(initialValue) {
-      if (state === undefined) state = initialValue;
-      function setState(newValue) {
-        state = newValue;
-        render(); // 다시 렌더링
+      function useState(initialValue) {
+        if (state === undefined) state = initialValue;
+        function setState(newValue) {
+          state = newValue;
+          render(); // 다시 렌더링
+        }
+        return [state, setState];
       }
-      return [state, setState];
-    }
 
   state가 함수 바깥(React 내부 메모리) 에 저장되어 있어서 컴포넌트 함수가 다시 실행돼도 사라지지 않는다. 이게 바로 클로저의 힘.
   setState가 state를 “기억”하고 있어서, 렌더링이 반복돼도 같은 메모리 영역을 바라봄.
   이 예시는 useState의 개념적 아이디어만 표현한 단순 버전이고, 진짜 React의 useState는 컴포넌트별, 훅 호출 순서별로 독립된 저장 공간을 만들어 관리
 
-  ```
+    ```
 
 #### 핫 리로딩
 
@@ -451,9 +437,9 @@ React (전체 시스템)
 3️⃣ React가 이 새 코드(App 컴포넌트)를 실행하면서 렌더 트리를 다시 계산 \
 4️⃣ 여기서 가상 DOM이 등장
 
-- React는 새로운 Virtual DOM 트리를 생성
-- 이전 Virtual DOM 트리와 비교(diff)
-- 실제 DOM에 필요한 부분만 갱신
+* React는 새로운 Virtual DOM 트리를 생성
+* 이전 Virtual DOM 트리와 비교(diff)
+* 실제 DOM에 필요한 부분만 갱신
 
 이렇게 해서 “상태(state)는 유지되고, 화면만 바뀌는” 느낌을 준다.
 
@@ -556,11 +542,11 @@ function Timer({ message }) {
 
   - React 18부터는 **서버 컴포넌트**(Server Components)와 React **Suspense for data fetching** 개념이 등장 → 이제는 렌더링 도중에 데이터를 읽는 패턴이 공식적으로 가능
 
-  ```tsx
-    // 서버 컴포넌트에서 직접 fetch (Next.js 13~15 / React 19)
-    export default async function Page() {
-      const res = await fetch('https://api.example.com/data');
-      const data = await res.json();
+    ```tsx
+      // 서버 컴포넌트에서 직접 fetch (Next.js 13~15 / React 19)
+      export default async function Page() {
+        const res = await fetch('https://api.example.com/data');
+        const data = await res.json();
 
       return <div>{data.title}</div>;
     }
@@ -570,38 +556,42 @@ function Timer({ message }) {
     그래서 클라이언트(브라우저)에서는 이미 데이터가 준비된 상태이므로 useEffect로 따로 데이터를 다시 가져올 필요가 없다.
     React 19에서는 이게 공식적으로 지원되는 데이터 패칭 방식
 
-
-    // Suspense + use (React 19)
-    import { use } from "react";
-
-    function DataView() {
-      const data = use(fetch("/api/data").then(res => res.json()));
-      return <p>{data.title}</p>;
-    }
+      서버에서 렌더링하는 시점에 데이터를 가져오기 때문에 클라이언트에서 useEffect가 필요 없음.
+      즉, 데이터를 서버에서 미리 불러와서 화면을 만든다.
+      그래서 클라이언트(브라우저)에서는 이미 데이터가 준비된 상태이므로 useEffect로 따로 데이터를 다시 가져올 필요가 없다.
+      React 19에서는 이게 공식적으로 지원되는 데이터 패칭 방식
 
 
-    React 19에서는 use()라는 새 훅을 도입
-    이제 useEffect 없이도 렌더링 도중 fetch 결과를 읽을 수 있다.
-    React는 자동으로 이 Promise를 감지해서 데이터가 도착할 때까지 Suspense로 렌더링을 일시 중단
-    즉, fetch는 이제 렌더링 도중에도 가능하고, React가 그걸 알아서 기다려주는 시대
+      // Suspense + use (React 19)
+      import { use } from "react";
 
-  ```
+      function DataView() {
+        const data = use(fetch("/api/data").then(res => res.json()));
+        return <p>{data.title}</p>;
+      }
 
-- 클라이언트 컴포넌트에서도 꼭 useEffect가 필요한 경우
+
+      React 19에서는 use()라는 새 훅을 도입
+      이제 useEffect 없이도 렌더링 도중 fetch 결과를 읽을 수 있다.
+      React는 자동으로 이 Promise를 감지해서 데이터가 도착할 때까지 Suspense로 렌더링을 일시 중단
+      즉, fetch는 이제 렌더링 도중에도 가능하고, React가 그걸 알아서 기다려주는 시대
+
+    ```
+*   클라이언트 컴포넌트에서도 꼭 useEffect가 필요한 경우
 
   - 여전히 **렌더링 이후에 실행해야 하는 작업**은 useEffect가 필요
   - **데이터 fetch 결과로 브라우저 전용 API(localStorage 등) 사용해야 할 때**(서버에서는 안 돌아감)
   - **사용자 상호작용 이후(클릭 등)에 fetch 해야 할 때(이벤트 기반)**
   - 예시
 
-  ```jsx
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    fetch(`/api/profile?token=${token}`)
-      .then((res) => res.json())
-      .then(setProfile);
-  }, []);
-  ```
+    ```jsx
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      fetch(`/api/profile?token=${token}`)
+        .then((res) => res.json())
+        .then(setProfile);
+    }, []);
+    ```
 
 ## 랜더링은 어떻게 일어나는가?
 
