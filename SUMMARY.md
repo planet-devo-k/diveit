@@ -3,39 +3,39 @@
 - [Modern React Deep Dive Study](README.md)
 - [시은](undefined/README.md)
   - [Interview Qs](sgoldenbird/interviewQA/questions-list.md)
-  - [Ch.1](undefined/ch.1/README.md)
+  - Ch.1
     - [Takeaways](sgoldenbird/ch1.md)
     - [Interview](sgoldenbird/interviewQA/ch1.md)
-  - [Ch.2](undefined/ch.2/README.md)
+  - Ch.2
     - [Takeaways](sgoldenbird/ch2.md)
-    - [Interview](undefined/ch.2/interview.md)
-  * Ch.3
+    - [Interview](sgoldenbird/interviewQA/ch2.md)
+  - Ch.3
     - [Takeaways](sgoldenbird/ch3.md)
     - [Interview](sgoldenbird/interviewQA/ch3.md)
-  * Ch.4
+  - Ch.4
     - [Takeaways](sgoldenbird/ch4.md)
     - [Interview](sgoldenbird/interviewQA/ch4.md)
-  * Ch.5
+  - Ch.5
     - [Takeaways](sgoldenbird/ch5.md)
     - [Interview](sgoldenbird/interviewQA/ch5.md)
-  * Ch.6
+  - Ch.6
     - [Takeaways](sgoldenbird/ch6.md)
     - [Interview](sgoldenbird/interviewQA/ch6.md)
-  * Ch.7
+  - Ch.7
     - [Takeaways](sgoldenbird/ch7.md)
     - [Interview](sgoldenbird/interviewQA/ch7.md)
-  * Ch.8
+  - Ch.8
     - [Takeaways](sgoldenbird/ch8.md)
     - [Interview](sgoldenbird/interviewQA/ch8.md)
-  * Ch.9
-  - [Takeaways](sgoldenbird/ch9.md)
-  - [Interview](sgoldenbird/interviewQA/ch9.md)
-  * Ch.10
-  - [Takeaways](sgoldenbird/ch10.md)
-  - [Interview](sgoldenbird/interviewQA/ch10.md)
-  * Ch.11
-  - [Takeaways](sgoldenbird/ch11.md)
-  - [Interview](sgoldenbird/interviewQA/ch11.md)
+  - Ch.9
+    - [Takeaways](sgoldenbird/ch9.md)
+    - [Interview](sgoldenbird/interviewQA/ch9.md)
+  - Ch.10
+    - [Takeaways](sgoldenbird/ch10.md)
+    - [Interview](sgoldenbird/interviewQA/ch10.md)
+  - Ch.11
+    - [Takeaways](sgoldenbird/ch11.md)
+    - [Interview](sgoldenbird/interviewQA/ch11.md)
 - [인성](undefined-1/README.md)
   - [Ch.1](undefined-1/ch.1/README.md)
     - [Chapter 1](Insung-Jo/ch1.md)
