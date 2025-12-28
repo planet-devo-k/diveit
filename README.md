@@ -68,21 +68,21 @@
       <td>6</td>
       <td>11/22</td>
       <td>Ch6 ~ 8.1</td>
-      <td></td>
+      <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>7</td>
       <td>11/29</td>
       <td>8.2 ~ 9.3</td>
-      <td></td>
+      <td>유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>8</td>
       <td>12/6</td>
       <td>9.4 ~ Ch10</td>
-      <td></td>
+      <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
