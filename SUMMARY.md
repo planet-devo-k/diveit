@@ -36,6 +36,18 @@
   - Ch.11
     - [Takeaways](sgoldenbird/ch11.md)
     - [Interview](sgoldenbird/interviewQA/ch11.md)
+  - Ch.12
+    - [Takeaways](sgoldenbird/ch12.md)
+    - [Interview](sgoldenbird/interviewQA/ch12.md)
+  - Ch.13
+    - [Takeaways](sgoldenbird/ch13.md)
+    - [Interview](sgoldenbird/interviewQA/ch13.md)
+  - Ch.14
+    - [Takeaways](sgoldenbird/ch14.md)
+    - [Interview](sgoldenbird/interviewQA/ch14.md)
+  - Ch.15
+    - [Takeaways](sgoldenbird/ch15.md)
+    - [Interview](sgoldenbird/interviewQA/ch15.md)
 - [인성](undefined-1/README.md)
   - [Ch.1](undefined-1/ch.1/README.md)
     - [Chapter 1](Insung-Jo/ch1.md)
