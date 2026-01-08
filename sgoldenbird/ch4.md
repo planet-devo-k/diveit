@@ -594,7 +594,93 @@ export default function PostPage({ post }) {
 
 #### getServerSideProps (SSR)
 
+- 서버에서만 실행되는 함수
+  - API 호출 시 /api/some/path와 같이 protocol과 domain이 없는 fetch 요청은 할 수 없다. 브라우저와 다르게 서버는 자신의 호스트를 유추할 수 없기 때문. 반드시 완전한 주소를 제공해야 fetch가 가능.
+- Next.js의 서버 사이드 렌더링은 getServerSideProps의 실행과 함께 이뤄진다. (v12까지)
+- 이 함수가 있다면 꼭 서버에서 실행해야 하는 페이지로 분류해 빌드시 서버용 JS파일을 별도로 만든다.
+- 응답값에 따라 페이지의 루트 컴포넌트에 props를 반환 또는 다른 페이지로 리다이렉트
+  - 클라이언트에서는 아무리 리다이렉트를 초기화해도 JS가 어느정도 로딩된 이후에 실행할 수 밖에 없다.
+  - 하지만 getServerSideProps를 사용하면 조건에 따라 사용자에게 해당 페이지를 보여주기도 전에 원하는 페이지로 보내버릴 수 있다.
+- props로 내려줄 수 있는 값은 JSON으로 직렬화 할 수 있는 값으로 제한된다.
+
+리액트 서버 사이드 렌더링
+
+1. 서버에서 fetch 등으로 렌더링에 필요한 정보를 가져온다.
+2. 가져온 정보를 기반으로 HTML 완성
+3. HTML을 클라이언트(브라우저)에 제공한다.
+4. 클라이언트에서 hydrate 한다.
+5. hydrate로 만든 리액트 컴포넌트 트리와 서버에서 만든 HTML이 다르면 불일치 에러(suppressHydrationWarning)
+
 #### getInitialProps
+
+- 라우팅에 따라 서버와 클라이언트 모두에서 실행 가능한 메서드. 즉, 여기에 있는 코드는 때에 따라 서버와 클라이언트 모두에서 실행될 수 있으므로 이러한 특징을 감안해서 코드 작성
+- 대부분의 경우 getStaticProps나 getServerSideProps를 사용, getInitialProps는 굉장히 제한적인 예시에서만 사용, 사용이 제한돼 있는 페이지에서만 사용하는 것이 좋다.
+
+### 스타일 적용하기
+
+#### 전역 스타일
+
+- \_app.tsx 활용
+  - 글로벌 스타일은 다른 페이지나 컴포넌트와 충돌할 수 있으므로 반드시 \_app.tsx에서만 제한적으로 작성
+  - 브라우저에 기본으로 제공되고 있는 스타일 초기화(reset)
+  - 애플리케이션 전체에 공통으로 적용하고 싶은 스타일
+
+#### 컴포넌트 레벨 CSS
+
+- [name].module.css 명명 규칙 준수
+- 컴포넌트 레벨 CSS는 다른 컴포넌트의 클래스명과 겹쳐서 스타일에 충돌이 일어나지 않도록 고유한 클래스명 제공
+
+#### SCSS(Syntactically Awesome Style Sheets)와 SASS(Sassy CSS; Sass의 기능을 가진 CSS)
+
+- `npm install --save-dev sass`
+
+- 둘은 구문(Syntax), 즉 코드를 작성하는 방식에 차이가 있습니다.
+- Sass (Original)
+
+  - 들여쓰기 기반: 중괄호({ })와 세미콜론(;)을 사용하지 않습니다.
+  - 파이썬(Python)과 유사하게 줄 바꿈과 들여쓰기로 범위를 구분합니다.
+  - 코드가 매우 간결하지만, 기존 CSS와 문법이 달라 적응이 필요할 수 있습니다.
+
+- SCSS (Sassy CSS)
+  - CSS 친화적: CSS와 완전히 동일하게 중괄호와 세미콜론을 사용합니다.
+  - 호환성: 모든 CSS 코드는 유효한 SCSS 코드입니다. 즉, 기존 CSS 파일을 확장자만 .scss로 바꿔도 바로 작동합니다.
+  - 이런 편의성 덕분에 현재 실무에서는 Sass보다 SCSS가 훨씬 더 많이 사용됩니다.
+
+#### CSS-in-JS
+
+- 자바스크립트 내부에 스타일 시트 삽입
+- CSS-in-JS를 Next.js같은 서버 사이드 렌더링 프레임워크에서 사용할 때는 반드시 초기화 과정을 서버에서 거쳐야 한다.
+  - 서버에서 스타일을 미리 모은 다음 서버사이드 렌더링 시 한꺼번에 제공
+  - 만약 이런 과정을 거치지 않는 다면 FOUC 발생 가능
+
+### \_app.tsx 응용하기
+
+- Next.js 최초 진입점
+- userAgent 확인이나 사용자 정보 같은 애플리케이션 전역에 걸쳐 사용해야 하는 정보 등을 호출
+
+### next.config.js 살펴보기
+
+- Next.js 실행에 필요한 설정 추가
+- @type 구문을 활용해 미리 선언돼 있는 설정 타입(NextConfig)의 도움을 받을 수 있다.
+- 실무에서 자주 사용되는 설정
+  - basePath
+    - URL을 위한 접두사
+    - basePath: "docs" → `localhost: 3000/docs`
+    - 클라이언트 렌더링을 트리거하는 모든 주소에 알아서 basePath가 붙은 채로 렌더링
+    - 단, 이것 또한 Next.js에서 제공하는 기능이므로, `<a>`태그를 직접 사용하거나 `window.location.push` 등으로 라우팅 할 경우에는 반드시 basePath를 직접 붙여야 한다.
+  - swcMinify
+    - swc로 코드 압축
+    - 기본값 true
+  - poweredByHeader
+    - Next.js는 응답 헤더에 X-Power-by: Next.js 정보를 제공
+    - 기본적으로 보안 관련 솔루션에서는 powered-by 헤더를 취약점으로 분류하므로 false로 설정하는 것이 좋다.
+  - redirects
+    - 특정 주소를 다른 주소로 보내고 싶을 때 사용
+  - reactStrictMode
+  - assetPrefix
+    - next에서 빌드된 결과물을 동일한 호스트가 아닌 다른 CDN 등에 업로드하고자 한다면 이 옵션에 해당 CDN 주소를 명시
+    - 정적 리소스를 별도 CDN에 업로드 하고 싶다면 이 기능 활용.
+    - assetPrefix 설정이 활성화 되면 static 리소스들은 해당 주소에 있다고 가정하고 해당 주소로 요청하게 된다.
 
 ### 기타
 
