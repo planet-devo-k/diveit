@@ -89,21 +89,21 @@
       <td>9</td>
       <td>01/04</td>
       <td>Ch11 ~ Ch12</td>
-      <td></td>
+      <td>시은</td>
       <td>null</td>
     </tr>
     <tr>
       <td>10</td>
       <td>01/11</td>
       <td>Ch13 ~ Ch15</td>
-      <td></td>
+      <td>시은</td>
       <td>null</td>
     </tr>
     <tr>
       <td>11</td>
       <td>01/18</td>
       <td>정리</td>
-      <td></td>
+      <td>All</td>
       <td>null</td>
     </tr>
   </tbody>
