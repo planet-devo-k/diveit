@@ -110,3 +110,123 @@ Semantic Versioning, 줄여서 **SemVer(유의적 버전)**는 소프트웨어�
 | **`peerDependencies`** | 주로 라이브러리가 제공하는 기능에 필요한 의존성을 명시하며, 해당 패키지를 사용하는 프로젝트가 설치해야 하는 의존성을 의미 |
 
 ---
+
+## 9.4 리액트 애플리케이션 도커라이즈하기
+
+애플리케이션을 **도커라이즈(Dockerize)**한다는 것은 서비스 운영에 필요한 모든 환경(OS, 런타임, 라이브러리)을 하나로 묶어 **컨테이너**화하는 것을 의미합니다. 이를 통해 "내 컴퓨터에서는 되는데 서버에서는 안 돼요"라는 고질적인 문제를 해결하고 어디서든 동일한 환경에서 배포할 수 있습니다.
+
+### 9-4.1. 도커의 핵심 개념 재정립
+
+* **이미지(Image)**: 애플리케이션 실행에 필요한 모든 것이 담긴 **불변의 템플릿**입니다. (설계도/스냅샷)
+* **컨테이너(Container)**: 이미지를 실행한 **격리된 인스턴스**입니다. (실제 가동 중인 집)
+* **Dockerfile**: 이미지를 만들기 위한 **명령어들의 집합**이 담긴 텍스트 파일입니다.
+* **레이어(Layer)**: 도커 이미지는 여러 개의 읽기 전용 레이어로 구성되며, 명령어마다 새로운 레이어가 생성됩니다. 효율적인 빌드를 위해 **캐시**를 활용합니다.
+
+### 9-4.2. Docker 핵심 CLI 명령어 (실무 활용)
+
+| 명령어 | 설명 | 비고 |
+| --- | --- | --- |
+| `docker build -t [명:태그] .` | 현재 디렉토리의 Dockerfile로 이미지 빌드 | `-t`는 태그 부여 |
+| `docker run -p 3000:80 [명]` | 호스트의 3000포트를 컨테이너 80포트에 연결해 실행 | `-p`는 포트 포워딩 |
+| `docker ps -a` | 가동 중인(및 멈춘) 모든 컨테이너 목록 확인 |  |
+| `docker images` | 로컬에 저장된 이미지 목록 확인 |  |
+| `docker exec -it [ID] /bin/sh` | 가동 중인 컨테이너 내부 터미널에 접속 | 디버깅 시 유용 |
+| `docker system prune` | 사용하지 않는 모든 도커 리소스 삭제 | 용량 확보용 |
+
+---
+
+### 9-4.3. 실전: 리액트 앱을 위한 효율적인 Dockerfile 작성 (Vite/CRA 기준)
+
+단순히 이미지를 만드는 것을 넘어, **멀티 스테이지 빌드(Multi-stage build)**를 통해 결과물의 용량을 획기적으로 줄여야 합니다.
+
+```dockerfile
+# 스테이지 1: 빌드 단계 (Node.js 환경)
+FROM node:18-alpine AS build
+WORKDIR /app
+
+# 의존성 설치 (캐싱을 위해 package.json만 먼저 복사)
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# 소스 복사 및 빌드
+COPY . .
+RUN npm run build
+
+# 스테이지 2: 실행 단계 (가벼운 NGINX 환경)
+FROM nginx:alpine
+# 빌드 스테이지에서 생성된 정적 파일만 가져옴 (용량 최소화)
+COPY --from=build /app/dist /usr/share/nginx/html
+# NGINX 설정 복사 (SPA 라우팅 대응)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+```
+
+* **💡 최적화 팁**: `alpine` 이미지는 보안에 꼭 필요한 최소한의 패키지만 포함된 경량 OS 이미지입니다. 빌드 시간과 배포 용량을 줄이기 위해 반드시 사용하는 것이 좋습니다.
+
+---
+
+### 9-4.4. 실전: Next.js 애플리케이션 도커라이즈 (Standalone)
+
+Next.js는 단순 정적 파일 서비스가 아니라 서버 실행이 필요합니다. `next.config.js`의 `output: 'standalone'` 옵션을 활용하면 실행에 꼭 필요한 파일만 별도로 추출할 수 있습니다.
+
+**1. `next.config.js` 설정**
+
+```javascript
+const nextConfig = {
+  output: 'standalone', // 빌드 시 실행에 필요한 최소 파일만 .next/standalone에 모음
+}
+
+```
+
+**2. Dockerfile 작성**
+
+```dockerfile
+FROM node:18-alpine AS runner
+WORKDIR /app
+
+# 빌드 결과물 중 standalone 폴더와 static/public 폴더만 복사
+COPY .next/standalone ./
+COPY .next/static ./.next/static
+COPY public ./public
+
+EXPOSE 3000
+# standalone 모드는 node server.js로 실행 가능
+ENTRYPOINT ["node", "server.js"]
+
+```
+
+---
+
+### 9-4.5. 배포 시 주의사항: 아키텍처 불일치
+
+M1/M2 맥(ARM64) 환경에서 빌드한 이미지를 그대로 일반적인 리눅스 서버(AMD64)에 올리면 작동하지 않습니다. 이럴 때는 `--platform` 옵션을 명시해야 합니다.
+
+* **멀티 플랫폼 빌드**:
+```bash
+docker build --platform linux/amd64 -t my-next-app:latest .
+
+```
+
+
+
+### 9-4.6. 배포 파이프라인의 완성 (GCP Cloud Run 등)
+
+도커 이미지를 만들었다면 이를 **레지스트리(Docker Hub, GCP Artifact Registry)**에 푸시하고, **Cloud Run**이나 **Kubernetes**에서 해당 이미지를 불러와 서비스를 가동합니다.
+
+1. **이미지 푸시**: `docker push [저장소주소]/[이미지명]:[태그]`
+2. **배포**: 서버에서 해당 이미지를 Pull 받아 컨테이너 실행.
+3. **CI/CD 통합**: GitHub Actions에서 새로운 코드가 커밋될 때마다 도커 이미지를 자동으로 빌드하고 배포 서비스에 갱신하도록 구성합니다.
+
+---
+
+### 💡 9장 핵심 요약 정리
+
+| 단계 | 핵심 도구 | 목표 |
+| --- | --- | --- |
+| **개발 구축** | Next.js, TS, ESLint | 수동 설정을 통한 프로젝트 통제력 및 최적화 확보 |
+| **품질 관리** | GitHub Actions, CI | 테스트/빌드 자동화를 통한 main 브랜치 정합성 보호 |
+| **보안 방어** | Dependabot, overrides | 의존성 취약점 감지 및 강제 버전 업데이트를 통한 보안 강화 |
+| **운영 배포** | Docker, GCP/Vercel | 컨테이너화를 통한 환경 독립적이고 유연한 배포 체계 구축 |
