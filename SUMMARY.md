@@ -20,11 +20,11 @@
     - [Interview](sgoldenbird/interviewQA/ch5.md)
   - [Ch.6](undefined/ch.6/README.md)
     - [Takeaways](sgoldenbird/ch6.md)
-    - [Interview](sgoldenbird/interviewQA/ch6.md)
-  - [Ch.7](undefined/ch.7/README.md)
+    <!-- - [Interview](sgoldenbird/interviewQA/ch6.md) -->
+  - Ch.7
     - [Takeaways](sgoldenbird/ch7.md)
-    - [Interview](sgoldenbird/interviewQA/ch7.md)
-  - [Ch.8](undefined/ch.8/README.md)
+    <!-- - [Interview](sgoldenbird/interviewQA/ch7.md) -->
+  - Ch.8
     - [Takeaways](sgoldenbird/ch8.md)
     - [Interview](sgoldenbird/interviewQA/ch8.md)
   - [Ch.9](undefined/ch.9/README.md)
@@ -47,7 +47,7 @@
     - [Interview](undefined/ch.14/interview.md)
   - [Ch.15](undefined/ch.15/README.md)
     - [Takeaways](sgoldenbird/ch15.md)
-    - [Interview](undefined/ch.15/interview.md)
+    <!-- - [Interview](sgoldenbird/interviewQA/ch15.md) -->
 - [인성](undefined-1/README.md)
   - [Ch.1](undefined-1/ch.1/README.md)
     - [Chapter 1](Insung-Jo/ch1.md)
