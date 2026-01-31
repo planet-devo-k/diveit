@@ -1,10 +1,10 @@
-# Modern React Deep Dive Study
+# 한입 타입스크립트
 
 ## 📅 Study Schedule
 
-- 기간: 2025-09-24 \~ 2025-01-18
+- 기간: 2026-01-26 \~ 2026-02-22
 - 매주 일요일 오후 10시
-- 목표: **Chapter 1 \~ 15 완독 및 토론**
+- 목표: **강의 총 60강**
 
 <table>
   <thead>
@@ -19,86 +19,37 @@
   <tbody>
     <tr>
       <td>0</td>
-      <td>9/24</td>
+      <td>1/26</td>
       <td>OT</td>
       <td></td>
       <td>null</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>10/2</td>
-      <td>~ 1.6</td>
-      <td>시은</td>
+      <td>2/1</td>
+      <td>~ 3.6</td>
+      <td></td>
       <td>null</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>10/9 (추석)</td>
-      <td>즐거운 휴일</td>
+      <td>2/8</td>
+      <td></td>
       <td></td>
       <td>null</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>10/23</td>
-      <td>1.7 ~ Ch2</td>
-      <td>시은, 유진</td>
+      <td>2/15 (설날)</td>
+      <td>즐거운 새해</td>
+      <td></td>
       <td>null</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>11/15</td>
-      <td>Ch3 ~ 4.2</td>
-      <td>수진</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>11/22</td>
-      <td>4.3 ~ Ch5</td>
-      <td>인성</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>11/29</td>
-      <td>Ch6 ~ 8.1</td>
-      <td>수진</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>12/07</td>
-      <td>8.2 ~ 9.3</td>
-      <td>유진</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>12/28</td>
-      <td>9.4 ~ Ch10</td>
-      <td>인성</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td>01/04</td>
-      <td>Ch11 ~ Ch12</td>
-      <td>시은</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td>01/11</td>
-      <td>Ch13 ~ Ch15</td>
-      <td>시은</td>
-      <td>null</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td>01/18</td>
-      <td>정리</td>
-      <td>All</td>
+      <td>2/22</td>
+      <td></td>
+      <td></td>
       <td>null</td>
     </tr>
   </tbody>
@@ -116,7 +67,6 @@
 - 자기 폴더 안에 내용 정리 [Study Structure 참고](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#%EF%B8%8F-study-structure)
 - 발표자는 매주 한 명씩 랜덤으로돌아가며 진행
 - 발표자가 아닌 팀원들은 정리한 내용 중 발표자와 중복되지 않는 내용만 발표
-- 각자 공부한 챕터의 핵심을 **질문으로 변환** → 스터디에서 릴레이식으로 답변
 - 질문은 GitHub Discussions [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a) 활용, question label 추가
 
 ## 🔎 [GitHub ↔ GitBook 동기화 흐름](https://github.com/planet-devo-k/diveit/blob/main/README.md#-github--gitbook-%EB%8F%99%EA%B8%B0%ED%99%94-%ED%9D%90%EB%A6%84)
@@ -140,8 +90,8 @@
   <tbody>
     <tr>
       <td><code>ch#-</code></td>
-      <td><strong>챕터별 정리 추가</strong><br />신규 학습 내용 및 요약 업로드</td>
-      <td><code>ch5-리액트와 상태 관리 라이브러리</code></td>
+      <td><strong>챕터별 정리 추가</strong><br />학습 내용 요약 및 결과물 업로드</td>
+      <td><code>ch3.6-타입 단언</code></td>
     </tr>
     <tr>
       <td><code>update-</code></td>
@@ -150,12 +100,12 @@
     </tr>
     <tr>
       <td><code>docs-</code></td>
-      <td><strong>문서 관리</strong><br />README 및 가이드라인 수정</td>
+      <td><strong>문서 관리</strong><br />README 및 프로젝트 가이드 수정</td>
       <td><code>docs-update README</code></td>
     </tr>
     <tr>
       <td><code>chore-</code></td>
-      <td><strong>기타 변경 사항</strong><br />파일 이동, 설정 변경 등</td>
+      <td><strong>기타 변경 사항</strong><br />파일 이동, 폴더 구조 정리, 설정 등</td>
       <td><code>chore-update dependencies</code></td>
     </tr>
   </tbody>
