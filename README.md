@@ -40,13 +40,40 @@
   </tbody>
 </table>
 
-## 🛠️ Project Structure
+## ➿ Study Structure
 
 본 저장소는 다음과 같은 구조를 유지합니다.
 
 - Domain별로 브랜치를 나누어 학습하고, 최종 결과물은 `main` 브랜치에 통합합니다.
-- [domain] / [topic] / [member] / [content.md]
-- e.g.`typescript/sgoldenbird/ch01-introduction.md`
+- 폴더 구조
+
+```
+[domain]/[topic]/[member]/[content.md]
+e.g.typescript/sgoldenbird/ch01-introduction.md
+```
+
+- 브랜치 갱신 가이드
+
+```
+아래와 같은 과정을 거쳐 기존 자신의 브랜치를 삭제하고 현재 base branch로 새로운 자기 브랜치를 생성합니다.
+
+# 로컬 브랜치 삭제
+git branch -D [예전-브랜치명]
+
+# 원격 브랜치 삭제
+git push origin --delete [예전-브랜치명]
+
+# 베이스 브랜치로 이동 및 최신화
+git checkout [새 도메인 브랜치(새 베이스 브랜치)]
+git pull origin [새 도메인 브랜치(새 베이스 브랜치)]
+
+# 새로운 자기 브랜치 생성 및 이동
+git checkout -b [새-브랜치명]
+
+# 원격(GitHub)에 새 브랜치 등록 및 푸시
+git push -u origin [새-브랜치명]
+
+```
 
 ## 🔎 GitHub ↔ GitBook 동기화 흐름
 
