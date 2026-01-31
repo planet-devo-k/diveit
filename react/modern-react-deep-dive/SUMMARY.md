@@ -108,27 +108,38 @@
   - [Ch.15](sujin/ch15.md)
     - [Chapter 15](sujin/ch15.md)
 - 유진
-  - [Ch.1](yujin/ch1.md)
+  - Ch.1
     - [Interview Question1](yujin/q1.md)
     - [Chapter 1](yujin/ch1.md)
-  - [Ch.2](yujin/ch2.md)
+  - Ch.2
     - [Interview Question2](yujin/q2.md)
     - [Chapter 2](yujin/ch2.md)
-  - [Ch.3](yujin/ch3.md)
+  - Ch.3
     - [Interview Question3](yujin/q3.md)
     - [Chapter 3](yujin/ch3.md)
-  - [Ch.4](yujin/ch4.md)
+  - Ch.4
     - [Interview Question4](yujin/q4.md)
     - [Chapter 4](yujin/ch4.md)
-  - [Ch.5](yujin/ch5.md)
-    - [Interview Question5](yujin/q5.md)
+  - Ch.5
+    - [Interview Question4](yujin/q5.md)
     - [Chapter 5](yujin/ch5.md)
-  - [Ch.6](yujin/ch6.md)
-    - [Interview Question4](yujin/q4.md)
+  - Ch.6
     - [Chapter 6](yujin/ch6.md)
-  - [Ch.7](yujin/ch7.md)
-    - [Interview Question4](yujin/q4.md)
+  - Ch.7
     - [Chapter 7](yujin/ch7.md)
-  - [Ch.8](yujin/ch8.md)
-    - [Interview Question4](yujin/q4.md)
+  - Ch.8
     - [Chapter 8](yujin/ch8.md)
+  - Ch.9
+    - [Chapter 9](yujin/ch9.md)
+  - Ch.10
+    - [Chapter 10](yujin/ch10.md)
+  - Ch.11
+    - [Chapter 11](yujin/ch11.md)
+  - Ch.12
+    - [Chapter 12](yujin/ch12.md)
+  - Ch.13
+    - [Chapter 13](yujin/ch13.md)
+  - Ch.14
+    - [Chapter 14](yujin/ch14.md)
+  - Ch.15
+    - [Chapter 15](yujin/ch15.md)
