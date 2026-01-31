@@ -113,7 +113,7 @@
 
 ## 🪄 Study Workflow
 
-- 자기 폴더 안에 내용 정리 [Study Structure 참고](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#%EF%B8%8F-study-structure)
+- 자기 브랜치 만들고 자기 폴더 안에 내용 정리 [Study Structure 참고](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#%EF%B8%8F-study-structure)
 - 발표자는 매주 한 명씩 랜덤으로돌아가며 진행
 - 발표자가 아닌 팀원들은 정리한 내용 중 발표자와 중복되지 않는 내용만 발표
 - 각자 공부한 챕터의 핵심을 **질문으로 변환** → 스터디에서 릴레이식으로 답변
