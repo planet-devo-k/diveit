@@ -3,22 +3,22 @@
 - [Modern React Deep Dive Study](README.md)
 - [시은](undefined/README.md)
   - [Interview Qs](sgoldenbird/interviewQA/questions-list.md)
-  - Ch.1
+  - [Ch.1](undefined/ch.1/README.md)
     - [Takeaways](sgoldenbird/ch1.md)
     - [Interview](sgoldenbird/interviewQA/ch1.md)
-  - Ch.2
+  - [Ch.2](undefined/ch.2/README.md)
     - [Takeaways](sgoldenbird/ch2.md)
     - [Interview](sgoldenbird/interviewQA/ch2.md)
-  - Ch.3
+  - [Ch.3](undefined/ch.3/README.md)
     - [Takeaways](sgoldenbird/ch3.md)
     - [Interview](sgoldenbird/interviewQA/ch3.md)
-  - Ch.4
+  - [Ch.4](undefined/ch.4/README.md)
     - [Takeaways](sgoldenbird/ch4.md)
     - [Interview](sgoldenbird/interviewQA/ch4.md)
-  - Ch.5
+  - [Ch.5](undefined/ch.5/README.md)
     - [Takeaways](sgoldenbird/ch5.md)
     - [Interview](sgoldenbird/interviewQA/ch5.md)
-  - Ch.6
+  - [Ch.6](undefined/ch.6/README.md)
     - [Takeaways](sgoldenbird/ch6.md)
     <!-- - [Interview](sgoldenbird/interviewQA/ch6.md) -->
   - Ch.7
@@ -27,25 +27,25 @@
   - Ch.8
     - [Takeaways](sgoldenbird/ch8.md)
     - [Interview](sgoldenbird/interviewQA/ch8.md)
-  - Ch.9
+  - [Ch.9](undefined/ch.9/README.md)
     - [Takeaways](sgoldenbird/ch9.md)
-    - [Interview](sgoldenbird/interviewQA/ch9.md)
-  - Ch.10
+    - [Interview](undefined/ch.9/interview.md)
+  - [Ch.10](undefined/ch.10/README.md)
     - [Takeaways](sgoldenbird/ch10.md)
     - [Interview](sgoldenbird/interviewQA/ch10.md)
-  - Ch.11
+  - [Ch.11](undefined/ch.11/README.md)
     - [Takeaways](sgoldenbird/ch11.md)
-    - [Interview](sgoldenbird/interviewQA/ch11.md)
-  - Ch.12
+    - [Interview](undefined/ch.11/interview.md)
+  - [Ch.12](undefined/ch.12/README.md)
     - [Takeaways](sgoldenbird/ch12.md)
-    - [Interview](sgoldenbird/interviewQA/ch12.md)
-  - Ch.13
+    - [Interview](undefined/ch.12/interview.md)
+  - [Ch.13](undefined/ch.13/README.md)
     - [Takeaways](sgoldenbird/ch13.md)
-    - [Interview](sgoldenbird/interviewQA/ch13.md)
-  - Ch.14
+    - [Interview](undefined/ch.13/interview.md)
+  - [Ch.14](undefined/ch.14/README.md)
     - [Takeaways](sgoldenbird/ch14.md)
-    - [Interview](sgoldenbird/interviewQA/ch14.md)
-  - Ch.15
+    - [Interview](undefined/ch.14/interview.md)
+  - [Ch.15](undefined/ch.15/README.md)
     - [Takeaways](sgoldenbird/ch15.md)
     <!-- - [Interview](sgoldenbird/interviewQA/ch15.md) -->
 - [인성](undefined-1/README.md)
@@ -55,7 +55,37 @@
   - [Ch.2](undefined-1/ch.2/README.md)
     - [Chapter 2](Insung-Jo/ch2.md)
     - [Interview Questions](Insung-Jo/quiz.md)
-- [수진](undefined-2.md)
+- [수진](undefined-2/README.md)
+  - [Ch.1](undefined/ch1/README.md)
+    - [Chapter 1](sujin/ch1.md)
+  - [Ch.2](undefined/ch2/README.md)
+    - [Chapter 2](sujin/ch2.md)
+  - [Ch.3](undefined/ch3/README.md)
+    - [Chapter 3](sujin/ch3.md)
+  - [Ch.4](undefined/ch4/README.md)
+    - [Chapter 4](sujin/ch4.md)
+  - [Ch.5](undefined/ch5/README.md)
+    - [Chapter 5](sujin/ch5.md)
+  - [Ch.6](undefined/ch6/README.md)
+    - [Chapter 6](sujin/ch6.md)
+  - [Ch.7](undefined/ch7/README.md)
+    - [Chapter 7](sujin/ch7.md)
+  - [Ch.8](sujundefinedin/ch8/README.md)
+    - [Chapter 8](sujin/ch8.md)
+  - [Ch.9](undefined/ch9/README.md)
+    - [Chapter 9](sujin/ch9.md)
+  - [Ch.10](undefined/ch10/README.md)
+    - [Chapter 10](sujin/ch10.md)
+  - [Ch.11](undefined/ch11/README.md)
+    - [Chapter 11](sujin/ch11.md)
+  - [Ch.12](undefined/ch12/README.md)
+    - [Chapter 12](sujin/ch12.md)
+  - [Ch.13](undefined/ch13/README.md)
+    - [Chapter 13](sujin/ch13.md)
+  - [Ch.14](undefined/ch14/README.md)
+    - [Chapter 14](sujin/ch14.md)
+  - [Ch.15](undefined/ch15/README.md)
+    - [Chapter 15](sujin/ch15.md)
 - [유진](undefined-3/README.md)
   - [Ch.1](undefined-3/ch.1/README.md)
     - [Interview Question1](yujin/q1.md)
@@ -63,21 +93,21 @@
   - [Ch.2](undefined-3/ch.2/README.md)
     - [Interview Question2](yujin/q2.md)
     - [Chapter 2](yujin/ch2.md)
-  - Ch.3
+  - [Ch.3](undefined-3/ch.3/README.md)
     - [Interview Question3](yujin/q3.md)
     - [Chapter 3](yujin/ch3.md)
-  - Ch.4
+  - [Ch.4](undefined-3/ch.4/README.md)
     - [Interview Question4](yujin/q4.md)
     - [Chapter 4](yujin/ch4.md)
-  - Ch.5
+  - [Ch.5](undefined-3/ch.5/README.md)
     - [Interview Question4](yujin/q5.md)
     - [Chapter 5](yujin/ch5.md)
-  - Ch.6
-    - [Interview Question4](yujin/q6.md)
+  - [Ch.6](undefined-3/ch.6/README.md)
+    - [Interview Question4](undefined-3/ch.6/interview-question4.md)
     - [Chapter 6](yujin/ch6.md)
-  - Ch.7
-    - [Interview Question4](yujin/q7.md)
+  - [Ch.7](undefined-3/ch.7/README.md)
+    - [Interview Question4](undefined-3/ch.7/interview-question4.md)
     - [Chapter 7](yujin/ch7.md)
-  - Ch.8
-    - [Interview Question4](yujin/q8.md)
+  - [Ch.8](undefined-3/ch.8/README.md)
+    - [Interview Question4](undefined-3/ch.8/interview-question4.md)
     - [Chapter 8](yujin/ch8.md)

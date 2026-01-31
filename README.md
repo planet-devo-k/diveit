@@ -7,8 +7,8 @@
 
 ### 📅 Study Schedule
 
-- 기간: 2025-09-24 \~ 2025-12-20
-- 매주 토요일 오후 2시
+- 기간: 2025-09-24 \~ 2025-01-18
+- 매주 일요일 오후 10시
 - 목표: **Chapter 1 \~ 15 완독 및 토론**
 
 <table>
@@ -52,51 +52,58 @@
     </tr>
     <tr>
       <td>4</td>
-      <td>10/30</td>
+      <td>11/15</td>
       <td>Ch3 ~ 4.2</td>
       <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>5</td>
-      <td>11/15</td>
+      <td>11/22</td>
       <td>4.3 ~ Ch5</td>
       <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
       <td>6</td>
-      <td>11/22</td>
+      <td>11/29</td>
       <td>Ch6 ~ 8.1</td>
-      <td></td>
+      <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>7</td>
-      <td>11/29</td>
+      <td>12/07</td>
       <td>8.2 ~ 9.3</td>
-      <td></td>
+      <td>유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>8</td>
-      <td>12/6</td>
+      <td>12/28</td>
       <td>9.4 ~ Ch10</td>
-      <td></td>
+      <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
       <td>9</td>
-      <td>12/13</td>
+      <td>01/04</td>
       <td>Ch11 ~ Ch12</td>
-      <td></td>
+      <td>시은</td>
       <td>null</td>
     </tr>
     <tr>
       <td>10</td>
-      <td>12/20</td>
+      <td>01/11</td>
       <td>Ch13 ~ Ch15</td>
-      <td></td>
+      <td>시은</td>
+      <td>null</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>01/18</td>
+      <td>정리</td>
+      <td>All</td>
       <td>null</td>
     </tr>
   </tbody>
