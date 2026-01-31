@@ -39,7 +39,6 @@
     - [Interview](sgoldenbird/interviewQA/ch12.md)
   - Ch.13
     - [Takeaways](sgoldenbird/ch13.md)
-    - [Interview](sgoldenbird/interviewQA/ch13.md)
   - Ch.14
     - [Takeaways](sgoldenbird/ch14.md)
     - [Interview](sgoldenbird/interviewQA/ch14.md)
