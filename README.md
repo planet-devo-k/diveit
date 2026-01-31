@@ -74,8 +74,9 @@ GitBook 개인 Space에서 작업 → CR 제목 입력 → CR 머지 → GitHub 
 
 ### PR/CR 및 이슈 규칙
 
-- **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 작성하세요.
 - Discussions탭의 [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)를 활용해 질문 및 답변을 공유합니다.
+- **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 작성하세요.
+- 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
 
 ### 커밋 규칙
 
