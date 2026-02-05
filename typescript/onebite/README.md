@@ -112,24 +112,24 @@ git push -u origin [새-브랜치명]
   </thead>
   <tbody>
     <tr>
-      <td><code>ch#-</code></td>
+      <td><code>ch#: </code></td>
       <td><strong>챕터별 정리 추가</strong><br />학습 내용 요약 및 결과물 업로드</td>
-      <td><code>ch3.6-타입 단언</code></td>
+      <td><code>ch3.6: 타입 단언</code></td>
     </tr>
     <tr>
-      <td><code>update-</code></td>
+      <td><code>update:</code></td>
       <td><strong>기존 문서 보강/수정</strong><br />내용 확장, 예제 추가, 오타 수정</td>
-      <td><code>update-ch2 컴포넌트 예시 추가</code></td>
+      <td><code>update: ch2 컴포넌트 예시 추가</code></td>
     </tr>
     <tr>
-      <td><code>docs-</code></td>
+      <td><code>docs: </code></td>
       <td><strong>문서 관리</strong><br />README 및 프로젝트 가이드 수정</td>
-      <td><code>docs-update README</code></td>
+      <td><code>docs: update README</code></td>
     </tr>
     <tr>
-      <td><code>chore-</code></td>
+      <td><code>chore: </code></td>
       <td><strong>기타 변경 사항</strong><br />파일 이동, 폴더 구조 정리, 설정 등</td>
-      <td><code>chore-update dependencies</code></td>
+      <td><code>chore: update dependencies</code></td>
     </tr>
   </tbody>
 </table>
