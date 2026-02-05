@@ -120,24 +120,24 @@ GitBook 개인 Space에서 작업 → CR 제목 입력 → CR 머지 → GitHub 
   </thead>
   <tbody>
     <tr>
-      <td><code>ch#-</code></td>
+      <td><code>ch#: </code></td>
       <td><strong>챕터별 정리 추가</strong><br />신규 학습 내용 업로드</td>
-      <td><code>ch3.6-타입 단언</code></td>
+      <td><code>ch3.6: 타입 단언</code></td>
     </tr>
     <tr>
-      <td><code>update-</code></td>
+      <td><code>update: </code></td>
       <td><strong>정리 보강/수정</strong><br />내용 확장, 예제 추가, 오타 수정</td>
-      <td><code>update-ch2 예시 추가</code></td>
+      <td><code>update: ch2 예시 추가</code></td>
     </tr>
     <tr>
-      <td><code>docs-</code></td>
+      <td><code>docs: </code></td>
       <td><strong>메인 문서 관리</strong><br />README 및 가이드라인 수정</td>
-      <td><code>docs-update README</code></td>
+      <td><code>docs: update README</code></td>
     </tr>
     <tr>
-      <td><code>chore-</code></td>
+      <td><code>chore: </code></td>
       <td><strong>기타 변경 사항</strong><br />파일 이동, 폴더 구조 정리 등</td>
-      <td><code>chore-move assets</code></td>
+      <td><code>chore: move assets</code></td>
     </tr>
   </tbody>
 </table>
