@@ -28,7 +28,7 @@
       <td>1</td>
       <td>2/1</td>
       <td>~ 3.6</td>
-      <td></td>
+      <td>수진, 유진, 시은, 인성</td>
       <td>null</td>
     </tr>
     <tr>
