@@ -112,9 +112,9 @@ git push -u origin [새-브랜치명]
   </thead>
   <tbody>
     <tr>
-      <td><code>ch#: </code></td>
+      <td><code>study: ch#~ch# </code></td>
       <td><strong>챕터별 정리 추가</strong><br />학습 내용 요약 및 결과물 업로드</td>
-      <td><code>ch3.6: 타입 단언</code></td>
+      <td><code>study: ch1~ch3.6 정리</code></td>
     </tr>
     <tr>
       <td><code>update:</code></td>
