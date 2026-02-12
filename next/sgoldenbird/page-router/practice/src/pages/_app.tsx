@@ -1,15 +1,19 @@
+import GlobalLayout from "@/components/global-layout";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
+import type { ReactNode } from "react";
+import type { NextPage } from "next";
 
-// 모든 페이지 역할 컴포넌트들의 부모 역할(루트 컴포넌트. 리액트의 app.tsx 역할)
-export default function App({ Component, pageProps }: AppProps) {
-  // Component: 페이지 컴포넌트를 받는다.
-  // 페이지 컴포넌트에 전달될 page props를 객체로 보관한 것
-  return (
-    <>
-      <header>글로벌 헤더</header>
-      <Component {...pageProps} />;
-    </>
-  );
-  // 공통 요소 추가
+// NextPage가 type으로 정의되어 있기 때문에 동일한 이름으로 재선언하여 확장하는 방식의 오버라이딩은 불가능합니다.
+// 교차 타입(Intersection Type, &)을 사용하는 방식으로 type을 확장합니다.
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactNode) => ReactNode;
+};
+
+export default function App({
+  Component,
+  pageProps,
+}: AppProps & { Component: NextPageWithLayout }) {
+  const getLayout = Component.getLayout ?? ((page: ReactNode) => page);
+  return <GlobalLayout>{getLayout(<Component {...pageProps} />)}</GlobalLayout>;
 }
