@@ -12,7 +12,7 @@
   - [타입 조작하기](sgoldenbird/타입_조작하기.md)
   - [조건부 타입](sgoldenbird/조건부_타입.md)
   - [유틸리티 타입](sgoldenbird/유틸리티_타입.md)
-
+  - [타입스크립트와 리액트](sgoldenbird/타입스크립트와_리액트.md)
 - 인성
 
 - 수진
