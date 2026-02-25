@@ -34,8 +34,8 @@
     <tr>
       <td>2</td>
       <td>2/8</td>
-      <td></td>
-      <td></td>
+      <td>~6.3</td>
+      <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
@@ -48,8 +48,8 @@
     <tr>
       <td>4</td>
       <td>2/22</td>
-      <td></td>
-      <td></td>
+      <td>~10.3</td>
+      <td>시은, 수진</td>
       <td>null</td>
     </tr>
   </tbody>
