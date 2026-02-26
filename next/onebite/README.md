@@ -19,7 +19,7 @@
   <tbody>
     <tr>
       <td>0</td>
-      <td>1/26</td>
+      <td>3/1</td>
       <td>OT</td>
       <td></td>
       <td>null</td>
@@ -27,7 +27,7 @@
     <tr>
       <td>1</td>
       <td>3/8</td>
-      <td>~ </td>
+      <td>1.1~ </td>
       <td>시은, 수진</td>
       <td>null</td>
     </tr>
@@ -72,8 +72,9 @@
 ## Workflow
 
 - 자기 브랜치를 만들고 자기 폴더 안에 내용 정리. [Study Structure & Workflow 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
-- 발표자는 매주 한 명씩 랜덤으로돌아가며 진행
-- 발표자가 아닌 팀원들은 정리한 내용 중 발표자와 중복되지 않는 내용만 발표
+- 매주 정해진 분량을 팀원들이 나누어 함께 발표를 진행합니다.
+- 발표자가 아닌 팀원들은 본인이 정리한 내용 중 발표자와 중복되지 않는 내용을 추가로 공유합니다.
+- 강의가 실습 위주이므로 직접 작성한 코드를 화면 공유하며 설명합니다.
 
 ## Rules
 
