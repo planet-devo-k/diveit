@@ -113,19 +113,14 @@
 
 ## Workflow
 
-- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리 [Study Structure & Workflow 참고](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
+- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리. [Study Structure & Workflow 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
 - 발표자는 매주 한 명씩 랜덤으로돌아가며 진행
 - 발표자가 아닌 팀원들은 정리한 내용 중 발표자와 중복되지 않는 내용만 발표
 - 각자 공부한 챕터의 핵심을 **질문으로 변환** → 스터디에서 릴레이식으로 답변
-- 질문은 GitHub Discussions [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a) 활용, question label 추가
-
-- [GitHub ↔ GitBook 동기화 흐름](https://github.com/planet-devo-k/diveit/blob/main/README.md#-github--gitbook-%EB%8F%99%EA%B8%B0%ED%99%94-%ED%9D%90%EB%A6%84)
 
 ## Rules
 
-- [그라운드 룰](https://github.com/planet-devo-k/diveit/blob/main/README.md#%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0)
-
-- [PR/CR 및 이슈 규칙](https://github.com/planet-devo-k/diveit/blob/main/README.md#prcr-%EB%B0%8F-%EC%9D%B4%EC%8A%88-%EA%B7%9C%EC%B9%99)
+- [그라운드 룰, PR/CR 및 이슈 규칙 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
 
 - 커밋 규칙
 
