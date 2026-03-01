@@ -15,3 +15,10 @@
   - [타입스크립트와 리액트](sgoldenbird/타입스크립트와_리액트.md)
 
 - 수진
+  - [session01](sujin/session01.md)
+  - [session02](sujin/session02.md)
+  - [session03](sujin/session03.md)
+  - [session04](sujin/session04.md)
+  - [session05](sujin/session05.md)
+  - [session06](sujin/session06.md)
+  - [session07](sujin/session07.md)
