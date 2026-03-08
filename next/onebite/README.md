@@ -27,28 +27,28 @@
     <tr>
       <td>1</td>
       <td>3/8</td>
-      <td>1.1~ </td>
+      <td>1.1~ 3.15</td>
       <td>시은, 수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>2</td>
       <td>3/15</td>
-      <td>~</td>
+      <td>3.16~5</td>
       <td>시은, 수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>3</td>
       <td>3/22</td>
-      <td></td>
+      <td>6~7</td>
       <td>시은, 수진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>4</td>
       <td>3/29</td>
-      <td>~</td>
+      <td>8~10</td>
       <td>시은, 수진</td>
       <td>null</td>
     </tr>
