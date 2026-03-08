@@ -22,3 +22,6 @@
   - [session05](sujin/session05.md)
   - [session06](sujin/session06.md)
   - [session07](sujin/session07.md)
+  - [session08](sujin/session08.md)
+  - [session09](sujin/session09.md)
+  - [session10](sujin/session10.md)
