@@ -32,14 +32,14 @@
     </tr>
     <tr>
       <td><strong>한입 크기로 잘라먹는 넥스트</strong></td>
-      <td>2026.03 ~ 2026.0</td>
+      <td>2026.03 ~ 2026.04</td>
       <td><code>next</code></td>
       <td>Next.js 기본 개념(Page Router, App Router) 및 렌더링 전략과 최적화 학습</td>
       <td><a href="./next/onebite/README.md">View Link</a></td>
     </tr>
     <tr>
       <td><strong>한입 크기로 잘라먹는 리액트</strong></td>
-      <td>2026.03 ~ 2026.0</td>
+      <td>2026.03 ~ 2026.03</td>
       <td><code>react</code></td>
       <td>리액트 핵심 개념 복습</td>
       <td><a href="./react/onebite/README.md">View Link</a></td>
