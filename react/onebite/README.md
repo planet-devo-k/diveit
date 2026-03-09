@@ -8,7 +8,7 @@
   <details>
   <summary>시은 schedule</summary>
 
-  <br/>기간: 2026-03-01 ~ 2026-03-29
+  <br/>기간: 2026-03-01 ~ 2026-03-08
 
     <table>
       <thead>
@@ -29,25 +29,7 @@
         <tr>
           <td>2</td>
           <td>3/8</td>
-          <td>2.6~</td>
-          <td>null</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>3/15</td>
-          <td></td>
-          <td>null</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>3/22</td>
-          <td></td>
-          <td>null</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>3/29</td>
-          <td>총 정리 및 <a href="./sgoldenbird/retrospective.md">회고</a></td>
+          <td>2.6~13.1 마무리, 총 정리 및 <a href="./sgoldenbird/retrospective.md">회고</a></td>
           <td>null</td>
         </tr>
       </tbody>
