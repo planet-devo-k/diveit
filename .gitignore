@@ -2,3 +2,4 @@ local/
 .vscode/
 node_modules/
 dist/
+pnpm-debug.log
