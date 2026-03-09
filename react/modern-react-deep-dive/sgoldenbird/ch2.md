@@ -1,0 +1,687 @@
+# Takeaways
+
+## JSX란?
+
+* 자바스크립트 코드 내부에 HTML과 같은 트리 구조를 가진 컴포넌트로 표현
+* 반드시 트랜스파일러를 거쳐야 자바스크립트 런타임이 이해할 수 있는 의미있는 자바스크립트 코드로 변환된다.
+* JSXElement, JSXAttributes, JSXChildren, JSXStrings 라는 4가지 컴포넌트를 기반으로 구성
+
+### JSX는 어떻게 자바스크립트로 변환될까?
+
+**React 16까지(Classic Runtime)**
+
+* JSX → React.createElement(...) 로 바꾸는 변환
+
+```jsx
+
+// 이전에는 JSX를 쓰면 반드시 이렇게 상단에 import를 해야 했다.
+import React from "react";
+
+export default function App() {
+  return <h1>Hello</h1>;
+}
+
+// 그 이유는 Babel이 JSX를 이런 식으로 변환했기 때문
+import React from "react";
+
+export default function App() {
+  return React.createElement("h1", null, "Hello");
+}
+
+```
+
+**React 17부터(Automatic Runtime)**
+
+* React 17부터는 Babel 플러그인이 새 옵션을 지원하기 시작. 즉, react/jsx-runtime 모듈을 통해 JSX가 자동 처리. 이게 바로 “자동 JSX 런타임”
+
+```js
+
+{
+  "presets": [
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ]
+}
+
+// 이때부터는 React.createElement 대신 react/jsx-runtime 모듈의 jsx() 함수 등이 사용
+import { jsx as _jsx } from "react/jsx-runtime";
+
+export default function App() {
+  return _jsx("h1", { children: "Hello" });
+}
+
+```
+
+* 때문에 현재(리액트19)는 createElement가 레거시 API. createElement 쓰는 대신 JSX를 쓰는 것을 권장.
+
+## 가상 DOM과 리액트 파이버
+
+### DOM과 브라우저 렌더링 과정
+
+* DOM: 웹페이지에 대한 인터페이스. 브라우저가 웹페이지의 콘텐츠와 구조를 어떻게 보여줄지에 대한 정보를 담고 있다.
+
+1. 브라우저가 사용자가 요청한 주소를 방문해 HTML 파일을 다운로드
+2. 브라우저의 렌더링 엔진은 HTML을 파싱해 DOM노드로 구성된 트리 DOM을 만든다.
+3. 2번 과정에서 CSS 파일을 만나면 해당 CSS파일도 다운로드 한다.
+4. 브라우저의 렌더링 엔진은 이 CSS도 파싱해 CSS노드로 구성된 트리 CSSOM을 만든다.
+5. 브라우저는 2번에서 만든 DOM 노드를 순회하는데 여기서 모든 노드를 방문하는 것이 아니고 사용자 눈에 보이는 노드만 방문한다. 즉, display: none과 같이 사용자 화면에 보이지 않는 요소는 방문해 작업하지 않는다.
+6. 눈에 보이는 노드를 대상으로 해당 노드에 대한 CSSOM정보를 찾고 여기서 발견한 CSS 스타일 정보를 이 노드에 적용한다. 이 **DOM노드에 CSS를 적용하는 과정**은 크게 두 가지로 나눌 수 있다.
+
+* **레이아웃(=reflow)**: 각 노드가 브라우저 화면의 어느 좌표에 정확히 나타나야 하는지 계산하는 과정. 이후 반드시 페인팅 과정도 거치게 된다.
+* **페인팅**: 레이아웃 단계를 거친 노드에 색과 같은 실제 유효한 모습을 그리는 과정
+
+### 가상 DOM
+
+* 가상 DOM은 웹페이지가 표시해야 할 DOM을 일단 **메모리에 저장**하고 리액트가 실제 변경에 대한 준비가 완료됐을 때 실제 브라우저의 DOM에 반영
+* DOM 계산을 브라우저가 아닌 메모리에서 계산하는 과정을 한 번 거치게 된다면 실제로는 여러 번 발생했을 **렌더링 과정을 최소화**. 브라우저와 개발자의 부담을 덜 수 있다.
+* 가상 DOM을 사용하는 방식이 일반적인 DOM을 관리하는 브라우저보다 더 빠르지는 않다. 충분히 빠를 뿐.
+* 가상 DOM과 리액트의 핵심은 브라우저의 DOM을 더 빠르게 그리고 반영하는 것이 아니라 바로 <mark style="background-color:yellow;">**값으로 UI를 표현하는 것**</mark>이다. 화면에 표시되는 **UI를 자바스크립트의 문자열, 배열 등과 마찬가지로 값으로 관리하고 이러한 흐름을 효율적으로 관리하기 위한 메커니즘이 바로 리액트의 핵심**이다.
+
+```jsx
+// 예를 들어, 이런 JSX가 있을 때:
+const element = <h1>Hello, world</h1>;
+
+// <h1>Hello</h1> 도 결국 하나의 자바스크립트 객체, 즉 ‘값’ 으로 표현된다
+const element = {
+  type: "h1",
+  props: { children: "Hello, world" },
+};
+```
+
+#### 리액트의 핵심 흐름(선언형 접근)
+
+* UI는 상태(state)의 함수다. React의 본질은 **UI를 계산하는 함수형 구조**라는 점
+* DOM을 빠르게 조작하는 게 핵심이 아니라, <mark style="background-color:yellow;">**UI를 데이터로서 관리**</mark>하고, **상태 변화에 따라 일관성 있게 갱신**하는 구조를 만드는 게 핵심
+* 예전 방식 (jQuery 등): “화면이 바뀌면 DOM을 직접 찾아서 조작해라.” → 명령형 (Imperative) 접근
+* React 방식: “이 상태일 때 화면이 어떤 모습이어야 하는지 표현만 해라.” → 선언형 (Declarative) 접근
+* React는 상태(state)가 바뀌면 “UI라는 값”을 새로 계산해서, 이전 UI 값과 비교(diff) 후 실제 DOM을 수정
+* 그래서 핵심은 DOM이 아니라, “<mark style="background-color:yellow;">UI도 데이터처럼 다루자</mark>”, “화면은 상태의 결과물이다” 이 두 가지 사고 전환이다.
+
+#### 명령형(Imperative) vs 선언형(Declarative)
+
+1. 명령형 방식 (jQuery나 순수 JS)
+
+* **어떻게 업데이트할지(how)를 명령**
+
+```js
+// 상태
+let count = 0;
+
+// UI를 직접 조작 (명령형)
+const button = document.querySelector("#btn");
+const text = document.querySelector("#text");
+
+button.addEventListener("click", () => {
+  count++;
+  text.textContent = `Count: ${count}`; // DOM 직접 조작
+});
+```
+
+2. 선언형 방식 (React)
+
+* <mark style="background-color:yellow;">**상태(state)**</mark>**만 바꾸면 React가 알아서 그에 맞는 UI를 계산해서 반영**
+* UI를 “그릴 방법”이 아니라, **UI가 “어떤 상태일 때 어떤 모양이어야 하는가”**&#xB97C; 표현
+
+```jsx
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p> {/* UI를 '값'처럼 표현 */}
+      <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+}
+```
+
+#### <mark style="background-color:yellow;">가상 DOM이 필요한 이유</mark>
+
+* 렌더링이 완료된 이후에도 사용자의 인터렉션으로 웹페이지가 자주 변경
+* 레이아웃, 리페인트 재계산
+* DOM 변경은 하위 자식 요소도 덩달아 변경
+* **SPA는 하나의 페이지에서 모든 작업이 일어나다보니 렌더링 이후 추가 렌더링 작업이 많아짐**
+  * 처음부터 HTML을 새로 받아서 다시 렌더링 과정을 시작하는 서버 렌더링 페이지와는 다르게 하나의 페이지에서 계속해서 요소의 위치를 재계산.
+  * 사용자는 페이지의 깜빡임 없이 자연스러운 웹페이지 탐색을 할 수 있지만 그만큼 DOM을 관리하는 과정에서 부담 할 비용이 커짐
+  * 라우팅이 변경되는 경우 대부분의 요소를 삭제하고 다시 삽입하고 위치를 계산
+  * 보통 새로 로드하는 것 보다 짧은 시간 동안 여러 번 발생하는 reflow/repaint가 더 성능에 악영향
+* 사용자의 인터랙션에 따라 DOM의 모든 변경 사항을 추적하는 것은 개발자 입장에서 너무 수고스러운 일. DOM 결과물 하나만 알고 싶어함.
+
+### 가상 DOM을 위한 아키텍처, 리액트 파이버
+
+* 가상 DOM을 구현하기 위해 만들어진 리액트 파이버.&#x20;
+* **파이버는** 리액트 아키텍처 내에서 **비동기로 이루어짐**.
+* 실제 브라우저 구조인 DOM에 반영하는 것은 동기적으로 일어나야하고 화면에 불완전하게 표시 될 수 있는 가능성이 높기때문에 이러한 작업을 **메모리상에서 먼저 수행**해서 **최종적인 결과만 실제 브라우저 DOM에 적용**하는 것.
+* 가상DOM은 웹 애플리케이션에서만 통용되는 개념
+  * 리액트 파이버는 리액트 네이티브와 같은 브라우저가 아닌 환경에서도 사용할 수 있기 때문에 파이버와 가상 DOM은 동일한 개념이 아니다.
+  * 리액트와 리액트 네이티브의 렌더러가 서로 다르더라도 내부적으로 파이버를 통해 조정되는 과정은 동일
+
+#### React의 렌더링 파이프라인은 세 가지 모듈로 나뉩니다.
+
+| 단계                           | 역할                                   | 내부 구성요소                       |
+| ---------------------------- | ------------------------------------ | ----------------------------- |
+| **Reconciler (조정기, 렌더링 엔진)** | 어떤 변화가 필요한지 계산                       | Fiber 구조가 여기에 속함              |
+| **Renderer (렌더러)**           | 실제 DOM 조작, ReactDOM / React Native 등 | ReactDOM, ReactNativeRenderer |
+| **Scheduler (스케줄러)**         | 렌더링 우선순위, 시간 분할 관리                   | Scheduler 패키지 (Concurrent 관리) |
+
+```
+React (전체 시스템)
+ ┣ Scheduler (우선순위/시간 관리)
+ ┣ Reconciler (렌더링 엔진)
+ ┃   ┗ Fiber (Reconciler의 내부 구조)
+ ┗ Renderer (DOM, Native 등 실제 출력)
+```
+
+#### 리액트 파이버란?
+
+* <mark style="background-color:yellow;">React의 재조정(Reconciliation) 엔진</mark>
+  * <mark style="background-color:yellow;">렌더링을 작은 단위로 나누어 중단·재개·우선순위 제어가 가능하게 만든 내부 구조</mark>.
+  * 이전에 했던 작업을 다시 재사용하거나 필요하지 않은 경우에는 폐기할 수 있다.
+  * **재조정**: 어떤 부분을 새롭게 렌더링 해야 하는지 **가상 DOM과 실제 DOM을 비교**하는 작업(알고리즘)
+* 기존 구조와 Fiber의 차이
+  * React 15 이하: 한 번 시작하면 끝까지 달리는 요리사
+  * React Fiber: 손님이 들어오면 잠시 멈추고 주문부터 받는 요리사
+  * React 15까지 — Stack Reconciler (스택 기반)
+    * 컴포넌트 업데이트가 동기적(synchronous) 으로 일어남. 한 번 렌더링이 시작되면 중간에 멈출 수 없음
+      * 하나의 스택에 렌더링에 필요한 작업들이 쌓이면 이 스택이 빌 때까지 동기적으로 작업이 이루어짐.
+      * 자바스크립트는 싱글스레드이므로 이 동기 작업이 중단될 수 없음
+    * 대규모 컴포넌트 트리를 렌더링하면 UI가 잠깐 멈추는 현상(jank) 발생
+    * 예시: 렌더링 중이던 컴포넌트가 많으면 브라우저 이벤트(입력, 스크롤 등)가 막혀버림
+  * React 16부터 — **Fiber Reconciler (비동기적)**
+    * Fiber는 위 문제를 해결하기 위해 <mark style="background-color:yellow;">렌더링 작업을 잘게 쪼개어(Chunking)</mark> <mark style="background-color:yellow;">동시성(concurrent) 스케줄</mark>링을 가능하게 만든 구조
+    * 렌더링 중이라도 더 급한 작업(입력, 스크롤 등)이 들어오면 중단하고 먼저 처리한 뒤 다시 재개
+* Fiber의 핵심 개념
+  * Fiber는 하나의 작업 단위로 구성돼 있다.
+  * 리액트는 이러한 작업 단위를 하나씩 처리하고 finishedWork( )라는 작업으로 마무리한다.
+  * 그리고 이 작업을 커밋해 실제 브라우저 DOM에 가시적인 변경 사항을 만들어 낸다.
+* <mark style="background-color:yellow;">**리액트 렌더링(렌더 단계 → 커밋 단계) → 브라우저 렌더링**</mark>
+  * **렌더 단계**: 리액트는 **사용자에게 노출되지 않는 모든 비동기 작업**을 수행한다. 이 단계에서 앞서 언급한 **파이버의 작업**, 우선순위를 지정하거나 중지시키거나 버리는 등의 작업이 일어난다.\
+    **재조정**은 렌더 단계에서 일어난다.
+  * **커밋 단계**: **DOM에 실제 변경 사항을 반영**, commitWork( )가 실행되는데, 이 과정은 앞서와 다르게 **동기식으로 일어나고 중단될 수도 없다.** DOM 조작, ref 설정, `useLayoutEffect` 실행 등이 이 단계에서 일어난다. 이때 브라우저의 실제 DOM 트리가 변경되며, 변경된 DOM은 아직 화면에 그려지지 않은 상태. 즉, React가 브라우저에게 “이제 이걸 그려줘!” 하고 넘겨주는 순간.\
+    **재조정의 결과**가 커밋 단계에서 **실제 DOM에 반영**된다.
+  * 브라우저 렌더링: 커밋된 DOM 변경사항을 브라우저가 실제로 그려주는 과정
+
+| 개념                          | 설명                                                                                                                               |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Fiber**                   | <p>컴포넌트 하나하나를 나타내는 <strong>작업 단위(task node)</strong>.<br>각 컴포넌트는 자신만의 Fiber 객체를 가짐.</p>                                          |
+| **Work Loop**               | <p>Fiber 단위를 하나씩 처리하는 React 내부 루프.<br><code>requestIdleCallback</code> 또는 <code>scheduler</code>를 사용해 브라우저가 바쁜지 확인하며 작업을 진행.</p> |
+| **Interruptible Rendering** | <p>렌더링 도중 “중단 → 재개”가 가능.<br>즉, 더 중요한 업데이트가 생기면 우선 처리.</p>                                                                        |
+| **Priority-Based Updates**  | <p>각 업데이트에 “우선순위(priority)”가 부여됨.<br>예: 입력 이벤트 > 애니메이션 > 일반 업데이트.</p>                                                            |
+| **Double Buffering**        | 현재 트리(`current`)와 작업 중 트리(`workInProgress`)를 번갈아 사용하여 렌더링 안정성을 확보.                                                               |
+
+* Fiber 도입의 결과
+
+| 기능                                                                                   | 설명                                                             |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------- |
+| **Concurrent Rendering (**<mark style="background-color:yellow;">동시성 렌더링</mark>**)** | React 18의 핵심 기능(`useTransition`, `Suspense`)은 모두 Fiber 덕분에 가능. |
+| <mark style="background-color:yellow;">렌더링 스케줄링 제어</mark>                            | React 내부가 “이 업데이트는 급하니까 먼저”라는 식으로 판단 가능.                       |
+| <mark style="background-color:yellow;">UI 끊김 감소</mark>                               | 큰 컴포넌트 트리에서도 브라우저 이벤트가 부드럽게 유지됨.                               |
+
+* 파이버 구현 상세
+  * 리액트 파이버는 자바스크립트 객체로 구현되어있다.
+  * 파이버는 하나의 element에 하나가 생성되는 1:1 관계. 1:1로 연결되는 것은 리액트의 컴포넌트일 수도, HTML의 DOM노드 일 수도, 혹은 다른 어떤 것일수도 있다.
+  * Fiber는 컴포넌트가 최초로 마운트되는 시점에 생성되어 이후에는 **가급적 재사용**된다.
+  * 생성된 파이버는 state가 변경되거나 생명주기 메서드가 실행되거나 DOM의 변경이 필요한 시점 등에 실행된다.
+  * **중요한 것은 리액트가 파이버를 처리할 때마다 이러한 작업을 직접 바로 처리하기도 하고 스케줄링하기도 한다는 것**이다.
+
+#### 리액트 파이버 트리
+
+* 파이버 트리는 리액트 내부에 두 개 존재
+  * 현재 모습을 담은 파이버 트리 (**current**)
+  * 작업 중인 상태를 나타내는 **workInProgress** 트리
+* current tree를 기준으로 모든 작업이 시작.
+* 여기에서 업데이트가 발생하면 파이버는 리액트에서 새로 받은 데이터로 새로운 workInProgress 트리를 빌드하기 시작
+* workInProgress 트리를 빌드하는 작업이 끝나면 다음 렌더링에 이 트리를 사용
+* 이 workInProgress 트리가 UI에 최종적으로 렌더링되어 반영이 완료되면 current가 이 workInProgress 로 변경
+* 더블 버퍼링
+  * **더블 버퍼링을 위해 트리가 두개 존재**하는 것.
+  * 컴퓨터 그래픽에서 사용자에게 미처 다 그리지 못한 모습을 보이지 않기 위해 보이지 않는 곳에서 그 다음으로 그려야 할 그림을 미리 그린 다음, 이것이 완성되면 현재 상태를 새로운 그림으로 바꾸는 기법
+  * 리액트에서도 미처 다 그리지 못한 모습을 노출시키지 않기 위해(불완전한 트리를 보여주지 않기 위해) 더블 버퍼링 기법 사용.
+  * 리액트 파이버의 작업이 끝나면 리액트는 단순히 **포인터만 변경**해 workInProgress 트리를 현재 트리로 바꿔버린다.
+  * 더블 버퍼링은 커밋 단계에서 수행된다.
+
+#### 파이버의 작업 순서
+
+일반적인 파이버 노드의 생성 흐름(파이버 트리)
+
+1. 리액트는 beginWork( )함수를 실행해 파이버 작업을 수행하는데, 더 이상 자식이 없는 파이버를 만날 때 까지 트리 형식으로 시작된다.
+2. 1번 작업이 끝나면 completeWork( )함수를 실행해 파이버 작업을 완료한다.
+3. 형제가 있다면 형제로 넘어간다.
+4. 2,3번이 모두 끝났다면 return으로 돌아가 자신의 작업이 완료됐음을 알린다.
+
+* current트리가 존재하고 setState등으로 업데이트 요청을 받아 workInProgress 트리를 위 과정대로 다시 빌드한다.
+* 최초 렌더링 시에는 모든 파이버를 새롭게 만들어야 했지만 이제는 파이버가 이미 존재하므로 되도록 새로 생성하지 않고 **기존 파이버에서 업데이트된 props를 받아 파이버 내부에서 처리**한다.
+  * 반복적인 재조정 작업때마다 새롭게 파이버 자바스크립트 객체를 만드는 것은 리소스 낭비. 따라서 **객체를 새로 만들기보다는 기존에 있는 객체를 재활용**하기 위해 **내부 속성값만 초기화하거나 바꾸는 형태로 트리를 업데이트**.
+* 파이버 트리를 만들고 업데이트 하는 과정은 과거에는 동기식으로 처리되어 중단될 수 없었으나 현재는 우선순위가 높은 다른 업데이트가 오면 현재 업데이트 작업을 일시 중단하거나 새롭게 만들거나 폐기할 수도 있다. 또한 작업 단위를 나누어 우선순위를 할당하는 것 또한 가능하다.
+  * 애니메이션이나 사용자가 입력하는 작업은 우선순위가 높은 작업으로 분리, 목록을 렌더링하는 등의 작업은 우선순위가 낮은 작업으로 분리
+
+## 클래스 컴포넌트와 함수 컴포넌트
+
+### 클래스 컴포넌트
+
+* React.Component 또는 React.PureComponent를 extends. (둘의 차이는 shouldComponentUpdate()메서드를 다루는 차이)
+* constructor( )
+  * 컴포넌트 내부에 이 생성자 함수가 있다면 컴포넌트가 초기화되는 시점에 호출된다.
+  * 여기에 선언돼 있는 super( )는 컴포넌트를 만들면서 상속받은 상위 컴포넌트(React.Component)의 생성자 함수를 먼저 호출해 필요한 상위 컴포넌트에 접근할 수 있게 도와준다.
+  * ES2022에 추가된 클래스 필드는 constructor없이, 즉 별도의 초기화 과정을 거치지 않고도 클래스 내부에 필드를 선언할 수 있게 도와준다.
+  * React 공식 문서는 클래스 컴포넌트(React.Component) 사용을 여전히 지원은 하지만 레거시API로 지정. 새 코드에서는 함수형 컴포넌트(function components)와 훅(Hooks)을 사용하는 것을 권장한다.
+  * PureComponent도 마찬가지 이유로 PureComponent → React.memo 로 치환 권장
+    * React.memo는 props를 얕게 비교(shallow compare) 해서 값이 같으면 리렌더링을 생략 — 완전히 PureComponent와 동일한 원리
+    * 하지만 React.memo 역시 리액트 19이후 React Compiler가 활성화된 환경에서는 더 이상 필요하지 않다.
+      * React 19의 핵심 변화 중 하나는 React.memo, useMemo, useCallback 같은 수동 메모이제이션을 없애는 자동화된 컴파일러 최적화
+      * 프로젝트가 아직 React Compiler를 사용하지 않는다면, React.memo, useMemo, useCallback 등의 수동 최적화가 여전히 필요. Vite, CRA, Next.js 등 대부분의 빌드 도구는 React 19이더라도 Compiler가 opt-in 설정이라 기본 활성화 되지는 않는다.
+      * **React Compiler는 컴파일 단계에서 이미 React.memo( )가 하던 일을 컴파일러가 자동으로 해준다.**
+        * 컴포넌트의 props 변화를 자동으로 추적하고,
+        * 동일한 props로 생성된 JSX를 자동 캐싱(memoization) 해서,
+        * 불필요한 리렌더링을 스스로 건너뛰도록 코드를 변환합니다.
+
+#### 클래스 컴포넌트의 생명주기 메서드
+
+* **getSnapShotBeforeUpdate, getDerivedStateFromError, componentDidCatch는 아직 리액트 훅으로 구현되어 있지 않기** 때문에 이 세가지 메서드가 필요한 경우가 있다면 반드시 클래스 컴포넌트를 사용해야 한다.
+
+**생명주기 메서드가 실행되는 시점**
+
+1. 마운트: 컴포넌트가 마운팅(생성)되는 시점
+2. 업데이트: 이미 생성된 컴포넌트의 내용이 변경(업데이트)되는 시점
+3. 언마운트(unmount): 컴포넌트가 더 이상 존재하지 않는 시점
+
+**생명주기 메서드**
+
+* static getDerivedStateFromProps( )
+  * 사라진 componentWillReceiveProps를 대체
+  * render( )가 호출되기 직전에 호출
+  * static으로 선언돼 있어 this에 접근할 수 없다.
+  * 여기서 반환하는 객체는 해당 객체의 내용이 모두 state로 들어가게 된다.
+* render( )
+  * 클래스 컴포넌트의 필수 값
+  * 컴포넌트가 UI를 렌더링 하기 위해 쓰임
+  * 마운트, 업데이트 시점에 호출
+  * render( )함수는 항상 순수해야 하며 부수 효과가 없어야 한다.
+    * 값은 입력값(prop, state)가 들어가면 항상 같은 결과물 반환
+    * render( )내부에서 state를 직접 업데이트하는 this.setState 호출하면 안됨
+* componentDidMount( )
+  * 컴포넌트가 마운트되고 준비되면 호출
+  * 이 함수 내부에서 this.setState호출 가능하나, 일반적으로 state를 다루는 것은 생성자에서 하는 것이 좋다.
+  * componentDidMount에서 this.setState를 허용하는 것은 생성자 함수에서 할 수 없는 API 호출 후 업데이트, DOM에 의존적인 작업(이벤트 리스너 추가 등) 등을 하기 위해서만.
+* getSnapShotBeforeUpdate( )
+  * 사라진 componentWillUpdate( )를 대체
+  * DOM이 업데이트 되기 직전에 호출
+  * 여기서 반환되는 값은 componentDidUpdate로 전달
+  * **DOM에 렌더링되기 전**에 **윈도우 크기를 조절**하거나 **스크롤 위치를 조정**하는 등의 작업을 처리하는데 유용
+* componentDidUpdate ( )
+  * 컴포넌트 업데이트가 일어난 후 바로 실행
+  * state나 props의 변화에 따라 DOM을 업데이트하는데 쓰임
+* componentWillUnmount( )
+  * 컴포넌트가 언마운트되거나 더 이상 사용되지 않기 직전에 호출
+  * 메모리 누수나 불필요한 작동을 막기 위한 클린업 함수를 호출하기 위한 최적의 위치(이벤트를 지우거나, API 호출을 취소하거나, setInterval, setTimeout으로 생성된 타이머를 지우는 등)
+* shouldComponentUpdate( )
+  * state나 props의 면경으로 리액트 컴포넌트가 다시 리렌더링 되는 것을 막고 싶을때 사용
+  * 성능 최적화 상황에서만 고려
+  * Component vs PureComponent
+    * 두 클래스 모두 “리렌더링을 할지 말지”를 결정할 때 shouldComponentUpdate(nextProps, nextState)메서드를 기준으로 판단한다.
+    * 이 함수가 true → 다시 렌더링, false → 렌더링 생략
+    * React.Component
+      * 기본적으로 shouldComponentUpdate가 정의되어 있지 않다.
+      * 그래서 React는 항상 true로 판단 → 매번 리렌더링.
+      * Component의 경우 state가 업데이트되는 대로 렌더링이 일어남
+      * 리렌더링을 막고 싶으면 개발자가 직접 shouldComponentUpdate를 오버라이드해야 함
+    * React.PureComponent
+      * PureComponent는 React 내부에서 이미 shouldComponentUpdate를 자동으로 구현해둔 클래스
+      * 내부적으로 shallowEqual(얕은 비교) 을 수행해서 props/state가 달라졌을 때만 true를 반환
+      * PureComponent는 state값에 대해 얕은 비교를 수행해 결과가 다를 때만 렌더링을 수행한다. 때문에 state가 객체와 같이 복잡한 구조의 데이터 변경은 감지하지 못해 제대로 작동하지 않는다.
+
+#### 에러 상황에서 실행되는 메서드
+
+* 아래 두 메서드는 ErrorBoundary를 만들기 위한 목적으로 많이 사용된다. ErrorBoundary를 여러개 선언해서 컴포넌트별로 에러 처리를 다르게 적용할 수 있다.
+* <mark style="background-color:yellow;">자식 컴포넌트에서 발생한 에러에 대한 처리</mark>**는 현재 클래스 컴포넌트로만 가능**. (클래스 컴포넌트를 공부해야할 필요성)
+* **getDerivedStateFromError( )**
+  * 자식컴포넌트에서 에러가 발생했을 때 호출되는 에러 메서드
+  * static 메서드로, 하위 컴포넌트에서 발생한 error를 인수로 받는다.
+  * **하위 컴포넌트에서 에러가 발생했을 경우 어떻게 자식 리액트 컴포넌트를 렌더링할지 설정하는 용도**로 제공되는 메서드이기 때문에 반드시 미리 정의해둔 state값을 반환해야 한다.
+  * 렌더링 과정에서(**render 단계**에서) 호출되는 메서드이기 때문에 **부수효과를 발생시켜서는 안된다.**(즉, **에러에 따른 상태 state를 반환하는 것 외의 작업이 발생해서는 안됨**; console.error를 이용한 에러 로깅 포함)
+* **componentDidCatch( )**
+  * 자식 컴포넌트에서 에러가 발생했을 때 실행
+  * getDerivedStateFromError에서 에러를 잡고 state를 결정한 이후에 실행
+  * 두개의 인수를 받는다. getDerivedStateFromError와 동일한 error, 그리고 정확히 어떤 컴포넌트가 에러를 발생시켰는지 정보를 가지고 있는 info.
+    * 두번째 인수는 errorInfo의 componentStack은 어느 컴포넌트에서 에러가 발생했는지 알려준다. 여기서 표시되는 이름은 Function.name 또는 컴포넌트의 displayName을 따른다. componentStack의 추적을 용이하게 하려면 기명 함수 또는 displayName을 쓰자.
+  * getDerivedStateFromError와는 다르게 **커밋 단계**에 실행. 따라서 getDerivedStateFromError에서 하지 못했던 **부수 효과를 수행**할 수 있다. 즉, 에러 정보 로깅하는 등의 용도로 사용할 수 있다.
+  * **주의할 점은 componentDidCatch는 개발모드와 프로덕션 모드에서 다르게 작동한다.**
+    * 개발 모드에서는 에러가 발생하면 window까지 전파된다. 즉, window.onerror나 window.addEventListener('error', callback)같은 메서드가 componentDidCatch에서 잡은 오류를 마찬가지로 잡을 수 있다.
+    * **프로덕션 모드에서는 componentDidCatch로 잡히지 않은 에러만 window까지 전파된다.**
+
+#### 클래스 컴포넌트의 한계
+
+* <mark style="background-color:yellow;">데이터의 흐름을 추적하기 어렵다.</mark>
+  * 서로 다른 여러 메서드에서 state 업데이트가 일어날 수 있고, state의 흐름을 추적하기 어렵다.
+  * 코드 작성시 메서드의 순서가 강제돼 있는것이 아니라 읽기가 어렵다. 생명주기 메서드는 실행되는 순서가 있지만 클래스에 작성할 때 메서드의 순서를 맞춰야 하는건 아니기 때문에 생명주기 메서드 순서와 상관없이 작성돼 있을 수 있다.
+* <mark style="background-color:yellow;">애플리케이션 내부 로직의 재사용이 어렵다.</mark>
+  * 컴포넌트를 또 다른 고차컴포넌트로 감싸거나, props를 넘겨주는 방식은 공통 로직이 많아질수록 **래퍼 지옥(wrapper hell)**&#xC5D0; 빠져들 위험이 커짐. 애플리케이션 규모가 커질수록 재사용할 로직이 많아지는데 이를 클래스 컴포넌트 환경에서 매끄럽게 처리하기 쉽지 않음
+  * 컴포넌트를 상속해서 중복 코드를 관리하는 것도 상속되고 있는 클래스의 흐름을 쫓아야 하기 때문에 복잡도가 증가함.
+* 기능이 많아질수록 컴포넌트의 크기가 커짐
+* 클래스는 함수에 비해 상대적으로 어려움
+* <mark style="background-color:yellow;">코드 크기를 최적화하기 여려움</mark>
+  * 클래스 컴포넌트는 최종 결과물인 번들 크기를 줄이기도 어려움
+    * 예를 들어 JS 빌드 시 보통 코드를 압축(minify). 함수 이름과 변수 이름이 짧게 변환되어 파일 크기가 줄어든다.
+    * 그런테 클래스 이름과 메서드 이름은 런타임에 참조될 수 있기 때문에 완전히 난독화/축약할 수 없음
+  * React Compiler나 현대적인 번들러(Vite, esbuild, Rollup 등)는 함수형 코드를 훨씬 더 잘 분석\
+    컴파일러는 함수 단위로 의존성, 부수효과, 순수성을 추적. 클래스는 내부 상태와 this 바인딩 등으로 인해 이 분석이 훨씬 어렵다. 즉, Compiler가 자동 최적화를 안전하게 수행할 수 없게 된다.
+  * 클래스형은 React가 내부적으로 더 많은 구조(prototype, 상속 체인 등)를 남기기 때문에 dead code 제&#xAC70;**(tree-shaking) 효율이 떨어진다.**
+  * **React 19의 자동 최적화(React Compiler)는 오직 함수형 컴포넌트만 지원**\
+    따라서 클래스 컴포넌트를 쓰면 컴파일러가 전혀 개입하지 못함 → 번들 크기 증가 + 리렌더링 최적화 불가
+*   <mark style="background-color:yellow;">핫 리로딩을 하는 데 상대적으로 불리하다.</mark>
+
+    * 클래스 컴포넌트는 핫 리로딩이 일어나면 바로 다시 기본값으로 돌아감. 클래스 컴포넌트는 최초 렌더링 시에 **instance를 생성하고 그 내부에서 state값을 관리**하는데, 이 instance 내부에 있는 render를 수정하게 되면 이를 반영할 수 있는 방법은 오직 새로운 instance를 만드는 것 뿐이다. 그리고 새롭게 만들어진 instance에서 값은 당연히 초기화 된다.
+    * 이에 반해 함수 컴포넌트는 핫 리로딩이 일어난 뒤에도 변경된 상태값이 유지. **함수 컴포넌트는 state를 함수가 아닌 클로저에 저장**해두므로 함수가 다시 실행돼도 해당 state를 잃지 않고 다시 보여줄 수 있게 된다. (useState가 내부적으로 클로저 사용)
+    * 예시
+
+    ```jsx
+
+      // 클래스 컴포넌트는 “인스턴스(instance)” 기반
+      class Counter extends React.Component {
+      state = { count: 0 };
+
+      render() {
+        return (
+          <div>
+            <p>{count}</p>
+            <button onClick={() => setCount(count + 1)}>+</button>
+          </div>
+        );
+      }
+
+      - useState는 React 내부의 “상태 저장소”에 접근하는 클로저를 생성.
+      - 즉, “이 Counter 함수와 연결된 상태가 여기에 저장돼 있다”는 정보를 React가 기억하고, 함수가 다시 실행되더라도 그 상태를 계속 유지.
+      - 이 덕분에 코드가 수정돼서 Counter 함수 자체가 새로 정의되어도 React는 “이건 같은 컴포넌트 인스턴스야”라고 판단하고 클로저로 연결된 상태값을 그대로 재사용
+      - 그래서 핫 리로딩 후에도 state가 유지
+
+    ```
+
+    * 클로저 = useState 내부의 상태 저장 메커니즘
+
+    ```js
+      // useState의 간단한 개념적 모형
+
+      let state; // 함수 밖에 저장됨
+
+      function useState(initialValue) {
+        if (state === undefined) state = initialValue;
+        function setState(newValue) {
+          state = newValue;
+          render(); // 다시 렌더링
+        }
+        return [state, setState];
+      }
+
+    state가 함수 바깥(React 내부 메모리) 에 저장되어 있어서 컴포넌트 함수가 다시 실행돼도 사라지지 않는다. 이게 바로 클로저의 힘.
+    setState가 state를 “기억”하고 있어서, 렌더링이 반복돼도 같은 메모리 영역을 바라봄.
+    이 예시는 useState의 개념적 아이디어만 표현한 단순 버전이고, 진짜 React의 useState는 컴포넌트별, 훅 호출 순서별로 독립된 저장 공간을 만들어 관리
+
+    ```
+
+#### 핫 리로딩
+
+* 핫 리로딩(HMR: Hot Module Replacement): <mark style="background-color:yellow;">코드에 변경 사항이 발생했을 때, 앱을 다시 시작하지 않고서도 해당 변경된 코드만 업데이트해 변경 사항을 빠르게 적용하는 기법</mark>. 코드를 수정했을 때, 페이지 전체를 새로고침하지 않고 바뀐 모듈만 교체하는 기술. 애플리케이션을 실행한 채로 코드의 수정 내용이 바로 반영되는 것이 핫 리로딩 덕분이다.
+* 핫 리로딩(Hot Reloading)은 개발 서버(dev server)에서만 동작하는 **개발용 기능**. 빌드(배포)한 이후에는 핫 리로딩처럼 바로바로 업데이트할 수 없다. 빌드된 결과물은 정적인 파일.
+* 핫 리로딩이 코드가 바뀜을 감지하고 리액트에 알림. 렌더링을 다시 하라고 트리거 → 가상DOM이 새 코드로 Virtual DOM을 다시 생성하고, 이전 Virtual DOM과 비교(diff)해서 어떤 부분을 업데이트 할지 결정 → 실제 브라우저 DOM에 필요한 부분만 업데이트
+* 예시
+
+```jsx
+  function App() {
+    return <h1>Hello</h1>;
+  }
+
+  → Hello React!로 수정하고 저장하면?
+```
+
+1️⃣ 핫 리로딩 시스템이 변경된 파일을 감지\
+2️⃣ 개발 서버(Vite, Webpack Dev Server 등)가 변경된 App 컴포넌트 모듈만 브라우저로 전송\
+3️⃣ React가 이 새 코드(App 컴포넌트)를 실행하면서 렌더 트리를 다시 계산\
+4️⃣ 여기서 가상 DOM이 등장
+
+* React는 새로운 Virtual DOM 트리를 생성
+* 이전 Virtual DOM 트리와 비교(diff)
+* 실제 DOM에 필요한 부분만 갱신
+
+이렇게 해서 “상태(state)는 유지되고, 화면만 바뀌는” 느낌을 준다.
+
+### 함수 컴포넌트
+
+* 상대적으로 보일러 플레이트가 복잡한 클래스 컴포넌트보다 함수 컴포넌트를 더 사용
+  * 보일러 플레이트: **프로젝트를 시작할 때 매번 반복해서 써야 하는 기본 틀**(<mark style="background-color:yellow;">기본 코드 세트</mark>)
+
+#### 생명 주기 메서드의 부재
+
+* 함수 컴포넌트는 props를 받아 단순히 리액트 요소만 반환하는 함수.
+* 클래스 컴포넌트는 render메서드가 있는 React.Component를 상속받아 구현하는 자바스크립트 클래스. 생명주기 메서드는 React.Component에서 온다.
+* 함수 컴포넌트는 useEffect 훅으로 생명주기 메서드 비슷한 작업 가능
+  * 그러나 useEffect 훅은 생명주기를 위한 훅이 아니다. **useEffect는 컴포넌트의 state를 활용해 동기적으로 부수 효과를 만드는 매커니즘**이다.
+
+#### <mark style="background-color:yellow;">함수 컴포넌트는 렌더링된 값을 고정하고 클래스 컴포넌트는 그렇지 못하다.</mark> 클래스 컴포넌트의 this vs 함수 컴포넌트의 클로저(closure) 차이
+
+* 만약 3초 사이에 props를 변경한다면
+  * 클래스 컴포넌트는 3초 뒤에 변경된 props를 기준으로 메시지가 뜬다.
+    * 클래스 컴포넌트는 props의 값을 항상 this로 부터 가져온다. (this에 바인딩된 props를 사용)
+    * this가 가리키는 객체, 즉 컴포넌트의 인스턴스 멤버는 변경 가능한 값이다.
+    * 따라서 render 메서드를 비롯한 리액트의 생명주기 메서드가 변경된 값을 읽을 수 있게 된다.
+    * 즉, 클래스 컴포넌트는 시간의 흐름에 따라 변화하는 this를 기준으로 렌더링이 일어난다.
+  * 함수 컴포넌트는 클릭했던 시점의 props값을 기준으로 메시지가 뜬다.
+    * 함수 컴포넌트는 props를 인수로 받는다.
+    * this와 다르게 인수로 받기 때문에 컴포넌트는 props값을 변경할 수 없다. 이러한 특성은 state도 마찬가지다.
+    * 함수 컴포넌트는 렌더링이 일어날 때마다 그 순간의 값인 props와 state를 기준으로 렌더링 된다.
+    * props와 state가 변경되면 다시 한번 그 값을 기준으로 함수가 호출
+* 예시
+
+```jsx
+// 클래스 컴포넌트: this 기반 (인스턴스 유지)
+class Timer extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      alert(this.props.message);
+    }, 3000);
+  }
+
+  render() {
+    return <p>{this.props.message}</p>;
+  }
+}
+
+클래스 컴포넌트는 한 번 new Timer()로 인스턴스가 생성되고, this 안에 props, state 같은 값이 “속성”으로 저장
+만약 부모가 3초 안에 props.message를 바꾼다면, this.props는 그 새 값을 가리킴
+setTimeout 안에서 3초 뒤 this.props를 읽으면 그 시점의 최신 props를 읽음
+즉, 클래스는 “인스턴스(객체)”가 살아 있어서 최신 값에 접근 가능
+
+// 함수 컴포넌트: 클로저 기반 (스냅샷 유지)
+function Timer({ message }) {
+  useEffect(() => {
+    setTimeout(() => {
+      alert(message);
+    }, 3000);
+  }, []);
+  return <p>{message}</p>;
+}
+
+함수 컴포넌트는 렌더링될 때마다 새로 호출
+useEffect 안의 setTimeout 콜백은 그 당시의 message 값을 기억한 클로저를 만든다.
+그 후 부모가 3초 안에 props를 바꿔도, 이미 만들어진 콜백은“3초 전 렌더링 당시의 message를 기억.그래서 3초 후 alert가 뜰 때는 그때의 message 값(이전 값)을 보여준다.
+즉, 함수 컴포넌트는 렌더링 시점의 값이 클로저에 캡처되어 있어서 바뀌지 않는다.
+
+
+```
+
+* React에서는 필요한 경우 이런 클로저에 **과거 값이 묶이는 문제**를 해결하기 위해 <mark style="background-color:yellow;">**useRef**</mark> <mark style="background-color:yellow;">같은 도구로 “</mark><mark style="background-color:yellow;">**클로저 안의 값 갱신**</mark><mark style="background-color:yellow;">”을 허용</mark>
+* 즉, 렌더링과 상관없이, 항상 최신 상태를 기억해야 하는 경우가 ref가 빛을 발하는 순간
+* React의 **ref는 렌더링 주기(render cycle)와 독립적인 저장소**. 그래서 React가 다시 렌더링되어도 값이 초기화되지 않고 그대로 남아 있다. 한 번 생성된 ref 객체는 컴포넌트가 리렌더링돼도 새로 만들어지지 않는다. 즉, Ref는 리렌더가 되어도 객체는 그대로 유지되고, 값이 바뀌면 그 객체의 **current프로퍼티**만 바뀐다.
+* ref는 컴포넌트가 다시 렌더링되어도 “같은 객체”로 유지되므로 클래스의 this처럼 동작할 수 있다.
+* **state는 화면(UI)을 위한 값**, **ref는 화면과 무관하지만 최신성을 유지해야 하는 값**
+* DOM 요소 최신 참조 유지할 때(포커스, 스크롤, 크기 측정 시 항상 최신 노드 필요), WebSocket 등
+
+```jsx
+// 최신 값을 참조하고 싶을 때 useRef
+function Timer({ message }) {
+  const messageRef = useRef(message);
+
+  useEffect(() => {
+    messageRef.current = message;
+  }, [message]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      alert(messageRef.current); // 항상 최신 값
+    }, 3000);
+  }, []);
+}
+```
+
+#### 데이터 fetch를 무조건 useEffect안에서 해야할까?
+
+* 옛날(React 16\~18)에는 useEffect 안에서 해야 했다.
+  * React의 render( )는 순수해야 하고 렌더링(render) 과정에서 side effect(부수효과) 를 발생시키면 안됨(네트워크 요청, DOM 조작, 타이머 같은 걸 넣으면 안 됨)
+  * 데이터 fetch는 네트워크 요청이니까 → 부수효과
+  * 그래서 이런 “렌더링 외부의 일”은 전부 useEffect 안으로 밀어넣는 게 원칙이었다.
+* React 18\~19 이후에는 무조건 useEffect일 필요는 없다.
+  *   React 18부터는 **서버 컴포넌트**(Server Components)와 React **Suspense for data fetching** 개념이 등장 → 이제는 렌더링 도중에 데이터를 읽는 패턴이 공식적으로 가능
+
+      ```tsx
+        // 서버 컴포넌트에서 직접 fetch (Next.js 13~15 / React 19)
+        export default async function Page() {
+          const res = await fetch('https://api.example.com/data');
+          const data = await res.json();
+
+        return <div>{data.title}</div>;
+      }
+
+      서버에서 렌더링하는 시점에 데이터를 미리가져오기 때문에
+      클라이언트(브라우저)에서는 이미 데이터가 준비된 상태이므로 useEffect로 따로 데이터를 다시 가져올 필요가 없다.
+
+
+        // Suspense + use (React 19)
+        import { use } from "react";
+
+        function DataView() {
+          const data = use(fetch("/api/data").then(res => res.json()));
+          return <p>{data.title}</p>;
+        }
+
+
+        React 19에서는 use()라는 새 훅을 도입
+        이제 useEffect 없이도 렌더링 도중 fetch 결과를 읽을 수 있다.
+        React는 자동으로 이 Promise를 감지해서 데이터가 도착할 때까지 Suspense로 렌더링을 일시 중단
+        즉, fetch는 이제 렌더링 도중에도 가능하고, React가 그걸 알아서 기다려주는 시대
+
+      ```
+* 클라이언트 컴포넌트에서도 꼭 useEffect가 필요한 경우
+* 여전히 **렌더링 이후에 실행해야 하는 작업**은 useEffect가 필요
+* **데이터 fetch 결과로 브라우저 전용 API(localStorage 등) 사용해야 할 때**(서버에서는 안 돌아감)
+* **사용자 상호작용 이후(클릭 등)에 fetch 해야 할 때(이벤트 기반)**
+*   예시
+
+    ```jsx
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      fetch(`/api/profile?token=${token}`)
+        .then((res) => res.json())
+        .then(setProfile);
+    }, []);
+    ```
+
+## 랜더링은 어떻게 일어나는가?
+
+### 리액트의 렌더링이란?
+
+* 브라우저가 렌더링에 필요한 **DOM 트리를 만드는 과정** (리액트 렌더링 → 브라우저 렌더링)
+* 즉, 리액트 애플리케이션 트리 안에 있는 모든 컴포넌트들이 현재 사진들이 가지고 있는 props와 state의 값을 기반으로 어떻게 UI를 구성하고 이를 바탕으로 **어떤 DOM 결과를 브라우저에 제공할 것인지** 계산하는 일련의 과정
+* 렌더링 과정을 최소화하는 것이 성능에 중요
+* <mark style="background-color:orange;">**리렌더링이 발생하는 경우**</mark>(리액트에서 리렌더링이 일어나는 경우는 아래의 시나리오 뿐이다.)
+  * 클래스 컴포넌트 setState 실행
+  * 클래스 컴포넌트 forceUpdate 실행
+  * 함수 컴포넌트 useState 두번째 배열 요소인 <mark style="background-color:yellow;">**setter 실행**</mark>
+  * 함수 컴포넌트 useReducer 두번째 배열 요소인 <mark style="background-color:yellow;">**dispatch 실행**</mark>
+  * **컴포넌트의&#x20;**<mark style="background-color:yellow;">**key props가 변경될 때**</mark>
+    * 리액트에서 key는 명시적으로 선언돼 있지 않아도 **모든 컴포넌트에서 사용할 수 있는 특수한 props**.
+    * key는 리렌더링이 발생하는 동안 형제 요소들 사이에서 동일한 요소를 식별하는 값
+      * 리렌더링이 발생하면 current 트리와 workInProgress 트리 사이에서 어떠한 컴포넌트가 변경이 있었는지 구별해야 하는데, 이 두 트리 사이에서 같은 컴포넌트인지를 구별하는 값이 바로 key다. 리렌더링이 필요한 컴포넌트를 최소화해야 하므로 반드시 필요.
+      * key가 없다면 단순히 파이버 내부의 sibling 인덱스만을 기준으로 판단하게 됨.
+    * key의 변화는 리렌더링을 야기. key를 활용해 강제로 리렌더링을 일으킬 수도 있다.
+    * memo로 선언돼 있다면 리렌더링이 발생하지 않는다.
+  * <mark style="background-color:yellow;">**props가 변경되는 경우**</mark>
+    * 부모로부터 전달받는 props가 달라지면 이를 사용하는 자식 컴포넌트에서도 변경이 필요하므로 리렌더링 발생
+  * <mark style="background-color:yellow;">**부모 컴포넌트가 렌더링 될 경우**</mark>
+    * 부모 컴포넌트가 리렌더링된다면 자식 컴포넌트도 무조건 리렌더링된다.
+* <mark style="background-color:orange;">**useState 등으로 관리 되지 않는 단순한 변수는 제아무리 변경된다 해도 리렌더링을 발생시키지 않아 변경된 값을 렌더링된 DOM에서 확인할 수 없다.**</mark>
+  * React는 useState, useReducer 같은 상태 관리 훅으로 선언된 값만 추적하고,
+  * 단순 변수는 React가 변경된 걸 몰라서 렌더링을 다시 실행하지 않는다.
+  * 그래서 **값은 바뀌었더라도, 화면(DOM)에는 반영되지 않는다.**
+  * 때문에 MobX나 Redux같은 라이브러리는 mobx-react, react-redux와 같은 리액트 패키지를 설치해야한다.
+    * MobX나 Redux는 각자의 방법으로 상태를 관리해 주지만 이 상태 관리가 리액트의 리렌더링으로 이어지지 않기 때문에 mobx-react, react-redux같은 패키지가 변경된 상태를 바탕으로 위에서 언급한 리렌더링을 일으키는 방법 중 하나를 사용해 리렌더링을 발생시키는 것.
+
+### 렌더와 커밋
+
+* 리액트의 렌더링은 렌더 단계와 커밋 단계로 분리되어 실행
+* 렌더 단계:
+  * **컴포넌트를 렌더링**하고 **변경 사항을 계산**
+  * 렌더링 프로세스에서 컴포넌트를 실행해 이 결과와 이전 가상 DOM을 **비교**하는 과정을 거쳐 변경이 필요한 컴포넌트를 체크하는 단계(**재조정**)
+  * 여기서 비교하는 것은 크게 3가지: **type, props, key** 이 중 하나라도 변경된 것이 있으면 변경이 필요한 컴포넌트로 체크
+* 커밋 단계:
+  * 렌더 단계의 변경 사항을 실제 DOM에 **적용**해 **사용자에게 보여주는 과정**
+  * **이 단계가 끝나야 브라우저의 렌더링이 발생한다.**
+* 리액트가 먼저 DOM을 커밋단계에서 업데이트하면 이렇게 만들어진 모든 DOM노드 및 인스턴스를 가리키도록 리액트 내부의 참조를 업데이트 한다.
+* 그 다음 생명주기 개념이 있는 클래스 컴포넌트에서는 componentDidMount, componentDidUpdate 메서드를 호출하고, 함수 컴포넌트에서는 useLayoutEffect 훅을 호출한다.
+* 중요한 것은 리액트의 렌더링이 일어난다고 해서 무조건 DOM 업데이트가 일어나는 것은 아니라는 사실
+  * 렌더링 과정 중 첫번째 단계인 렌더 단계에서 변경 사항을 감지할 수 없다면 커밋 단계가 생략되어 브라우저의 DOM업데이트가 일어나지 않을 수 있다.
+  * 렌더링을 수행했으나 커밋 단계까지 갈 필요가 없다면, 즉 변경 사항을 계산했는데 아무런 변경 사항이 감지 되지 않는다면 **커밋 단계는 생략될수 있다.**
+  * 즉, 리액트의 렌더링은 꼭 가시적인 변경이 일어나지 않아도 발생할 수 있다.
+* **렌더**와 커밋 과정으로 이뤄진 리액트의 렌더링은 항상 동기식
+  * Fiber 이후에도 커밋은 항상 동기식이다.\
+    달라진 건 “**렌더 단계**가 중단·재개 가능한 비동기(동시성)로 바뀌었다”는 점이다.
+  * 사용자가 하나의 상태에 대해 여러 다른 UI를 보게 될 수 있고 사용자에게 혼란을 줄 수 있기 때문
+  * 하지만 렌더링 과정이 길어질수록 애플리케이션 성능 저하로 이어지고 결과적으로 그 시간 만큼 브라우저의 다른 작업을 지연시킬 가능성이 있다.
+* <mark style="background-color:yellow;">동시성 렌더링</mark>이 리액트18에서 도입됐다. (<mark style="background-color:yellow;">비동기 렌더링</mark>)
+  * **의도된 우선순위로 컴포넌트를 렌더링**해 최적화할 수 있는 비동기 렌더링
+  * B의 컴포넌트 렌더링 작업이 무거워 상대적으로 빠르게 렌더링 할 수 있는 C라도 변경해서 보여주는 식
+  * 렌더 단계가 비동기로 작동해 **특정 렌더링의 우선순위**를 낮추거나 필요하다면 **중단하거나 재시작하거나 경우에 따라서는 포기할 수 있다.** React에서 **동시성(concurrent) 렌더링이 가능해진 근본적인 이유는 Fiber 아키텍처 덕분.**
+  * 이를 통해 브라우저의 동기 작업을 차단하지 않고 백그라운드에서 새로운 리액트 트리를 준비할 수도 있으므로 더욱 매끄러운 사용자 경험 가능
+* 컴포넌트를 렌더링 하는 작업은 별도로 렌더링을 피하기 위한 조치가 돼 있지 않는 한 하위 모든 컴포넌트에 영향을 미친다. 그리고 부모가 변경됐다면 props가 변경됐는지와 상관없이 무조건 자식 컴포넌트도 리렌더링 된다. 즉, 루트에서 무언가 렌더링을 발생시키는 작업이 일어난다는 것은 모든 하위 컴포넌트의 리렌더링을 트리거.
+  * memo로 래핑하면 렌더 단계에서 컴포넌트 비교를 거치지만 props가 변경되지 않으면 렌더링이 생략되므로 커밋 단계가 생략된다.
+* **컴포넌트의 트리 구조를 개선**하거나 **불필요한 렌더링 횟수를 줄임**으로써 성능 좋은 리액트 웹 애플리케이션을 만들 수 있다.
+
+## 컴포넌트와 함수의 무거운 연산을 기억해 두는 메모이제이션
+
+* 리액트에서 제공하는 API 중 **useMemo, useCallback 훅, 고차 컴포넌트 memo** 는 렌더링을 최소화
+* 트레이드 오프를 항상 고려하자
+  * 렌더링이 자주 일어나는 컴포넌트를 어떻게 알수 있지?
+  * 무거운 연산의 기준이 뭐지?
+  * 렌더링 비용과 메모이제이션 비용 중 어떤게 더 비싸지?
+* 섣부른 메모이제이션을 지양하는 자세를 견지하면서 실제 어느 지점에서 성능상 이점을 누릴 수 있는지 살펴보는 식으로 메모이제이션을 적용.
+
+### 주장1: 섣부를 최적화(premature optimization, premature memoization)는 독이다. 꼭 필요한 곳에만 메모이제이션을 추가하자
+
+* 미리 렌더링이 많이 될 것 같은 부분을 예측해 메모이제이션하는 섣부른 최적하는 옳지 않다.
+* 일단 애플리케이션을 어느 정도 만든 이후에 **개발자 도구나 useEffect를 사용해 실제로 어떻게 렌더링이 일어나고 있는지 확인하고** 필요한 곳에서만 최적화 하는 것이 옳다.
+* 가벼운 작업은 메모이제이션해서 자바스크립트 메모리 어딘가에 두었다가 다시 꺼내오는 것보다 매번 이 작업을 수행해 결과를 반환하는것이 더 빠를수 있다.
+* 메모이제이션도 비용이 든다.
+  * **값을 비교하고 렌더링 또는 재계산이 필요한지 확인하는 비용**
+  * **이전에 결과물을 저장해 두었다가 다시 꺼내오는 비용**
+* 리액트 공식문서(19)
+  * “React Compiler automatically memoizes values and functions, reducing the need for manual useMemo calls.”
+  * useMemo를 사용하지 않고도 작동할 수 있도록 코드를 작성하고 최적화
+
+### 주장2: 렌더링 과정의 비용은 비싸다. 모조리 메모이제이션해 버리자
+
+* 해당 컴포넌트가 렌더링이 자주 일어나고 그 렌더링 사이에 비싼 연산이 포함돼 있고, 심지어 그 컴포넌트가 자식 컴포넌트 또한 많이 가지고 있을 경우
+* 메모이제이션은 컴포넌트 자신의 리렌더링 뿐 아니라 이를 **사용하는 쪽에서도 변하지 않는 고정된 값을 사용할 수 있다는 믿음**을 준다.
+* 메모이제이션이 비록 섣부른 조치라도 이를 **실수로 빠트렸을때 치러야 할 위험 비용이 더 크기 때문에 최적화에 대한 확신이 없다면 가능한 모든 곳에 메모이제이션을 활용**하는 것이 좋다.
+* **성능에 대해 지속적으로 모니터링하고 관찰하는 것보다 섣부르더라도 메모이제이션 최적화가 주는 이점**이 더 클수 있다.
+* 메모이제이션 비용
+  * 잘못된 memo로 지불해야 하는 비용은 바로 **props에 대한 얕은 비교가 발생하면서 지불해야 하는 비용 뿐이다.**
+    * 메모이제이션을 위해서는 CPU와 메모리를 사용해 이전 렌더링 결과물을 저장해 둬야 하고, 리렌더링할 필요가 없다면 이전 결과물을 사용해야 한다.
+    * 그런데 **리액트는 기본적으로 재조정 알고리즘으로 인해 이전 렌더링 결과를 다음 렌더링과 구별하기 위해 저장한다.** 즉, 어차피 리액트의 기본적인 알고리즘 때문에 이전 결과물은 어떻게든 저장되고 있다. **따라서 우리가 치뤄야 하는 비용은 props에 대한 얕은 비교뿐인 것이다.**
+    * 일반적으로 props에 대한 얕은 비교를 수행하는 것보다 **리액트 컴포넌트의 결과물을 다시 계산하고 실제 DOM까지 비교하는 작업이 더 무겁고 비싸다.**
+    * 조금이라도 로직이 들어간 컴포넌트는 메모이제이션이 성능 향상에 도움을 줄 가능성이 크다.
+    * useCallback의 경우 대부분 다른 컴포넌트의 props로 넘어가는 경우가 많을 것이다. 이 props로 넘어갔을 때 참조 투명성을 유지하기 위해서는 useCallback을 사용하는 것이 좋다. useMemo또한 마찬가지다. 물론 이 비용 또한 무시할 수 없다. props가 크고 복잡해진다면 이 비용 또한 커진다.
+    * 그러나 메모이제이션을 하지 않았을때 치러야 할 잠재적인 위험 비용이 더 크다.
+* 반면 메모이제이션을 하지 않았을 때의 비용
+  * 렌더링을 함으로써 발생되는 비용
+  * 컴포넌트 내부의 복잡한 로직의 재실행
+  * 위 두가지 모두가 모든 자식 컴포넌트에서 반복해서 일어남
+  * 리액트가 구 트리와 신규 트리를 비교
+  * useMemo와 useCallback을 사용해 의존성 배열을 비교하고 필요에 따라 값을 **재계산** 하는 과정과 이러한 처리 없이 값과 함수를 매번 **재생성**하는 비용 중에서 **무엇이 더 저렴한지 매번 계산해야한다.** 그렇다면 이 또한 무조건 메모이제이션 하는 방법을 먼저 고민해 볼 필요가 있다.
+  * 리렌더링이 발생할때 메모이제이션하지 않는 다면 모든 객체는 재생성되고 결과적으로 참조가 달라진다. 이 참조가 useEffect와 같은 의존성 배열에 쓰이고 있다면 변경된 참조로 인해 다른쪽에도 영향을 미칠 것이다.
