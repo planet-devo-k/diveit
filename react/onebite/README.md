@@ -5,36 +5,37 @@
 - 본 스터디는 팀원 개별 스케줄에 맞춰 자율적으로 강의를 수강하며, 학습 내용은 개인별 테이블에 기록합니다.
 - 목표: **강의 총 94강**
 
-  <details>
-  <summary>시은 schedule</summary>
+<details>
+<summary>시은 schedule</summary>
 
-  <br/>기간: 2026-03-01 ~ 2026-03-08
+기간: 2026-03-01 ~ 2026-03-08
 
-    <table>
-      <thead>
-        <tr>
-          <th>주차</th>
-          <th>날짜</th>
-          <th>범위</th>
-          <th>관련 이슈</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>3/1</td>
-          <td>0.1~2.5 원시타입 vs 객체타입</td>
-          <td>null</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>3/8</td>
-          <td>2.6~13.1 마무리, 총 정리 및 <a href="./sgoldenbird/retrospective.md">회고</a></td>
-          <td>null</td>
-        </tr>
-      </tbody>
-    </table>
-  </details>
+<table>
+  <thead>
+    <tr>
+      <th>주차</th>
+      <th>날짜</th>
+      <th>범위</th>
+      <th>관련 이슈</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>3/1</td>
+      <td>0.1~2.5 원시타입 vs 객체타입</td>
+      <td>null</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>3/8</td>
+      <td>2.6~13.1 마무리, 총 정리 및 <a href="./sgoldenbird/retrospective.md">회고</a></td>
+      <td>null</td>
+    </tr>
+  </tbody>
+</table>
+
+</details>
 
 ## Members
 

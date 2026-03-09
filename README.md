@@ -20,7 +20,7 @@
     </tr>
     <tr>
       <td><strong>한입 크기로 잘라먹는 리액트</strong></td>
-      <td>2026.03 ~ 2026.0</td>
+      <td>2026.03 ~ 2026.03</td>
       <td>리액트 핵심 개념 복습</td>
       <td><a href="./react/onebite/README.md">View Link</a></td>
     </tr>
