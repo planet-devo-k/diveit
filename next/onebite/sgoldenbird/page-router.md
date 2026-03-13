@@ -81,7 +81,9 @@
 ### 리액트 data fetching
 
 * 리액트에서 데이터 패칭은 컴포넌트 마운트 시점에 호출. 즉 컴포넌트가 렌더링 된 이후에 호출되니까 애초에 데이터 요청 자체가 늦다.
-* 가뜩이나 csr이라 초기렌더링이 늦는데 데이터 패칭도 늦게 요청 ![리액트에서의 데이터 fetching](../.gitbook/assets/react-datafetching.png) ![리액트에서의 데이터 fetching2](../.gitbook/assets/react-datafetching2.png)
+* 가뜩이나 csr이라 초기렌더링이 늦는데 데이터 패칭도 늦게 요청
+
+&#x20;![리액트에서의 데이터 fetching](../.gitbook/assets/react-datafetching.png) ![리액트에서의 데이터 fetching2](../.gitbook/assets/react-datafetching2.png)
 
 ### 넥스트 data fetching
 
@@ -97,7 +99,7 @@
   * 사전렌더링하는 과정에서 한번만 실행. 서버측에서만 실행
   * getServerSideProps의 리턴값은 props 프로퍼티를 포함하는 하나의 객체여야함\
     그래야 next가 props를 페이지 역할하는 컴포넌트에 전달
-* SSR하는 페이지 역할 컴포넌트는 서버에서 한번 실행된(사전렌더링) 후 브라우저에서도 실행(하이드레이션)\
+* SSR 하는 페이지 역할 컴포넌트는 서버에서 한번 실행된(사전렌더링) 후 브라우저에서도 실행(하이드레이션)\
   → 콘솔 서버랑 브라우저 둘 다 출력. window객체 사용 불가
 * 브라우저에서만 실행하는 코드는 useEffect사용
 * 검색 페이지 같이 query string, url parameter 등을 읽어와서 해당 q 데이터 받아와야하는 경우 context 매개변수 사용
@@ -153,7 +155,9 @@
 * SSG방식으로 생성된 정적 페이지를 일정 시간을 주기로 다시 생성하는 것
 * 60초로 설정하면 60초 이후 첫번째 요청 발생시 이전 버전 먼저 반환하고 동시에 서버 뒷단에서 새로운 버전 만듦.
 * SSG장점(빠르게 응답)+SSR장점(최신 데이터 업데이트)
-* getStaticProps의 return에 `revalidate: 초` 추가 ![isr](../.gitbook/assets/isr.png)
+* getStaticProps의 return에 `revalidate: 초` 추가
+
+&#x20;![isr](../.gitbook/assets/isr.png)
 
 #### 주문형 재검증 on-Demand-ISR
 
@@ -167,13 +171,13 @@
 * 리액트와 달리 각 페이지별 메타태그 설정 가능
   * import Head from "next/head" 사용. `<Head>` 안에 html 메타태그 적듯이 작성
   * import Head from "next/document": \_document파일에서만 사용되는 컴포넌트
-* dynamic SSG fallback: true 인 경우, 미리 static에 등록한 경로가 아닌 경로로 요청한다면, 데이터 채우기 전 html을 먼저 사용자에게 보내기때문에 설정한 메타태그가 적용되지 않는다.s\
+* dynamic SSG fallback: true 인 경우, 미리 static에 등록한 경로가 아닌 경로로 요청한다면, 데이터 채우기 전 html을 먼저 사용자에게 보내기때문에 설정한 메타태그가 적용되지 않는다.\
   또한 조건문 `if(router.isFallback) return "로딩중입니다"`같은 처리가 되어있어도 메타태그 적용 안됨. 하지만 조건문 여부와 관계없이 위와같은 이유로 적용안됨.\
   → 이럴때는 위 조건문의 return 값으로 기본 메타태그라도 넣는다.
 
 ## Vercel에 배포하기
 
-* `npm install -g vercel` `sudo npm install -g vercel``pnpm add -g vercel`: vercel package 설치
+* `npm install -g vercel` `sudo npm install -g vercel` `pnpm add -g vercel`: vercel package 설치
 * `vercel login`
 * `vercel` 터미널로 배포
 * 백엔드 서버도 같이 배포해서 배포된 백엔드 서버로부터 데이터를 불러와야함.
@@ -225,9 +229,12 @@
 ### 3. 불필요한 컴포넌트들도 JS Bundle에 포함된다.
 
 * 불필요한 컴포넌트: 상호작용 기능이 없어서 브라우저에서 한 번 더 실행이 되어 하이드레이션 될 필요 없는 컴포넌트들
-  * 넥스트 컴포넌트들 2번 실행
-    * 서버 측에서 사전 렌더링을 진행하기 위해 최초로 한번 실행
-    * 브라우저 측에서 하이드레이션을 위해 한번 더 실행 ![넥스트 컴포넌트 2번 실행](../.gitbook/assets/twice.png)
+  *   넥스트 컴포넌트들 2번 실행
+
+      * 서버 측에서 사전 렌더링을 진행하기 위해 최초로 한번 실행
+      * 브라우저 측에서 하이드레이션을 위해 한번 더 실행
+
+      &#x20;![넥스트 컴포넌트 2번 실행](../.gitbook/assets/twice.png)
 * FCP 이후에 hydration을 위해 JS bundle을 서버가 브라우저로 보낼때 JS상호작용에 필요하지 않은 컴포넌트들도 같이 묶어서 보낸다.
   * 참고로 Link 태그 페이지 이동은 하이퍼링크로 동작하는 HTML 고유의 기능이지 JS가 동작해서 이벤트를 처리해주는 상호작용 기능이 아니다.
 * 넥스트의 컴포넌트들은 상호작용이 있는 컴포넌트와 없는 컴포넌트들이 있는데 없는 컴포넌트들이 더 많다. 상호작용 없는 컴포넌트들은 단순히 UI만 렌더링. 상호작용이 없는 컴포넌트들은 사전 렌더링에서 HTML로 변환만 되면 됨. JS Bundle에 포함되어 브라우저에서 한번 더 실행될 필요가 없다.\
