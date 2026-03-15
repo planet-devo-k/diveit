@@ -26,37 +26,44 @@
     </tr>
     <tr>
       <td>1</td>
-      <td>3/8</td>
-      <td>1.1~ 3.15</td>
-      <td>시은, 수진</td>
+      <td>3/15</td>
+      <td>1.1 ~ 2.15</td>
+      <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>3/15</td>
-      <td>3.16~5</td>
-      <td>시은, 수진</td>
+      <td>3/22</td>
+      <td>2.16 ~ 4</td>
+      <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>3/22</td>
-      <td>6~7</td>
-      <td>시은, 수진</td>
+      <td>3/29</td>
+      <td>5 ~ 6</td>
+      <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>3/29</td>
-      <td>8~10</td>
-      <td>시은, 수진</td>
+      <td>4/5</td>
+      <td>7 ~ 8</td>
+      <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>5</td>
-      <td>4/5</td>
+      <td>4/12</td>
+      <td>9 ~ 10</td>
+      <td>시은, 수진, 유진</td>
+      <td>null</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>4/19</td>
       <td>총 정리 및 회고</td>
-      <td><a href="./sgoldenbird/retrospective.md">시은</a>, 수진</td>
+      <td><a href="./sgoldenbird/retrospective.md">시은</a>, 수진, 유진</td>
       <td>null</td>
     </tr>
   </tbody>
@@ -67,7 +74,7 @@
 - 송시은 [sgoldenbird](https://github.com/sgoldenbird)
 - 손수진 [pappaya109](https://github.com/pappaya109)
   <!-- - 조인성 [Insung-Jo](https://github.com/Insung-Jo) -->
-  <!-- - 전유진 [yuj2n](https://github.com/yuj2n) -->
+- 전유진 [yuj2n](https://github.com/yuj2n) 
 
 ## Workflow
 
