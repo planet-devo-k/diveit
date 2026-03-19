@@ -1,5 +1,7 @@
 # DIVEIT: 깊게 파고들고, 넓게 공유하라
 
+[![Discord Join](https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join%20Community&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/8vn2pZ6p)
+
 이 공간은 개발 기술을 깊이 탐구하는 Diveit 스터디 기록 아카이브입니다.
 <br/>모든 정리 자료와 질의 응답 및 토론 내용은 이 레포와 GitBook Space에 문서화됩니다.
 
