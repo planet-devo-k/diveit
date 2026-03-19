@@ -1,4 +1,4 @@
-# 🪐 DIVEIT: 깊게 파고들고, 넓게 공유하라
+# DIVEIT: 깊게 파고들고, 넓게 공유하라
 
 이 공간은 개발 기술을 깊이 탐구하는 Diveit 스터디 기록 아카이브입니다.
 <br/>모든 정리 자료와 질의 응답 및 토론 내용은 이 레포와 GitBook Space에 문서화됩니다.
@@ -156,3 +156,13 @@ PR/CR 및 이슈 규칙
         </tr>
       </tbody>
     </table>
+---
+이 레포지토리에 포함된 강의 코드 및 관련 자료의 저작권은 원저작자에게 있습니다. 
+<br/>해당 자료는 교육적 목적으로만 사용되었으며, 원저작자의 허가 없는 무단 복제 및 배포를 금합니다.
+<br/>[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/) 강의 내용을 바탕으로 본인이 직접 작성한 학습 정리 및 노트는 CC BY-NC-SA 4.0 라이선스를 따릅니다.
+
+
+
+
+
+
