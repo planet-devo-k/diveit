@@ -114,17 +114,15 @@
 
 ## Rules
 
-그라운드 룰
+**Ground Rules**
 - [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules) 
 
-PR/CR 및 이슈 규칙
-
+**PR/CR & Issue**
 - 질문이 있다면 해당 PR에 question label을 추가하고, PR 본문, Discussions 탭의 [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)등을 활용해 질문 및 답변을 공유합니다.
 - **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 커밋 메시지 규칙에 맞게 작성하세요.
 - 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
 
-커밋 규칙
-
+**Commit**
 - 정해진 분량 만큼 정리한 내용을 커밋합니다.
 - 각 스터디별 커밋 메시지 작성 규칙을 따릅니다. 아래는 예시입니다.
     <table>
@@ -132,7 +130,7 @@ PR/CR 및 이슈 규칙
         <tr>
           <th >Type</th>
           <th >Description</th>
-          <th>Example Message</th>
+          <th>Example</th>
         </tr>
       </thead>
       <tbody>
