@@ -6,7 +6,6 @@
 </p>
 !-->
 
-# <p align="center">DIVEIT: 깊게 파고들고, 넓게 공유하라 <a href="https://discord.gg/8vn2pZ6p"><img src="https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join&logo=discord&logoColor=white&style=flat-square" align="right"></a></p>
 # <p align="center">DIVEIT: 깊이 있는 학습 <a href="https://discord.gg/8vn2pZ6p"><img src="https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join&logo=discord&logoColor=white&style=flat-square" align="right"></a></p>
 
 
@@ -116,13 +115,7 @@
 ## Rules
 
 그라운드 룰
-
-- 공유를 통한 동반 성장: 아는 것은 나누고 모르는 것은 질문합니다. 지식의 선순환이 우리 모두의 실력을 만듭니다.
-- 질문은 자유롭고, 설명은 친절하게: 모르는 것은 창피한 것이 아닙니다. 모든 Q&A는 우리의 자산입니다.
-- 함께 성장하기: 경쟁보다 협업! 서로를 존중하며 배우는 문화를 지향합니다.
-- 책임감 있는 학습: 매주 정한 분량은 꾸준히. 사정이 생기면 미리 공유합니다.
-- 프로페셔널한 연습: 커밋 메시지, PR 제목 등 협업 도구 사용도 실전처럼 연습합니다.
-- 지속 가능한 스터디를 위해 필요에 따라 유연하게 조정합니다. 피드백을 바탕으로 같이 가꿔나가요.
+- [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules) 
 
 PR/CR 및 이슈 규칙
 
@@ -134,7 +127,6 @@ PR/CR 및 이슈 규칙
 
 - 정해진 분량 만큼 정리한 내용을 커밋합니다.
 - 각 스터디별 커밋 메시지 작성 규칙을 따릅니다. 아래는 예시입니다.
-
     <table>
       <thead>
         <tr>
