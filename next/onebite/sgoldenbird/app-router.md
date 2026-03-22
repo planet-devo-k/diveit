@@ -30,7 +30,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
 ## 라우팅 설정
 
-* page라는 이름의 파일만 페이지 라우터로 취급 ![라우팅 설정1](../.gitbook/assets/route1.png) ![라우팅 설정2](../.gitbook/assets/route2.png)
+* page라는 이름의 파일만 페이지 라우터로 취급 ![라우팅 설정1](../../../.gitbook/assets/route1.png) ![라우팅 설정2](../../../.gitbook/assets/route2.png)
 * query string, url parameter 등이 페이지 컴포넌트의 props로 전달된다. Promise 객체 타입에 프로퍼티로 담겨있다.
   * Promise 객체는 반드시 await로 먼저 결과를 확정한 뒤에 프로퍼티에 접근해야 합니다.
   * note:
@@ -103,7 +103,7 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
 * 넥스트의 사전 렌더링 과정
   * 서버 컴포넌트가 먼저 실행 → → RSC payload(JSON과 비슷한 형태의 문자열)생성 → 클라이언트 컴포넌트들이 뒤이어 실행 → RSC payload + 클라이언트 컴포넌트 ⇒ HTML 페이지 완성
   * RSC payload: RSC의 순수한 데이터(결과물). RSC를 직렬화 한 결과 - RSC payload에는 서버 컴포넌트의 모든 데이터가 포함되어있다.
-  * 서버 컴포넌트의 렌더링 결과 - 연결된 클라이언트 컴포넌트의 위치 - 클라이언트 컴포넌트에게 전달하는 Props값 등 ![RSC payload](../.gitbook/assets/rsc-payload.png)
+  * 서버 컴포넌트의 렌더링 결과 - 연결된 클라이언트 컴포넌트의 위치 - 클라이언트 컴포넌트에게 전달하는 Props값 등 ![RSC payload](../../../.gitbook/assets/rsc-payload.png)
 
 ## Navigating(페이지 이동)
 
@@ -112,7 +112,7 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
   * rsc + js bundle
 * 단, 앱라우터에서는 페이지 이동시에 JS bundle뿐 아니라 RSC payload도 함께 전달
   * JSBundle에는 클라이언트 컴포넌트들만 포함되기 때문
-  * 서버컴포넌트를 실행한 결과물인 RSC payload도 함께 보냄 ![앱 라우터 페이지 이동](../.gitbook/assets/app-navigating.png)
+  * 서버컴포넌트를 실행한 결과물인 RSC payload도 함께 보냄 ![앱 라우터 페이지 이동](../../../.gitbook/assets/app-navigating.png)
 * 서버컴포넌트로만 되어있다면 페이지 이동시 JS bundle에 포함될 클라이언트 컴포넌트가 없으므로 그냥 rsc페이로드만 전달
   * 클라이언트 컴포넌트를 리턴한다면 해당 컴포넌트(페이지)로 이동 시 JS bundle도 전달되는 것 확인
 
@@ -137,7 +137,7 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
 
 ### 페이지 라우터
 
-![페이지 라우터 data fetching](../.gitbook/assets/page-datafetching.png)
+![페이지 라우터 data fetching](../../../.gitbook/assets/page-datafetching.png)
 
 * 페이지 라우터에서는 Page 컴포넌트 안에 데이터 패칭 로직을 작성하면 서버 뿐 아니라 브라우저에서도 한번 더 실행되기 때문에 서버측에서만 데이터를 불러오기 위해서 getServerSideProps, getStaticProps 같은 특수한 함수를 이용해야한다. → 서버측 모든 데이터는 컴포넌트 트리 최상단에 위치하는 Page컴포넌트에게만 props로 전달되다보니 props drilling
 
@@ -156,8 +156,8 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
 * 영구적으로 데이터를 보관해 불필요한 데이터 페칭을 방지하거나 특정 시간을 주기로 갱신 시키는 것도 가능
 *   캐시 옵션
 
-    * no-store: 데이터 패칭 결과 저장하지 않음. 캐싱을 아예 하지 않도록 설정. v15기본값 ![data cache no-store](../.gitbook/assets/cache-no-store.png)
-    * force-cache: 요청 결과 무조건 캐싱. 한번 호출된 이후에는 다시는 호출하지 않음. 캐싱된 데이터는 JSON형태로 넥스트 서버에 보관(.next/cache/fetch-cache/) ![data cache force-cache](../.gitbook/assets/cache-force-cache.png)
+    * no-store: 데이터 패칭 결과 저장하지 않음. 캐싱을 아예 하지 않도록 설정. v15기본값 ![data cache no-store](../../../.gitbook/assets/cache-no-store.png)
+    * force-cache: 요청 결과 무조건 캐싱. 한번 호출된 이후에는 다시는 호출하지 않음. 캐싱된 데이터는 JSON형태로 넥스트 서버에 보관(.next/cache/fetch-cache/) ![data cache force-cache](../../../.gitbook/assets/cache-force-cache.png)
     * {next: {revalidate: 3\}}
       * 특정 시간을 주기로 캐시 업데이트(3초 주기로 업데이트)
       * 페이지 라우터의 ISR 방식과 유사
@@ -179,13 +179,13 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
 ### Request Memoization
 
 * 데이터 캐시로 데이터 패치를 최적화
-* 넥스트가 하나의 페이지를 렌더링하는 동안에 발생하는 중복된 API요청을 자동 캐싱. ![request memoization 1](../.gitbook/assets/request-memoization1.png) ![request memoization 2](../.gitbook/assets/request-memoization2.png)
+* 넥스트가 하나의 페이지를 렌더링하는 동안에 발생하는 중복된 API요청을 자동 캐싱. ![request memoization 1](../../../.gitbook/assets/request-memoization1.png) ![request memoization 2](../../../.gitbook/assets/request-memoization2.png)
 * request memoization은 데이터 캐시와 다르다.
   * 하나의 페이지를 렌더링 하는 동안 중복된 API요청을 캐싱하기 위해 존재.
   * 하나의 요청으로 받은 데이터를 동일한 페이지의 모든 컴포넌트에서 사용할수 있음
   * 렌더링이 종료되면 모든 캐시가 소멸된다. (새로고침 누르면 다시 API 요청)
 
-![request memoization은 렌더링이 종료되면 캐시 소멸](../.gitbook/assets/request-memoization3.png)
+![request memoization은 렌더링이 종료되면 캐시 소멸](../../../.gitbook/assets/request-memoization3.png)
 
 * 서버 컴포넌트가 도입되면서 컴포넌트가 각각 필요한 데이터를 패칭하다보니 API 중복 호출되는 경우 종종 있었음.
 * 데이터 캐시는 백엔드 서버로 부터 불러온 데이터를 거의 영구적으로 보관하기 위해 사용. 서버 가동중에는 영구적으로 보관된다.
@@ -196,16 +196,15 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
 * SSG와 유사
 * 넥스트의 모든 페이지는 static 또는 dynamic으로 분류. 단, 서버 컴포넌트만 해당됩니다. (클라이언트 컴포넌트는 페이지 유형에 영향을 미치지 않음) 즉, Next.js가 페이지를 빌드할 때, 해당 페이지가 정적인지 동적인지를 결정하는 기준은 오직 서버 컴포넌트의 동작에만 달려 있다.
   * static page: dynamic 페이지가 아니면 기본적으로 모두 static page (default)
-  * dynamic page: 특정 페이지가 접속 요청을 받을때마다 매번 변화가 생기거나 데이터가 달라질 경우
-    *
-      1. 캐시되지 않는 data fetching을 사용할 경우 (revalidate option은 다이나믹 페이지를 만드는 옵션 아님)
+  * dynamic page: 특정 페이지가 접속 요청을 받을때마다 매번 변화가 생기거나 데이터가 달라질 경우 \*
+    1. 캐시되지 않는 data fetching을 사용할 경우 (revalidate option은 다이나믹 페이지를 만드는 옵션 아님)
     *
       2. 동적함수(cookies(), headers(), searchParams)를 사용하는 컴포넌트가 있을 때
-* 그 중 static page에만 full route cache가 적용. ![full route cache1](../.gitbook/assets/full-route-cache1.png) ![full route cache2](../.gitbook/assets/full-route-cache2.png)
+* 그 중 static page에만 full route cache가 적용. ![full route cache1](../../../.gitbook/assets/full-route-cache1.png) ![full route cache2](../../../.gitbook/assets/full-route-cache2.png)
 * full route cache도 revalidate이 가능하다. (ISR처럼)
   * 페이지를 구성하는 서버 컴포넌트 중 하나라도 fetch요청에 revalidate이 되어있다면 데이터가 revalidate되면서 자동으로 풀 라우트 캐시도 revalidate된다.
 
-![full route cache revalidate](../.gitbook/assets/full-route-cache-revalidate.png)
+![full route cache revalidate](../../../.gitbook/assets/full-route-cache-revalidate.png)
 
 * 동적 경로를 갖는 페이지를 static 페이지로 설정하려면 generateStaticParams 사용
 * generateStaticParams를 사용하면 페이지 내부에 데이터 캐싱이 설정되지 않은 데이터 패칭이 존재해도 무조건 해당 페이지는 static 페이지가 된다.
@@ -252,7 +251,7 @@ export const dynamicParams = false; // 기본값은 true
 * dynamic page에 자주 사용된다.
   * dynamic page는 full route cache가 되지 않기 때문에.
 
-![스트리밍](../.gitbook/assets/streaming.png)
+![스트리밍](../../../.gitbook/assets/streaming.png)
 
 ### 페이지(Page 컴포넌트) 스트리밍
 
@@ -301,7 +300,7 @@ export default function Page(){} 는 스트리밍 안됨
 * 클라이언트인 브라우저에서 특정 폼의 제출 이벤트가 발생했을 때 서버에서만 실행되는 함수를 브라우저가 직접 호출해 실행하고, 데이터까지 폼데이터 형식으로 전달할 수 있게 해주는 기능
 * 기존에 API를 통해서만 진행했어야 했던 브라우저와 서버 간의 데이터 통신을 자바스크립트 함수 하나만으로 간결하게 설정.
 
-![서버 액션](../.gitbook/assets/server-action.png)
+![서버 액션](../../../.gitbook/assets/server-action.png)
 
 ```tsx
 export default function Page() {
@@ -349,12 +348,12 @@ export default function Page() {
 revalidatePath(`/book/${bookId}`);
 ```
 
-![revalidatePath full route cache](../.gitbook/assets/revalidatePath-fullroutecache.png)
+![revalidatePath full route cache](../../../.gitbook/assets/revalidatePath-fullroutecache.png)
 
 * 빌드타임이 종료되고 revalidatePath로 재검증 요청 → full route cache, data cache 제거 → 현재 사용자가 보고있는 화면을 업데이트하기 위해 새롭게 페이지 생성: 이때는 full route cache에 페이지가 업데이트되지 않는다. → 모든 과정이 종료되고 브라우저로부터 다음번에 요청이 들어왔을때 실시간으로 다시 페이지 생성하면서 이때 full route cache에 페이지 업데이트. 이때는 dynamic page처럼 실시간으로 페이지가 생성되다보니 비교적 느린 응답이 올 수 있다.
 * 이렇게 동작하는 이유는 revalidate 요청 이후 브라우저에서 이 페이지에 접속했을때 무조건 최신화된 데이터를 보장하기 위해.
 
-![revalidatePath](../.gitbook/assets/revalidatePath.png)
+![revalidatePath](../../../.gitbook/assets/revalidatePath.png)
 
 * revalidatePath의 두번째 인수로 layout 또는 page를 넘길수 있다.
 
@@ -524,11 +523,11 @@ children은 그냥 기존의 페이지를(상세페이지 클릭 전 페이지) 
 */
 ```
 
-![modal intercepting+parallel](../.gitbook/assets/modal-intercepting-parallel.png)
+![modal intercepting+parallel](../../../.gitbook/assets/modal-intercepting-parallel.png)
 
 ## 이미지 최적화
 
-![다양한 이미지 최적화 기법들](../.gitbook/assets/image-optimization.png)
+![다양한 이미지 최적화 기법들](../../../.gitbook/assets/image-optimization.png)
 
 * next는 대부분의 최적화 기법들이 자체적으로 제공. next의 Image컴포넌트를 사용하면 위 사진의 최적화기법들 다 적용됨.
   * 뷰포트에 렌더링될 필요 없는 이미지들은 lazy loading
@@ -571,7 +570,7 @@ export default nextConfig;
 
 ## 검색 엔진 최적화 SEO
 
-![검색 엔진 최적화 다양한 방법](../.gitbook/assets/seo.png)
+![검색 엔진 최적화 다양한 방법](../../../.gitbook/assets/seo.png)
 
 * route segment option처럼 해당 page component 또는 layout 컴포넌트에 metadata 변수 선언, export 하면 자동으로 그 페이지 메타 데이터 설정
 * 트위터를 위한 메타태그들도 우리가 입력한 값을 기반으로 자동으로 설정됨

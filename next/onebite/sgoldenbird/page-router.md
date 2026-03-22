@@ -83,13 +83,13 @@
 * 리액트에서 데이터 패칭은 컴포넌트 마운트 시점에 호출. 즉 컴포넌트가 렌더링 된 이후에 호출되니까 애초에 데이터 요청 자체가 늦다.
 * 가뜩이나 csr이라 초기렌더링이 늦는데 데이터 패칭도 늦게 요청
 
-&#x20;![리액트에서의 데이터 fetching](../.gitbook/assets/react-datafetching.png) ![리액트에서의 데이터 fetching2](../.gitbook/assets/react-datafetching2.png)
+![리액트에서의 데이터 fetching](../../../.gitbook/assets/react-datafetching.png) ![리액트에서의 데이터 fetching2](../../../.gitbook/assets/react-datafetching2.png)
 
 ### 넥스트 data fetching
 
 * 넥스트는 다양한 pre rendering 방식 제공
-  * 사전 렌더링 중 요청이 들어왔을 때 JS 렌더링 단계에서 data fetching도 미리 하도록 설정 가능 ![넥스트에서의 데이터 fetching](../.gitbook/assets/next-datafetching.png)
-  * 만약 데이터 용량이 엄청 크거나 서버 이상 등으로 fetch 시간이 오래걸리면 유저는 그동안 빈화면을 보게됨 → 넥스트는 빌드타임에 사전렌더링을 하도록 설정할 수도 있다. SSG ![넥스트 빌드타임 사전렌더링, 데이터 fetching](../.gitbook/assets/next-build-datafetching.png) ![넥스트의 다양한 사전 렌더링 방식 SSR, SSG, ISR](../.gitbook/assets/next-various-pre-rendering.png)
+  * 사전 렌더링 중 요청이 들어왔을 때 JS 렌더링 단계에서 data fetching도 미리 하도록 설정 가능 ![넥스트에서의 데이터 fetching](../../../.gitbook/assets/next-datafetching.png)
+  * 만약 데이터 용량이 엄청 크거나 서버 이상 등으로 fetch 시간이 오래걸리면 유저는 그동안 빈화면을 보게됨 → 넥스트는 빌드타임에 사전렌더링을 하도록 설정할 수도 있다. SSG ![넥스트 빌드타임 사전렌더링, 데이터 fetching](../../../.gitbook/assets/next-build-datafetching.png) ![넥스트의 다양한 사전 렌더링 방식 SSR, SSG, ISR](../../../.gitbook/assets/next-various-pre-rendering.png)
 
 ### SSR
 
@@ -114,7 +114,7 @@
 * 사전 렌더링에 많은 시간이 소요되는 페이지더라도 빌드타임에 미리 만들어 두기 때문에 사용자의 요청에는 매우 빠른속도로 응답 가능
 *   매번 같은 페이지만 응답함. 최신 데이터 반영은 어렵다.
 
-    ![ssg1](../.gitbook/assets/ssg1.png) ![ssg2](../.gitbook/assets/ssg2.png)
+    ![ssg1](../../../.gitbook/assets/ssg1.png) ![ssg2](../../../.gitbook/assets/ssg2.png)
 * getStaticProps에 전달되는 context에는 query string이 없다. 정적인 페이지에서 query string을 써야한다면 getStaticProps가 아닌 페이지 컴포넌트 안에서 useRouter().query.q 와 useEffect사용. state에 보관. 즉, 기본 SSG 방식(getStaticProps없는)으로 동작.
 *   동적 경로를 갖는 페이지를 getStaticProps로 SSG로 만들고 싶다면 getStaticPaths 필요
 
@@ -131,7 +131,7 @@
     }
     ```
 
-    ![동적 경로에 SSG 적용하기1](../.gitbook/assets/dynamic-ssg1.png)
+    ![동적 경로에 SSG 적용하기1](../../../.gitbook/assets/dynamic-ssg1.png)
 * fallback 옵션
   * false: paths에 미리 설정하지 않은 경로는 not found 반환
   * blocking: 즉시 생성(SSR처럼)
@@ -140,7 +140,7 @@
     * blocking은 SSR의 단점과 마찬가지로 사전렌더링이 오래걸리면 사용자가 로딩을 기다려야한다.
     * true는 props(페이지에 필요한 데이터)없는 페이지만 일단 바로 반환. 즉, getStaticProps함수 호출은 생략하고 페이지 컴포넌트만 먼저 보냄 → 사용자가 긴 로딩시간 대신 데이터 없는 페이지 먼저 본다.
 
-![fallback blocking](../.gitbook/assets/fallback-blocking.png) ![fallback true](../.gitbook/assets/fallback-true.png)
+![fallback blocking](../../../.gitbook/assets/fallback-blocking.png) ![fallback true](../../../.gitbook/assets/fallback-true.png)
 
 #### 빌드 후 콘솔에 찍히는 기호
 
@@ -157,13 +157,13 @@
 * SSG장점(빠르게 응답)+SSR장점(최신 데이터 업데이트)
 * getStaticProps의 return에 `revalidate: 초` 추가
 
-&#x20;![isr](../.gitbook/assets/isr.png)
+![isr](../../../.gitbook/assets/isr.png)
 
 #### 주문형 재검증 on-Demand-ISR
 
 * 시간과 관계없이 사용자의 행동 또는 특정 조건에 따라 데이터가 업데이트되는 페이지는 ISR로 구현하기 어렵다.(e.g. 게시글 수정, 삭제)
   * SSR은 요청이 들어올때마다 실행되니까 응답이 늦어질수도 있고 사용자가 많으면 서버 부하
-* 요청을 받을때마다 페이지를 다시 생성하는 ISR인 on-Demand-ISR 사용 ![on-Demand-ISR](../.gitbook/assets/on-demand-isr.png)
+* 요청을 받을때마다 페이지를 다시 생성하는 ISR인 on-Demand-ISR 사용 ![on-Demand-ISR](../../../.gitbook/assets/on-demand-isr.png)
 * api route에서 특정 경로에대한 revalidate 처리. 이 route로 요청하면 그 페이지가 revalidate됨.
 
 ## SEO 설정하기
@@ -234,7 +234,7 @@
       * 서버 측에서 사전 렌더링을 진행하기 위해 최초로 한번 실행
       * 브라우저 측에서 하이드레이션을 위해 한번 더 실행
 
-      &#x20;![넥스트 컴포넌트 2번 실행](../.gitbook/assets/twice.png)
+      ![넥스트 컴포넌트 2번 실행](../../../.gitbook/assets/twice.png)
 * FCP 이후에 hydration을 위해 JS bundle을 서버가 브라우저로 보낼때 JS상호작용에 필요하지 않은 컴포넌트들도 같이 묶어서 보낸다.
   * 참고로 Link 태그 페이지 이동은 하이퍼링크로 동작하는 HTML 고유의 기능이지 JS가 동작해서 이벤트를 처리해주는 상호작용 기능이 아니다.
 * 넥스트의 컴포넌트들은 상호작용이 있는 컴포넌트와 없는 컴포넌트들이 있는데 없는 컴포넌트들이 더 많다. 상호작용 없는 컴포넌트들은 단순히 UI만 렌더링. 상호작용이 없는 컴포넌트들은 사전 렌더링에서 HTML로 변환만 되면 됨. JS Bundle에 포함되어 브라우저에서 한번 더 실행될 필요가 없다.\
