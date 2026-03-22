@@ -26,6 +26,7 @@
 
 - 송시은 [sgoldenbird](https://github.com/sgoldenbird)
 - 손수진 [pappaya109](https://github.com/pappaya109)
+- 전유진 [yuj2n](https://github.com/yuj2n)
 
 ## Workflow
 
