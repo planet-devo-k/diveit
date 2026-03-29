@@ -32,70 +32,70 @@
       <td>null</td>
     </tr>
     <tr>
-      <td>2</td>
+      <td></td>
       <td>10/9 (추석)</td>
       <td>즐거운 휴일</td>
       <td></td>
       <td>null</td>
     </tr>
     <tr>
-      <td>3</td>
+      <td>2</td>
       <td>10/23</td>
       <td>1.7 ~ Ch2</td>
       <td>시은, 유진</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>4</td>
+      <td>3</td>
       <td>11/15</td>
       <td>Ch3 ~ 4.2</td>
       <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>5</td>
+      <td>4</td>
       <td>11/22</td>
       <td>4.3 ~ Ch5</td>
       <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>6</td>
+      <td>5</td>
       <td>11/29</td>
       <td>Ch6 ~ 8.1</td>
       <td>수진</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>7</td>
+      <td>6</td>
       <td>12/07</td>
       <td>8.2 ~ 9.3</td>
       <td>유진</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>8</td>
+      <td>7</td>
       <td>12/28</td>
       <td>9.4 ~ Ch10</td>
       <td>인성</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>9</td>
+      <td>8</td>
       <td>01/04</td>
       <td>Ch11 ~ Ch12</td>
       <td>시은</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>10</td>
+      <td>9</td>
       <td>01/11</td>
       <td>Ch13 ~ Ch15</td>
       <td>시은</td>
       <td>null</td>
     </tr>
     <tr>
-      <td>11</td>
+      <td>10</td>
       <td>01/18</td>
       <td>총 정리 및 회고</td>
       <td><a href="./sgoldenbird/retrospective.md">시은</a>, 수진, 유진, 인성</td>
