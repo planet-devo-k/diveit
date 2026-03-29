@@ -19,49 +19,49 @@
   <tbody>
     <tr>
       <td>0</td>
-      <td>3/1</td>
+      <td>3/15</td>
       <td>OT</td>
       <td></td>
       <td>null</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>3/15</td>
+      <td>3/22</td>
       <td>1.1 ~ 2.15</td>
       <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>2</td>
-      <td>3/22</td>
+      <td>3/29</td>
       <td>2.16 ~ 4</td>
       <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>3/29</td>
+      <td>4/5</td>
       <td>5 ~ 6</td>
       <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>4</td>
-      <td>4/5</td>
+      <td>4/12</td>
       <td>7 ~ 8</td>
       <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>5</td>
-      <td>4/12</td>
+      <td>4/19</td>
       <td>9 ~ 10</td>
       <td>시은, 수진, 유진</td>
       <td>null</td>
     </tr>
     <tr>
       <td>6</td>
-      <td>4/19</td>
+      <td>4/26</td>
       <td>총 정리 및 회고</td>
       <td><a href="./sgoldenbird/retrospective.md">시은</a>, 수진, 유진</td>
       <td>null</td>
