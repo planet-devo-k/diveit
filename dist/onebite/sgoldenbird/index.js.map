@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "",
+  "sources": [
+    "../../../typescript/onebite/sgoldenbird/index.ts"
+  ],
+  "names": [],
+  "mappings": "AAAA,OAAO,CAAC,GAAG,CAAC,MAAM,CAAC,CAAC"
+}
