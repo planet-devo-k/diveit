@@ -6,7 +6,7 @@
 </p>
 !-->
 
-# <p align="center">DIVEIT: 깊이 있는 학습 <a href="https://discord.gg/8vn2pZ6p"><img src="https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join&logo=discord&logoColor=white&style=flat-square" align="right"></a></p>
+# <p align="center">DIVEIT<a href="https://discord.gg/8vn2pZ6p"><img src="https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join&logo=discord&logoColor=white&style=flat-square" align="right"></a></p>
 
 
 이 공간은 개발 기술을 깊이 탐구하는 Diveit 스터디 기록 아카이브입니다.
