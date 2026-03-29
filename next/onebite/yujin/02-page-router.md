@@ -403,3 +403,302 @@ export const getStaticPaths = () => {
 ```
 
 ---
+
+### 2.16
+
+#### Fallback 옵션 설정하기
+
+- `fallback` 상태 : **Page** 컴포넌트가 아직 서버로부터 데이터를 전달받지 못한 상태
+
+#### 1. `fallback: false` - 404 NotFound
+
+![alt text](image-21.png)
+
+#### 2. `fallback: “blocking”` - **SSR** 방식으로 사전 렌더링
+
+![alt text](image-22.png)
+
+- `book/4`와 같은 경로에 접근하게 되면 해당 id(4)와 **매칭되는 데이터가 있는 경우**, **SSR** 방식으로 사전 렌더링이 진행됨 → 이때 로딩이 길어지면 아무것도 보이지 않음
+
+![alt text](image-23.png)
+
+![alt text](image-24.png)
+
+- `book/100`과 같이 매칭 데이터가 없어 존재하지 않는 경로는 **NotFound** 페이지가 보임
+
+#### 3. `fallback: true` - **SSR** 방식 + 데이터가 없는 폴백 상태의 페이지부터 반환한 이후 데이터 후속 전송
+
+![alt text](image-25.png)
+
+- `“blocking”`과 비슷하게 **SSR** 방식으로 사전 렌더링이 진행되지만, 로딩 중인 경우 빈 페이지가 아닌 로딩 페이지를 보여줄 수 있음
+
+![alt text](image-26.png)
+
+![alt text](image-27.png)
+
+![alt text](image-28.png)
+
+- `fallback` 상태의 로딩 **text** : `router.isFallback` 프로퍼티로 반환 가능
+
+```jsx
+export default function Page(//...) {
+	const router = useRouter();
+
+	// 데이터를 기다리는 중
+	if (router.isFallback) return "로딩중입니다";
+
+	return (
+		// ...
+	)
+}
+
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  // !로 undefined가 아닐거라 단언
+  const id = context.params!.id;
+  // string으로 불러와지므로 Number 형변환
+  const book = await fetchOneBook(Number(id));
+
+	// fallback: true인 경우에만 사용 가능
+  if (!book) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { book },
+  };
+};
+```
+
+---
+
+### 2.17
+
+#### ISR : 증분 정적 재생성
+
+- ISR = Incremental Static Regeneration
+- **SSG** 방식으로 생성된 정적 페이지를 일정 시간을 주기로 **재생성**하는 기술
+- SSG의 단점: 속도는 빠르지만 최신 데이터 반영이 어려웠음
+
+![alt text](image-29.png)
+
+**ISR**의 특징
+
+![alt text](image-30.png)
+
+- 유통기한 설정 가능 → 일정 주기로 페이지 업데이트
+
+![alt text](image-31.png)
+
+- 유통기한이 지났다고 바로 업데이트가 이루어지는 것이 아닌 유통기한 이후 첫 요청 이후인 두번째 요청부터 업데이트 발생
+- 매우 빠른 속도로 응답(**SSG**의 장점) + 최신 데이터 반영 가능(**SSR**의 장점)
+
+#### `getStaticProps`의 리턴값으로 revalidate 프로퍼티로 적용 가능
+
+```jsx
+export const getStaticProps = async () => {
+  console.log("인덱스 페이지");
+
+  // 등록된 모든 도서와 추천 도서를 동시에 병렬로 작동
+  const [allBooks, recoBooks] = await Promise.all([
+    fetchBooks(),
+    fetchRandomBooks(),
+  ]);
+
+  return {
+    props: {
+      allBooks,
+      recoBooks,
+    },
+    // 유통기한: 초 단위
+    revalidate: 3,
+  };
+};
+```
+
+---
+
+### 2.18
+
+#### ISR. 주문형 재 검증(On-Demand-ISR)
+
+- **ISR**을 적용하기 어려운 페이지: 시간과 관계없이 사용자의 행동에 따라 데이터가 업데이트되는 페이지
+- `Api Routes`를 통해 요청을 받았을 때 특정 페이지를 재생성하도록 만들 수 있음
+
+→ 1. 사용자의 행동에 따라서 데이터가 업데이트 된다거나 2. 특정 조건에 의해 업데이트 되어야하는 페이지를 정적 페이지로서 유지하고 싶을 때 아래와 같이 사용 가능
+
+```jsx
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
+  try {
+    // index 경로 재생성
+    await res.revalidate("/");
+    return res.json({ revalidate: true });
+  } catch (err) {
+    if (err) res.status(500).send("Revalidation Failed");
+  }
+}
+```
+
+- [`localhost:3000/api/revalidate`](http://localhost:3000/api/revalidate) 경로를 통해 index 페이지를 재생성할 수 있음
+
+* 이러한 ISR 방식은 대부분의 케이스를 커버할 수 있는 굉장히 강력한 사전 렌더링 방식이기 때문에 최근 넥스트로 구축된 웹 서비스들에서 활발히 사용중 → 향후 Next로 구현 시 사용해보기!
+
+---
+
+### 2.19
+
+#### SEO 설정하기
+
+- `Head` 컴포넌트를 불러와 **return** 문 최상단에 `<Head>` 태그를 통해 작성 가능
+- `index` 페이지뿐 아닌 `search` 페이지, 동적 `id` 페이지에도 적용 가능
+- **SSG** 방식으로 동작할 때 fallback 옵션이 true로 설정되어 있는 경우 초기 데이터가 없는 폴백 상태의 페이지(로딩페이지)부터 반환 → **SEO**가 적용 안될 수 있음
+
+#### Fallback 상태에도 SEO 적용하기
+
+```jsx
+if (router.isFallback)
+  return (
+    <>
+      <Head>
+        <title>한입북스</title>
+        <meta property="og:image" content="/thumbnail.png" />
+        <meta property="og:title" content="한입북스" />
+        <meta
+          property="og:description"
+          content="한입 북스에 등록된 도서들을 만나보세요"
+        />
+      </Head>
+      <div>로딩중입니다</div>
+    </>
+  );
+```
+
+#### 제목, 이미지와 같은 데이터 정보가 있는 경우
+
+```tsx
+<Head>
+  <title>{title}</title>
+  <meta property="og:image" content={coverImgUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+</Head>
+```
+
+---
+
+### 2.20
+
+#### 배포하기
+
+- **Next.js**는 보통 **Vercel**을 통해 배포 → **Vercel**이 **Next.js** 만든 회사
+
+#### 배포 절차
+
+1. `npm install -g vercel`
+2. `vercel login`
+3. `vercel`
+
+이 때, 백엔드 서버도 배포가 이루어지지 않으면 도서 내용이 보이지 않음 → 백엔드 서버도 배포!
+
+1. `vercel` 또는 `vercel --prod`
+
+- 제 경우 그냥 vercel을 입력했을 때 **환경 변수를 못 읽어서** 에러(500)가 발생했고 두번째 명령어로 모든 환경변수를 읽어와서 제대로 배포가 되었음
+
+#### 인덱스 페이지와 특정 도서 페이지에 맞는 SEO가 잘 나옴
+
+![alt text](image-32.png)
+
+![alt text](image-33.png)
+
+---
+
+### 2.21
+
+#### Page Router 정리
+
+- 장점
+  1. 파일 시스템 기반의 간편한 페이지 라우팅 제공
+  2. 다양한 방식의 사전 렌더링 제공
+- 단점
+  1. 페이지별 레이아웃 설정이 번거로움
+  2. 데이터 패칭이 페이지 컴포넌트에 집중됨
+  3. 불필요한 컴포넌트들도 JS Bundle에 포함
+
+#### 파일 시스템 기반의 간편한 페이지 라우팅
+
+- `[id].tsx` : 동적 경로 ← book/1 … book/100
+- `[…id].tsx` : Catch All Segment ← book/1 … book/123/456
+- `[[…id]].tsx` : Optional Catch All Segment ← book, book/1, book/123/456 …
+
+#### 다양한 방식의 사전 렌더링
+
+**Next.js** - 기존 느린 **FCP** 해결하기 위해 접속 요청이 오면 서버 측에서 JS를 실행해 렌더링된 HTML 응답
+
+1. `SSR` : 요청이 들어올 때마다 사전 렌더링 진행 - JS 실행 딜레이 존재 → 응답 속도 느려짐
+2. `SSG` : 빌드 타임에 미리 페이지를 사전 렌더링 해둠 - 매번 같은 페이지만 응답
+3. `ISR` : **SSG** 페이지 일정 시간마다 재생성/유통기한 및 사용자 요청 - 최신 데이터 반영 가능
+
+#### 페이지별 레이아웃 설정의 번거로움
+
+- 레이아웃 적용하는 과정이 어렵고 레이아웃이 적용되길 원하는 페이지마다 `getLayout` 메서드 추가 필요 → `app router`에서는 **layout** 파일 하나만으로 손쉽게 페이지 별 레이아웃 설정 가능
+
+```jsx
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  // 3. 페이지에 getLayout 메서드가 있으면 사용하고, 없으면 기본값(페이지 그대로 반환) 설정
+  const getLayout = Component.getLayout ?? ((page: ReactNode) => page);
+
+  return (
+    <GlobalLayout>
+      {/* 4. getLayout 함수 안에 현재 컴포넌트를 넣어 실행 */}
+      {getLayout(<Component {...pageProps} />)}
+    </GlobalLayout>
+  );
+}
+```
+
+#### 데이터 패칭이 페이지 컴포넌트에 집중됨
+
+특정 페이지에 필요한 데이터를 사전 렌더링 과정에서 서버 측에서 불러오게 하려면 `getServerSideProps`/`getStaticProps` 함수로 데이터를 백엔드 서버로부터 불러와 페이지 컴포넌트에게 **Props** 형태로 전달해서 자유롭게 사용 가능
+
+```jsx
+export const getServerSideProps = async () => { // 1. 서버 측에서 실행되는 함수 (SSR)
+  // (... 데이터 페칭 로직 중략)
+  return {
+    props: {
+      allBooks,
+      recoBooks,
+    },
+  };
+};
+
+// 2. 홈 페이지 컴포넌트
+export default function Home({ allBooks, recoBooks,}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return (
+				// ...
+  );
+}
+```
+
+- 만약 `Page` 컴포넌트 아래 자식 컴포넌트들이 많아지면 **Props Drilling**이 이루어지는 경우 데이터를 전달하는 과정이 복잡해질 수 있음
+
+#### 불필요한 컴포넌트들도 JS Bundle에 포함
+
+![alt text](image-34.png)
+
+불필요한 컴포넌트: 상호작용을 하는 기능이 없는 컴포넌트
+
+![alt text](image-35.png)
+
+- 모든 `React` 컴포넌트들은 **JS**를 실행하여 렌더링 된 **HTML**을 전송하기 위해 서버에서 1번, **JS Bundle**을 통해 **hydration**이 이루어져 상호작용이 가능해지기 위해 브라우저 측에서 1번, 총 2번 실행됨
+
+실습만해도 Search 바 이외에는 상호작용이 없는 컴포넌트가 훨씬 많음
+
+상호작용 없는 컴포넌트들이 브라우저 측에서 한 번 더 실행될 필요 X → 서버에서만 한 번 실행되면 됨
+
+`Page Router`는 이 불필요한 컴포넌트들도 **JS Bundle**에 포함시켜 용량도 커지고 **hydration**의 시간도 길어져 상호작용이 가능해지기까지 오래 걸리게 됨! → `App Router`에서는 이를 Server Component
