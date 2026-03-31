@@ -8,7 +8,6 @@
 
 # <p align="center">DIVEIT<a href="https://discord.gg/8vn2pZ6p"><img src="https://img.shields.io/discord/1374753887902498929?color=7289DA&label=Join&logo=discord&logoColor=white&style=flat-square" align="right"></a></p>
 
-
 이 공간은 개발 기술을 깊이 탐구하는 Diveit 스터디 기록 아카이브입니다.
 <br/>모든 정리 자료와 질의 응답 및 토론 내용은 이 레포와 GitBook Space에 문서화됩니다.
 
@@ -115,16 +114,29 @@
 ## Rules
 
 **Ground Rules**
-- [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules) 
 
-**PR/CR & Issue**
-- 질문이 있다면 해당 PR에 question label을 추가하고, PR 본문, Discussions 탭의 [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)등을 활용해 질문 및 답변을 공유합니다.
-- **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 커밋 메시지 규칙에 맞게 작성하세요.
+- [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules)
+
+**PR**
+
+- 매주 **스터디 시작 1시간 전**까지 `main` 브랜치로 PR을 제출합니다.
+- PR 정책은 트랙마다 상이합니다. 자세한 내용은 해당 트랙의 리드미를 확인해주세요.
+
+**Issue**
+
+- 질의응답
+  - [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)활용
+  - 해당 PR에 question label 추가
+  - 해당 PR에 이슈 넘버 추가
+
+**GitBook**
+
 - 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
+- **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 커밋 메시지 규칙에 맞게 작성하세요.
 
 **Commit**
+
 - 정해진 분량 만큼 정리한 내용을 커밋합니다.
-- 각 스터디별 커밋 메시지 작성 규칙을 따릅니다. 아래는 예시입니다.
     <table>
       <thead>
         <tr>
@@ -146,23 +158,21 @@
         </tr>
         <tr>
           <td><code>docs: </code></td>
-          <td><strong>메인 문서 관리</strong><br />README 및 가이드라인 수정</td>
+          <td><strong>메인 문서 관리</strong><br />README 업데이트</td>
           <td><code>docs: update README</code></td>
         </tr>
         <tr>
           <td><code>chore: </code></td>
-          <td><strong>기타 변경 사항</strong><br />파일 이동, 폴더 구조 정리 등</td>
+          <td><strong>기타 변경 사항</strong><br /></td>
           <td><code>chore: move assets</code></td>
         </tr>
       </tbody>
     </table>
+
 ---
+
 <p align="right">
-  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
-    <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" alt="License: CC BY-NC-SA 4.0">
-  </a>
-  <br/>
-  <sub><b>Course Materials</b>: Copyright © Original Author. All rights reserved.</sub>
-  <br/>
-  <sub><b>Study Notes</b>: Copyright © 2026 sgoldenbird. Licensed under CC BY-NC-SA 4.0.</sub>
+  <sub><b>Original Resources</b>: Copyright © Original Author. All rights reserved.</sub>
+  <sub><b>Infrastructure & Systems</b>: © 2026 sgoldenbird. All rights reserved.</sub>
+  <sub><b>Participant Works</b>: Copyright © 2026 planet-devo-k. All rights reserved.</sub>
 </p>
