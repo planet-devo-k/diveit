@@ -26,11 +26,7 @@
 - 송시은 [sgoldenbird](https://github.com/sgoldenbird)
 - 손수진 [pappaya109](https://github.com/pappaya109)
 
-## Workflow
-
-- [Study Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
+## [Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
 - 각 스터디 별 상세한 workflow는 위의 View Link를 클릭해 해당 스터디의 README에서 확인
 
-## Rules
-
-- [그라운드 룰, PR/CR 및 이슈 규칙, 커밋 규칙](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
+## [Rules](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
