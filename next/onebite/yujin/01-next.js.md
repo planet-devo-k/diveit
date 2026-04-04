@@ -2,7 +2,7 @@
 
 ### 1.1
 
-![alt text](image.png)
+![alt text](image/image.png)
 
 - `Next.js`:
   - `React.js`를 보다 강력하고 편하게 사용할 수 있는 기능들을 제공
@@ -10,17 +10,17 @@
   - 빌트인 최적화 기능
   - 다이나믹 HTML 스트리밍
 
-![alt text](image-1.png)
+![alt text](image/image-1.png)
 
 - 실제 사이트: 카카오 웹툰/Velog/OP.GG/인프런/랠릿
 - **Next.js의 인기** 이유? Library가 아닌 Framework이기 때문이 아닐까
 
-![alt text](image-2.png)
+![alt text](image/image-2.png)
 
 - `React`: UI 개발을 위한 JS 라이브러리 ←→ Next: React 전용의 웹 개발 프레임워크
 - 프레임워크: 주도권을 개발자가 아닌 Framework가 가지므로 자유도가 낮음
 
-![alt text](image-3.png)
+![alt text](image/image-3.png)
 
 - 예시
   - `React`에서 페이지 라우팅 기능을 구현하는 경우 → React Router/TanStack Router 선택 가능
@@ -34,18 +34,18 @@
 
 ### 1.2
 
-![alt text](image-4.png)
+![alt text](image/image-4.png)
 
 - React의 렌더링
   1. 유저가 초기 접속 요청 시 빈껍데기(index.html)을 전송하여 빈 화면을 렌더링함
   2. JS Bundle을 전송하여 JS를 실행하여 컨텐츠를 렌더링하게 됨(화면이 보임)
 - `CSR(Client Side Rendering)`: 페이지 이동이 매우 빠르고 쾌적하지만 FCP(초기 접속 속도)가 느림
 
-![alt text](image-5.png)
+![alt text](image/image-5.png)
 
 - `FCP(first contentful paint)`: 사용자가 접속 후 화면에 첫 번째 콘텐츠가 나타나는 시점
 
-![alt text](image-6.png)
+![alt text](image/image-6.png)
 
 - **사전 렌더링**
   - Client Side Rendering의 단점을 효율적으로 해결하는 기술
@@ -86,7 +86,7 @@
 
 ### 1.4
 
-![alt text](image-7.png)
+![alt text](image/image-7.png)
 
 - Next에서 제공하는 Router
   - Page Router - 구 버전
