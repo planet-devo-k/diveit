@@ -1,3 +1,4 @@
+# Next
 <!--
 <p align="right">
   <a href="https://discord.gg/8vn2pZ6p">
@@ -59,39 +60,7 @@
 
 - 송시은 [sgoldenbird](https://github.com/sgoldenbird)
 - 손수진 [pappaya109](https://github.com/pappaya109)
-- 조인성 [Insung-Jo](https://github.com/Insung-Jo)
 - 전유진 [yuj2n](https://github.com/yuj2n)
-
-## Structure & Workflow
-
-본 저장소는 다음과 같은 구조와 흐름으로 구성되어 있습니다.
-
-- Domain별로 브랜치를 나누어 학습하고, 최종 결과물은 `main` 브랜치에 통합합니다.
-- 폴더 구조
-
-  ```
-  [domain]/[topic]/[member]/[content.md]
-  e.g.typescript/sgoldenbird/ch01-introduction.md
-  ```
-
-- 브랜치 갱신 가이드
-
-  ```
-  아래와 같은 과정을 거쳐 이전 학습 내용이 main에 merge되면 기존 자신의 브랜치를 삭제하고
-  현재 학습하고자 하는 도메인을 base branch로 하여 새로운 개인 브랜치를 생성합니다.
-
-  # 로컬 브랜치 삭제
-  git branch -D [예전-브랜치명]
-
-  # 원격 브랜치 삭제
-  git push origin --delete [예전-브랜치명]
-
-  # 베이스 브랜치로 이동 및 최신화
-  git checkout [학습할 도메인 브랜치(베이스 브랜치)]
-  git pull origin [학습할 도메인 브랜치(베이스 브랜치)]
-
-  # 새로운 자기 브랜치 생성 및 이동
-  git checkout -b [새-브랜치명]
 
   # 원격(GitHub)에 새 브랜치 등록 및 푸시
   git push -u origin [새-브랜치명]
@@ -113,30 +82,7 @@
 
 ## Rules
 
-**Ground Rules**
-
-- [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules)
-
-**PR**
-
-- 매주 **스터디 시작 1시간 전**까지 `main` 브랜치로 PR을 제출합니다.
-- PR 정책은 트랙마다 상이합니다. 자세한 내용은 해당 트랙의 리드미를 확인해주세요.
-
-**Issue**
-
-- 질의응답
-  - [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)활용
-  - 해당 PR에 question label 추가
-  - 해당 PR에 이슈 넘버 추가
-
-**GitBook**
-
-- 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
-- **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 커밋 메시지 규칙에 맞게 작성하세요.
-
-**Commit**
-
-- 정해진 분량 만큼 정리한 내용을 커밋합니다.
+- [그라운드 룰, PR/CR 및 이슈 규칙, 커밋 규칙](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
     <table>
       <thead>
         <tr>
@@ -158,16 +104,25 @@
         </tr>
         <tr>
           <td><code>docs: </code></td>
-          <td><strong>메인 문서 관리</strong><br />README 업데이트</td>
+          <td><strong>메인 문서 관리</strong><br />README 및 가이드라인 수정</td>
           <td><code>docs: update README</code></td>
         </tr>
         <tr>
           <td><code>chore: </code></td>
-          <td><strong>기타 변경 사항</strong><br /></td>
+          <td><strong>기타 변경 사항</strong><br />파일 이동, 폴더 구조 정리 등</td>
           <td><code>chore: move assets</code></td>
         </tr>
       </tbody>
     </table>
+<p align="right">
+  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+    <img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" alt="License: CC BY-NC-SA 4.0">
+  </a>
+  <br/>
+  <sub><b>Course Materials</b>: Copyright © Original Author. All rights reserved.</sub>
+  <br/>
+  <sub><b>Study Notes</b>: Copyright © 2026 sgoldenbird. Licensed under CC BY-NC-SA 4.0.</sub>
+</p>
 
 ---
 

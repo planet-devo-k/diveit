@@ -2,6 +2,11 @@ local/
 .vscode/
 node_modules/
 dist/
+<<<<<<< HEAD
 .env
 .vercel/
 .vercel
+=======
+pnpm-debug.log
+.env
+>>>>>>> 0260a345483cf9dd5684217bbe67d6fc3a6e7713
