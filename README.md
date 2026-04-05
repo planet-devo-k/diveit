@@ -1,4 +1,5 @@
 # Next
+
 <!--
 <p align="right">
   <a href="https://discord.gg/8vn2pZ6p">
@@ -63,7 +64,10 @@
 - 전유진 [yuj2n](https://github.com/yuj2n)
 
   # 원격(GitHub)에 새 브랜치 등록 및 푸시
+
   git push -u origin [새-브랜치명]
+
+  ```
 
   ```
 
@@ -82,34 +86,20 @@
 
 ## Rules
 
-<<<<<<< HEAD
-- [그라운드 룰, PR/CR 및 이슈 규칙, 커밋 규칙](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
-=======
 **Ground Rules**
 
 - [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules)
 
-**PR**
+**PR/CR & Issue**
 
-- 매주 **스터디 시작 1시간 전**까지 `main` 브랜치로 PR을 제출합니다.
-- PR 정책은 트랙마다 상이합니다. 자세한 내용은 해당 트랙의 리드미를 확인해주세요.
-
-**Issue**
-
-- 질의응답
-  - [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)활용
-  - 해당 PR에 question label 추가
-  - 해당 PR에 이슈 넘버 추가
-
-**GitBook**
-
-- 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
+- 질문이 있다면 해당 PR에 question label을 추가하고, PR 본문, Discussions 탭의 [Q&A](https://github.com/planet-devo-k/diveit/discussions/categories/q-a)등을 활용해 질문 및 답변을 공유합니다.
 - **GitBook**에서 작업 시 상단의 <mark style="background-color:yellow;">**CR 제목**</mark>을 커밋 메시지 규칙에 맞게 작성하세요.
+- 깃북의 목차와 구조를 결정하는 SUMMARY.md를 작성합니다.
 
 **Commit**
 
 - 정해진 분량 만큼 정리한 내용을 커밋합니다.
->>>>>>> b10ac2725babfcd4e142401f38f8fe790edbcc7b
+- 각 스터디별 커밋 메시지 작성 규칙을 따릅니다. 아래는 예시입니다.
     <table>
       <thead>
         <tr>
@@ -141,12 +131,9 @@
         </tr>
       </tbody>
     </table>
-<<<<<<< HEAD
-=======
 
 ---
 
->>>>>>> b10ac2725babfcd4e142401f38f8fe790edbcc7b
 <p align="right">
   <sub><b>Original Resources</b>: Copyright © Original Author. All rights reserved.</sub>
   <sub><b>Infrastructure & Systems</b>: © 2026 sgoldenbird. All rights reserved.</sub>
