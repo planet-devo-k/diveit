@@ -182,7 +182,7 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
     - 페이지 라우터의 ISR 방식과 유사
     - 3초 지나고 첫 요청은 우선 stale한 데이터라도 먼저 보내고 업데이트
 
-  ![data cache revalidate](next\onebite\sgoldenbird\assets\cache-revalidate.png)
+  ![data cache revalidate](./assets/cache-revalidate.png)
   - {next: {tags: \['a']\}}
     - on-Demand Revalidate
     - 요청이 들어왔을 때 데이터를 최신화
