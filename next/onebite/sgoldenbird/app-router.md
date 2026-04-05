@@ -182,7 +182,7 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
     - 페이지 라우터의 ISR 방식과 유사
     - 3초 지나고 첫 요청은 우선 stale한 데이터라도 먼저 보내고 업데이트
 
-  [data cache revalidate](./assets/cache-revalidate.png)
+  ![data cache revalidate](next\onebite\sgoldenbird\assets\cache-revalidate.png)
   - {next: {tags: \['a']\}}
     - on-Demand Revalidate
     - 요청이 들어왔을 때 데이터를 최신화
@@ -196,7 +196,6 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
 
 ### Request Memoization
 
-- 데이터 캐시로 데이터 패치를 최적화
 - 넥스트가 하나의 페이지를 렌더링하는 동안에 발생하는 중복된 API요청을 자동 캐싱. ![request memoization 1](<../.gitbook/assets/request-memoization1 (2).png>) ![request memoization 2](<../.gitbook/assets/request-memoization2 (2).png>)
 - request memoization은 데이터 캐시와 다르다.
   - 하나의 페이지를 렌더링 하는 동안 중복된 API요청을 캐싱하기 위해 존재.
@@ -232,7 +231,7 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
   - 처음 접속 시 실시간으로 생성되지만, 생성된 결과물이 재사용 가능하다면(Static한 데이터라면) Full Route Cache에 저장됩니다.
   - "정적으로 추가하지 않은 경로"는 보통 다이나믹 라우팅(\[id])에서 generateStaticParams로 미리 정의하지 않은 ID를 가진 페이지를 의미합니다. 이 경우의 동작은 설정에 따라 달라집니다.
     - case A: dynamicParams = true (기본값) 빌드 시점에 정의되지 않은 id로 접속하면, 서버는 그 즉시 해당 페이지를 실시간으로 생성합니다. 이때 생성된 결과는 Full Route Cache에 저장됩니다. 이후 같은 id로 접속하는 사용자들은 캐싱된 결과물을 받게 됩니다. 즉, 처음만 다이나믹하게 생성하고 이후부터는 스테틱하게 작동하는 것입니다.
-    - case B: 완전한 Dynamic 페이지 (예: searchParams 사용) 아까 만드신 검색 페이지처럼 접속할 때마다 내용이 바뀌어야 하는 페이지는 Full Route Cache가 생성되지 않습니다. 매번 서버에서 새로 그려야 하기 때문입니다.
+    - case B: 완전한 Dynamic 페이지 (예: searchParams 사용) 검색 페이지처럼 접속할 때마다 내용이 바뀌어야 하는 페이지는 Full Route Cache가 생성되지 않습니다. 매번 서버에서 새로 그려야 하기 때문입니다.
 
 ```tsx
 export function generateStaticParams() {
