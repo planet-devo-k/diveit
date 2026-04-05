@@ -1,11 +1,17 @@
 # App Router
 
-* 앱라우터에서는 페이지 데이터가 서버 컴포넌트는 RSC payload로 클라이언트 컴포넌트는 JS bundle로 나뉘어서 동시에 전달된다.
-* useSearchParams → 현재 페이지에 전달된 query string값을 꺼내올 수 있다.
+*   앱라우터에서는 페이지 데이터를,&#x20;
+
+    * 서버 컴포넌트는 RSC payload로&#x20;
+    * 클라이언트 컴포넌트는 JS bundle로&#x20;
+
+    나누어서 동시에 전달된다.
+* **useSearchParams** → 현재 페이지에 전달된 query string값을 꺼내올 수 있다.
   * 페이지 라우터에서는 useRouter().query.q 로 query string을 가져왔지만 앱라우터에서는 라우터객체에 query속성이 없다.
   * 앱라우터에서는 useSearchParams() 사용.
-* Next.js 15 버전부터는 searchParams, params 가 Promise로 변경되었습니다. 따라서 이전처럼 params.id로 바로 접근하면 데이터를 가져오지 못하거나 에러가 발생합니다. 반드시 await를 사용하여 데이터를 먼저 풀어주어야(Unwrap) 합니다.
-* 빌드할때 useSearchParams같이 빌드타임에는 값을 알수없는 훅을 실행하려고 하면 에러난다. → 오직 클라이언트측에서만 실행되도록 Suspense안에서 실행
+* Next.js 15 버전부터는 searchParams, params 가 Promise로 변경되었습니다. 따라서 이전처럼 params.id로 바로 접근하면 데이터를 가져오지 못하거나 에러가 발생합니다. 반드시 **await**를 사용하여 데이터를 먼저 풀어주어야(Unwrap) 합니다.
+* 빌드할때 useSearchParams같이 빌드타임에는 값을 알수 없는 훅을 실행하려고 하면 에러난다. \
+  → 오직 클라이언트측에서만 실행되도록 Suspense안에서 실행
   * Suspense 안에 있으면 사전 렌더링에서 제외되므로 오류나지 않음
     * 해당 컴포넌트의 비동기 작업이 종료될때까지 미완성 상태로 남아있음(로딩중 보여주고)
     * useSearchParams()는 비동기로 동작하는 훅
@@ -30,7 +36,10 @@ export default function Layout({ children }: { children: ReactNode }) {
 
 ## 라우팅 설정
 
-* page라는 이름의 파일만 페이지 라우터로 취급 ![라우팅 설정1](../../../.gitbook/assets/route1.png) ![라우팅 설정2](../../../.gitbook/assets/route2.png)
+* page라는 이름의 파일만 페이지 라우터로 취급
+
+&#x20;![라우팅 설정1](<../.gitbook/assets/route1 (2).png>) ![라우팅 설정2](<../.gitbook/assets/route2 (2).png>)
+
 * query string, url parameter 등이 페이지 컴포넌트의 props로 전달된다. Promise 객체 타입에 프로퍼티로 담겨있다.
   * Promise 객체는 반드시 await로 먼저 결과를 확정한 뒤에 프로퍼티에 접근해야 합니다.
   * note:
@@ -48,12 +57,13 @@ export default function Layout({ children }: { children: ReactNode }) {
 ## 서버 컴포넌트(RSC)
 
 * 앱라우터 디폴트 컴포넌트
-* 서버측에서만 실행되는 컴포넌트(브라우저에서 실행안됨)
+* **서버측에서만 실행되는 컴포넌트(브라우저에서 실행안됨)**
+  * 서버 컴포넌트: 특정페이지에 필요한 여러 컴포넌트 중 JS상호작용이 없어서 서버측에서만 실행되면 되는 컴포넌트
   * async function: 서버컴포넌트는 서버측에서 사전렌더링을 위해 한번만 실행되므로 비동기 async여도 문제가 되지 않는다.
-* 서버 컴포넌트: 특정페이지에 필요한 여러 컴포넌트 중 JS상호작용이 없어서 서버측에서만 실행되면 되는 컴포넌트
-* 클라이언트 컴포넌트: 특정페이지에 필요한 여러 컴포넌트 중 JS상호작용이 있어서 하이드레이션이 필요하기 때문에 서버와 브라우저에서 각각 한번씩 실행되어야 하는 컴포넌트
-* 서버컴포넌트와 클라이언트 컴포넌트를 분류하면 넥스트서버가 브라우저로부터 접속 요청 받아서 사전 렌더링에서 HTML생성할때는 서버+클라이언트 컴포넌트 한번 실행 → 이후 하이드레이션 위해 컴포넌트들 모아 JSBundle로 전달할때는 서버 컴포넌트는 빼고 클라이언트 컴포넌트들만 전달
-* 넥스트는 페이지의 대부분을 서버 컴포넌트로 구성하고 필요한 경우에만 클라이언트 컴포넌트를 사용할 것을 권장
+* 클라이언트 컴포넌트: 특정페이지에 필요한 여러 컴포넌트 중 **JS상호작용**이 있어서 **하이드레이션**이 필요하기 때문에 <mark style="background-color:yellow;">**서버와 브라우저에서 각각 한번씩 실행되어야 하는 컴포넌트**</mark>
+* 서버컴포넌트와 클라이언트 컴포넌트를 분류하면, \
+  넥스트서버가 브라우저로부터 접속 요청 받아서 사전 렌더링에서 HTML생성할때는 서버+클라이언트 컴포넌트 한번 실행 → 이후 하이드레이션 위해 컴포넌트들 모아 JSBundle로 전달할때는 서버 컴포넌트는 빼고 클라이언트 컴포넌트들만 전달
+* 넥스트는 페이지의 **대부분을 서버 컴포넌트로 구성**하고 필요한 경우에만 클라이언트 컴포넌트를 사용할 것을 권장
   * 클라이언트 컴포넌트가 줄어들수록 JS bundle용량도 줄어들기 때문
 * 상호작용이 있어야하면 클라이언트 컴포넌트, 그렇지 않다면 모두 서버컴포넌트로 만든다.
 * secretKey를 서버컴포넌트에서 사용해도 브라우저에는 전달되지 않아서 보안 문제가 발생하지 않는다.
@@ -73,10 +83,11 @@ export default function Layout({ children }: { children: ReactNode }) {
 #### 3. 클라이언트 컴포넌트에서 서버 컴포넌트를 import 할 수 없다.
 
 * 브라우저에서 하이드레이션을 위해 실행될때, 서버컴포넌트는 존재하지 않기 때문(JS bundle에서 제외). 없는 코드는 import 불가
-* 만약 실수로 클라이언트 컴포넌트에서 서버 컴포넌트를 import하는 코드를 작성하면 넥스트는 자동으로 서버 컴포넌트를 클라이언트 컴포넌트로 변경한다. 개발 도중 매번 오류나면 흐름이 막히기 때문.
+* 만약 실수로 클라이언트 컴포넌트에서 서버 컴포넌트를 import하는 코드를 작성하면 **넥스트는 자동으로 서버 컴포넌트를 클라이언트 컴포넌트로 변경**한다. 개발 도중 매번 오류나면 흐름이 막히기 때문.
 * 서버 컴포넌트가 클라이언트 컴포넌트가 되면 JS bundle에 포함.
-* 때문에 클라이언트의 자식으로, 즉, 클라이언트에서 서버컴포넌트를 return하는 것은 웬만하면 피하도록 한다.
-* 만약, 어쩔수 없이 클라이언트 컴포넌트에서 서버 컴포넌트를 return해야한다면(자식으로 둬야한다면) 서버컴포넌트를 클라이언트 컴포넌트에서 import하지 말고 children prop으로 받는다. → 넥스트는 children으로 전달된 서버 컴포넌트는 클라이언트 컴포넌트로 변경하지 않는다. children으로 받으면 클라이언트 컴포넌트는 서버 컴포넌트를 직접 실행할 필요가 없기 때문
+* 때문에 클라이언트의 자식으로, 즉, **클라이언트에서 서버컴포넌트를 return하는 것은 웬만하면 피하도록 한다.**
+* 만약, 어쩔수 없이 클라이언트 컴포넌트에서 서버 컴포넌트를 return해야한다면 \
+  <mark style="background-color:yellow;">**서버컴포넌트를 클라이언트 컴포넌트에서 import하지 말고 children prop으로 받는다.**</mark> → 넥스트는 children으로 전달된 서버 컴포넌트는 클라이언트 컴포넌트로 변경하지 않는다. children으로 받으면 클라이언트 컴포넌트는 서버 컴포넌트를 직접 실행할 필요가 없기 때문
 
 ```tsx
 export default function Home() {
@@ -100,20 +111,28 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
     * 클로저, 렉시컬 스코프 등 다양한 환경에 의존해 있는 경우가 많기 때문에 단순한 문자열이나 바이트 형태로 변환할 수 없음
 * 직렬화 되지 않는 Props
   * 함수 같은 값은 서버 컴포넌트에서 클라이언트 컴포넌트로 props 전달 불가
-* 넥스트의 사전 렌더링 과정
-  * 서버 컴포넌트가 먼저 실행 → → RSC payload(JSON과 비슷한 형태의 문자열)생성 → 클라이언트 컴포넌트들이 뒤이어 실행 → RSC payload + 클라이언트 컴포넌트 ⇒ HTML 페이지 완성
-  * RSC payload: RSC의 순수한 데이터(결과물). RSC를 직렬화 한 결과 - RSC payload에는 서버 컴포넌트의 모든 데이터가 포함되어있다.
-  * 서버 컴포넌트의 렌더링 결과 - 연결된 클라이언트 컴포넌트의 위치 - 클라이언트 컴포넌트에게 전달하는 Props값 등 ![RSC payload](../../../.gitbook/assets/rsc-payload.png)
+*   넥스트의 사전 렌더링 과정
+
+    * 서버 컴포넌트가 먼저 실행 → → RSC payload(JSON과 비슷한 형태의 문자열)생성 → 클라이언트 컴포넌트들이 뒤이어 실행 → RSC payload + 클라이언트 컴포넌트 ⇒ HTML 페이지 완성
+    * RSC payload: RSC의 순수한 데이터(결과물). RSC를 직렬화 한 결과 - RSC payload에는 서버 컴포넌트의 모든 데이터가 포함되어있다.
+      * 서버 컴포넌트의 렌더링 결과&#x20;
+      * 연결된 클라이언트 컴포넌트의 위치&#x20;
+      * 클라이언트 컴포넌트에게 전달하는 Props값 등
+
+    &#x20;![RSC payload](<../.gitbook/assets/rsc-payload (2).png>)
 
 ## Navigating(페이지 이동)
 
 * 페이지 이동은 CSR 방식으로 처리 (페이지 라우트와 동일)
 * 페이지 이동에 필요한 번들파일 받아오는 시간 줄이기 위해 Pre fetching(이동할 페이지 데이터를 미리 불러옴)
   * rsc + js bundle
-* 단, 앱라우터에서는 페이지 이동시에 JS bundle뿐 아니라 RSC payload도 함께 전달
-  * JSBundle에는 클라이언트 컴포넌트들만 포함되기 때문
-  * 서버컴포넌트를 실행한 결과물인 RSC payload도 함께 보냄 ![앱 라우터 페이지 이동](../../../.gitbook/assets/app-navigating.png)
-* 서버컴포넌트로만 되어있다면 페이지 이동시 JS bundle에 포함될 클라이언트 컴포넌트가 없으므로 그냥 rsc페이로드만 전달
+*   단, 앱라우터에서는 페이지 이동시에 JS bundle뿐 아니라 RSC payload도 함께 전달
+
+    * JSBundle에는 클라이언트 컴포넌트들만 포함되기 때문
+    * 서버컴포넌트를 실행한 결과물인 RSC payload도 함께 보냄
+
+    &#x20;![앱 라우터 페이지 이동](<../.gitbook/assets/app-navigating (2).png>)
+* 서버컴포넌트로만 되어있다면 페이지 이동시 JS bundle에 포함될 클라이언트 컴포넌트가 없으므로 그냥 RSC페이로드만 전달
   * 클라이언트 컴포넌트를 리턴한다면 해당 컴포넌트(페이지)로 이동 시 JS bundle도 전달되는 것 확인
 
 ### programmatic navigating
@@ -124,27 +143,29 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
 ### Static vs Dynamic page
 
 * 앱라우트에 존재하는 모든 페이지는 Static 또는 Dynamic 페이지로 나뉜다.
-* 페이지 유형에 따라 프리패칭의 동작도 달라진다.
+* **페이지 유형에 따라 프리패칭의 동작도 달라진다.**
 * Static → RSC, JS bundle
-  * SSG 방식으로 빌드타임에 미리 생성된 정적 페이지
+  * **SSG** 방식으로 빌드타임에 미리 생성된 정적 페이지
   * static 페이지는 데이터 업데이트가 추가로 필요하지 않으니까 RSC+JSbundle 둘 다 불러온다.
   * 기본적으로 모든 페이지가 static으로 설정. 만약 페이지 내부에서 query string, url parameter 등을 꺼내 쓰는 등 빌드타임에 생성하면 안될 것 같은 동작을 수행하면 자동으로 dynamic 페이지로 설정
 * Dynamic → RSC
-  * SSR 방식으로 브라우저가 요청을 보낼때마다 생성하는 동적 페이지
+  * **SSR** 방식으로 브라우저가 요청을 보낼때마다 생성하는 동적 페이지
   * dynamic 페이지는 데이터 업데이트가 향후에 필요할수 있으니까 일단 RSC만 프리패칭하고 JS bundle은 실제 페이지 이동이 발생했을때 불러온다.
 
 ## 데이터 페칭
 
 ### 페이지 라우터
 
-![페이지 라우터 data fetching](../../../.gitbook/assets/page-datafetching.png)
+![페이지 라우터 data fetching](<../.gitbook/assets/page-datafetching (2).png>)
 
 * 페이지 라우터에서는 Page 컴포넌트 안에 데이터 패칭 로직을 작성하면 서버 뿐 아니라 브라우저에서도 한번 더 실행되기 때문에 서버측에서만 데이터를 불러오기 위해서 getServerSideProps, getStaticProps 같은 특수한 함수를 이용해야한다. → 서버측 모든 데이터는 컴포넌트 트리 최상단에 위치하는 Page컴포넌트에게만 props로 전달되다보니 props drilling
 
 ### 앱 라우터
 
 * 클라이언트 컴포넌트에는 Async 키워드 사용 불가 → 브라우저에서 동작 시 문제를 일으킬 수 있기 때문에(props전달이나 memoization 차원에서)
-* 서버컴포넌트는 브라우저에서는 실행되지 않으므로 Async 키워드 붙여서 비동기 함수로 사용가능 → await 키워드와 함께 컴포넌트 내부에서 직접 데이터 패칭 → 각 컴포넌트가 필요한 데이터 패칭하면 되므로 props drilling 할 필요 없음.
+* 서버컴포넌트는 브라우저에서는 실행되지 않으므로 Async 키워드 붙여서 비동기 함수로 사용가능 \
+  → await 키워드와 함께 컴포넌트 내부에서 직접 데이터 패칭 \
+  → 각 컴포넌트가 필요한 데이터 패칭하면 되므로 props drilling 할 필요 없음.
 * getServerSideProps, getStaticProps 같은 특수한 함수 사용하지 않는다.
 
 ## 데이터 캐시
@@ -156,8 +177,8 @@ export default function ClientComponent({ children }: { children: ReactNode }) {
 * 영구적으로 데이터를 보관해 불필요한 데이터 페칭을 방지하거나 특정 시간을 주기로 갱신 시키는 것도 가능
 *   캐시 옵션
 
-    * no-store: 데이터 패칭 결과 저장하지 않음. 캐싱을 아예 하지 않도록 설정. v15기본값 ![data cache no-store](../../../.gitbook/assets/cache-no-store.png)
-    * force-cache: 요청 결과 무조건 캐싱. 한번 호출된 이후에는 다시는 호출하지 않음. 캐싱된 데이터는 JSON형태로 넥스트 서버에 보관(.next/cache/fetch-cache/) ![data cache force-cache](../../../.gitbook/assets/cache-force-cache.png)
+    * no-store: 데이터 패칭 결과 저장하지 않음. 캐싱을 아예 하지 않도록 설정. v15기본값 ![data cache no-store](<../.gitbook/assets/cache-no-store (2).png>)
+    * force-cache: 요청 결과 무조건 캐싱. 한번 호출된 이후에는 다시는 호출하지 않음. 캐싱된 데이터는 JSON형태로 넥스트 서버에 보관(.next/cache/fetch-cache/) ![data cache force-cache](<../.gitbook/assets/cache-force-cache (2).png>)
     * {next: {revalidate: 3\}}
       * 특정 시간을 주기로 캐시 업데이트(3초 주기로 업데이트)
       * 페이지 라우터의 ISR 방식과 유사
@@ -179,13 +200,13 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
 ### Request Memoization
 
 * 데이터 캐시로 데이터 패치를 최적화
-* 넥스트가 하나의 페이지를 렌더링하는 동안에 발생하는 중복된 API요청을 자동 캐싱. ![request memoization 1](../../../.gitbook/assets/request-memoization1.png) ![request memoization 2](../../../.gitbook/assets/request-memoization2.png)
+* 넥스트가 하나의 페이지를 렌더링하는 동안에 발생하는 중복된 API요청을 자동 캐싱. ![request memoization 1](<../.gitbook/assets/request-memoization1 (2).png>) ![request memoization 2](<../.gitbook/assets/request-memoization2 (2).png>)
 * request memoization은 데이터 캐시와 다르다.
   * 하나의 페이지를 렌더링 하는 동안 중복된 API요청을 캐싱하기 위해 존재.
   * 하나의 요청으로 받은 데이터를 동일한 페이지의 모든 컴포넌트에서 사용할수 있음
   * 렌더링이 종료되면 모든 캐시가 소멸된다. (새로고침 누르면 다시 API 요청)
 
-![request memoization은 렌더링이 종료되면 캐시 소멸](../../../.gitbook/assets/request-memoization3.png)
+![request memoization은 렌더링이 종료되면 캐시 소멸](<../.gitbook/assets/request-memoization3 (2).png>)
 
 * 서버 컴포넌트가 도입되면서 컴포넌트가 각각 필요한 데이터를 패칭하다보니 API 중복 호출되는 경우 종종 있었음.
 * 데이터 캐시는 백엔드 서버로 부터 불러온 데이터를 거의 영구적으로 보관하기 위해 사용. 서버 가동중에는 영구적으로 보관된다.
@@ -198,13 +219,15 @@ const res = await fetch(`~/api`, { cache: { next: { tags: ["a"] } } });
   * static page: dynamic 페이지가 아니면 기본적으로 모두 static page (default)
   * dynamic page: 특정 페이지가 접속 요청을 받을때마다 매번 변화가 생기거나 데이터가 달라질 경우 \*
     1. 캐시되지 않는 data fetching을 사용할 경우 (revalidate option은 다이나믹 페이지를 만드는 옵션 아님)
-    *
-      2. 동적함수(cookies(), headers(), searchParams)를 사용하는 컴포넌트가 있을 때
-* 그 중 static page에만 full route cache가 적용. ![full route cache1](../../../.gitbook/assets/full-route-cache1.png) ![full route cache2](../../../.gitbook/assets/full-route-cache2.png)
+    2. 동적함수(cookies(), headers(), searchParams)를 사용하는 컴포넌트가 있을 때
+* 그 중 static page에만 full route cache가 적용.
+
+&#x20;![full route cache1](<../.gitbook/assets/full-route-cache1 (2).png>) ![full route cache2](<../.gitbook/assets/full-route-cache2 (2).png>)
+
 * full route cache도 revalidate이 가능하다. (ISR처럼)
   * 페이지를 구성하는 서버 컴포넌트 중 하나라도 fetch요청에 revalidate이 되어있다면 데이터가 revalidate되면서 자동으로 풀 라우트 캐시도 revalidate된다.
 
-![full route cache revalidate](../../../.gitbook/assets/full-route-cache-revalidate.png)
+![full route cache revalidate](<../.gitbook/assets/full-route-cache-revalidate (2).png>)
 
 * 동적 경로를 갖는 페이지를 static 페이지로 설정하려면 generateStaticParams 사용
 * generateStaticParams를 사용하면 페이지 내부에 데이터 캐싱이 설정되지 않은 데이터 패칭이 존재해도 무조건 해당 페이지는 static 페이지가 된다.
@@ -251,7 +274,7 @@ export const dynamicParams = false; // 기본값은 true
 * dynamic page에 자주 사용된다.
   * dynamic page는 full route cache가 되지 않기 때문에.
 
-![스트리밍](../../../.gitbook/assets/streaming.png)
+![스트리밍](<../.gitbook/assets/streaming (2).png>)
 
 ### 페이지(Page 컴포넌트) 스트리밍
 
@@ -300,7 +323,7 @@ export default function Page(){} 는 스트리밍 안됨
 * 클라이언트인 브라우저에서 특정 폼의 제출 이벤트가 발생했을 때 서버에서만 실행되는 함수를 브라우저가 직접 호출해 실행하고, 데이터까지 폼데이터 형식으로 전달할 수 있게 해주는 기능
 * 기존에 API를 통해서만 진행했어야 했던 브라우저와 서버 간의 데이터 통신을 자바스크립트 함수 하나만으로 간결하게 설정.
 
-![서버 액션](../../../.gitbook/assets/server-action.png)
+![서버 액션](<../.gitbook/assets/server-action (2).png>)
 
 ```tsx
 export default function Page() {
@@ -348,12 +371,12 @@ export default function Page() {
 revalidatePath(`/book/${bookId}`);
 ```
 
-![revalidatePath full route cache](../../../.gitbook/assets/revalidatePath-fullroutecache.png)
+![revalidatePath full route cache](<../.gitbook/assets/revalidatePath-fullroutecache (2).png>)
 
 * 빌드타임이 종료되고 revalidatePath로 재검증 요청 → full route cache, data cache 제거 → 현재 사용자가 보고있는 화면을 업데이트하기 위해 새롭게 페이지 생성: 이때는 full route cache에 페이지가 업데이트되지 않는다. → 모든 과정이 종료되고 브라우저로부터 다음번에 요청이 들어왔을때 실시간으로 다시 페이지 생성하면서 이때 full route cache에 페이지 업데이트. 이때는 dynamic page처럼 실시간으로 페이지가 생성되다보니 비교적 느린 응답이 올 수 있다.
 * 이렇게 동작하는 이유는 revalidate 요청 이후 브라우저에서 이 페이지에 접속했을때 무조건 최신화된 데이터를 보장하기 위해.
 
-![revalidatePath](../../../.gitbook/assets/revalidatePath.png)
+![revalidatePath](<../.gitbook/assets/revalidatePath (2).png>)
 
 * revalidatePath의 두번째 인수로 layout 또는 page를 넘길수 있다.
 
@@ -396,14 +419,7 @@ revalidateTag(`review-${bookId}`, "max");
   * 서버 액션 내에서 즉시 반영을 원하는 경우: revalidateTag 대신 updateTag를 사용하면 현재 페이지의 데이터를 즉시 만료시키고 새로 가져옵니다.
 * Next.js 15 캐시 재검증 API 비교 (`revalidateTag` vs `updateTag`)
 
-| 구분          | `revalidateTag(tag, profile)`      | `updateTag(tag)`                                           |
-| ----------- | ---------------------------------- | ---------------------------------------------------------- |
-| **핵심 개념**   | **SWR** (Stale-While-Revalidate)   | **즉시 만료** (Immediate Expiry)                               |
-| **동작 방식**   | 기존 캐시를 보여주며 백그라운드에서 갱신             | 캐시 즉시 만료 및 다음 요청 시 새 데이터 강제                                |
-| **사용 환경**   | 서버 액션, 라우트 핸들러 등 모든 서버 환경          | **오직 서버 액션(Server Action)** 내부                             |
-| **UI 업데이트** | 백그라운드 갱신으로 화면 반영이 한 템포 늦음          | **즉시 반영** (Read-Your-Own-Writes 지원)                        |
-| **필수 인자**   | 두 번째 인자(`profile`) 필수 (예: `"max"`) | 태그명(`tag`) 하나만 전달                                          |
-| **권장 용도**   | 외부 시스템 웹훅, 주기적인 데이터 갱신             | **리뷰 작성**, 게시글 수정 등 사용자 액션. 사용자가 본인이 한 행동의 결과를 즉시 확인해야 할 때 |
+<table data-header-hidden><thead><tr><th width="116.99996948242188"></th><th></th><th></th></tr></thead><tbody><tr><td>구분</td><td><code>revalidateTag(tag, profile)</code></td><td><code>updateTag(tag)</code></td></tr><tr><td><strong>핵심 개념</strong></td><td><strong>SWR</strong> (Stale-While-Revalidate)</td><td><strong>즉시 만료</strong> (Immediate Expiry)</td></tr><tr><td><strong>동작 방식</strong></td><td>기존 캐시를 보여주며 백그라운드에서 갱신</td><td>캐시 즉시 만료 및 다음 요청 시 새 데이터 강제</td></tr><tr><td><strong>사용 환경</strong></td><td>서버 액션, 라우트 핸들러 등 모든 서버 환경</td><td><strong>오직 서버 액션(Server Action)</strong> 내부</td></tr><tr><td><strong>UI 업데이트</strong></td><td>백그라운드 갱신으로 화면 반영이 한 템포 늦음</td><td><strong>즉시 반영</strong> (Read-Your-Own-Writes 지원)</td></tr><tr><td><strong>필수 인자</strong></td><td>두 번째 인자(<code>profile</code>) 필수 (예: <code>"max"</code>)</td><td>태그명(<code>tag</code>) 하나만 전달</td></tr><tr><td><strong>권장 용도</strong></td><td>외부 시스템 웹훅, 주기적인 데이터 갱신</td><td><strong>리뷰 작성</strong>, 게시글 수정 등 사용자 액션. 사용자가 본인이 한 행동의 결과를 즉시 확인해야 할 때</td></tr></tbody></table>
 
 * 사용자의 직접적인 액션(등록, 수정) 후에는 updateTag를, 주기적이거나 간접적인 데이터 갱신에는 revalidateTag를 선택
 
@@ -523,11 +539,11 @@ children은 그냥 기존의 페이지를(상세페이지 클릭 전 페이지) 
 */
 ```
 
-![modal intercepting+parallel](../../../.gitbook/assets/modal-intercepting-parallel.png)
+![modal intercepting+parallel](<../.gitbook/assets/modal-intercepting-parallel (2).png>)
 
 ## 이미지 최적화
 
-![다양한 이미지 최적화 기법들](../../../.gitbook/assets/image-optimization.png)
+![다양한 이미지 최적화 기법들](<../.gitbook/assets/image-optimization (2).png>)
 
 * next는 대부분의 최적화 기법들이 자체적으로 제공. next의 Image컴포넌트를 사용하면 위 사진의 최적화기법들 다 적용됨.
   * 뷰포트에 렌더링될 필요 없는 이미지들은 lazy loading
@@ -570,7 +586,7 @@ export default nextConfig;
 
 ## 검색 엔진 최적화 SEO
 
-![검색 엔진 최적화 다양한 방법](../../../.gitbook/assets/seo.png)
+![검색 엔진 최적화 다양한 방법](<../.gitbook/assets/seo (2).png>)
 
 * route segment option처럼 해당 page component 또는 layout 컴포넌트에 metadata 변수 선언, export 하면 자동으로 그 페이지 메타 데이터 설정
 * 트위터를 위한 메타태그들도 우리가 입력한 값을 기반으로 자동으로 설정됨
