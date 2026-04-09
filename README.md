@@ -172,7 +172,7 @@
 ---
 
 <p align="right">
-  <sub><b>Original Resources</b>: Copyright © Original Author. All rights reserved.</sub>
-  <sub><b>Infrastructure & Systems</b>: © 2026 sgoldenbird. All rights reserved.</sub>
-  <sub><b>Participant Works</b>: Copyright © 2026 planet-devo-k. All rights reserved.</sub>
+  <sub><b>Original Resources</b>: Copyright © Original Author. All rights reserved.</sub><br/>
+  <sub><b>Infrastructure & Systems</b>: © 2026 sgoldenbird. All rights reserved.</sub><br/>
+  <sub><b>Participant Works</b>: Copyright © 2026 planet-devo-k. All rights reserved.</sub><br/>
 </p>
