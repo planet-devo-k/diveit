@@ -492,14 +492,29 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
   * slot/page.tsx는 자신의 부모 layout에게 props로 자동 전달된다. 이때 prop의 이름은 슬롯의 이름이다.
 * slot폴더는 url경로에 아무런 영향도 미치지 않는다.
 * slot에는 개수 제한이 없다.
-* slot에 하위 페이지를(e.g. @/feed/setting) 추가로 만들수 있다. → slot의 하위페이지는 별도의 페이지로 따로 렌더링 되는게 아니라 그냥 부모 layout 컴포넌트에 함께 포함되어 부모 slot안에서 페이지가 렌더링된다. 즉, feed slot에 해당하는 페이지만 페이지 이동이 이루어진것처럼 동작.
+* slot에 하위 페이지를(e.g. @feed/setting) 추가로 만들수 있다. → slot의 하위페이지는 별도의 페이지로 따로 렌더링 되는게 아니라 그냥 부모 layout 컴포넌트에 함께 포함되어 부모 slot안에서 페이지가 렌더링된다. 즉, feed slot에 해당하는 페이지만 페이지 이동이 이루어진것처럼 동작.
 
 ```
+app/
+└── parallel/
+    ├── layout.tsx       <-- children, feed, sidebar를 인자로 받아 배치함
+    ├── page.tsx         <-- 기본 children 내용 (URL: /parallel)
+    ├── default.tsx      <-- 새로고침 시 children을 대체할 기본 페이지
+    ├── @feed/
+    │   ├── page.tsx     <-- 기본 feed 내용
+    │   ├── default.tsx  <-- 새로고침 시 feed를 대체할 기본 페이지
+    │   └── setting/
+    │       └── page.tsx <-- 'setting' 페이지 (URL: /parallel/setting)
+    └── @sidebar/
+        ├── page.tsx     <-- 기본 sidebar 내용
+        └── default.tsx  <-- 새로고침 시 sidebar를 대체할 기본 페이지
+
+
 /*
 <Link href={"/parallel/setting"}>parallel/setting</Link> 클릭했을때
 
 - feed slot의 경우 setting/page.tsx 가 props로 전달된다. @feed/setting/page.tsx
-- sidebar slot의 경우 setting.가 없다. 이럴때 넥스트는 그냥 이전 페이지를 유지하도록 처리 @sidebar/page.tsx
+- sidebar slot의 경우 setting/가 없다. 이럴때 넥스트는 그냥 이전 페이지를 유지하도록 처리 @sidebar/page.tsx
 - children도 이전 페이지 그대로 유지
 
 결과적으로 feed slot의 페이지만 업데이트되고 나머지 슬롯은 이전 페이지 유지
@@ -530,15 +545,24 @@ export default function ReviewEditor({ bookId }: { bookId: string }) {
 * parallel route와 intercepting route를 함께 활용
   * intercepting되어서 모달로 나타나게 되는 도서의 상세 페이지를 이전 페이지와 함께 병렬로 보여줄 수 있다. (여기서는 이전 페이지를 백그라운드로)
 
-```
-/*
-사용자가 book/1 로 접속한다면 원래는 book/1/page.tsx가 렌더링되야하지만
+<pre><code>app/
+├── layout.tsx       &#x3C;-- {children, modal} 을 받아서 렌더링
+├── page.tsx         &#x3C;-- 메인 피드 (children으로 들어감)
+├── @modal/
+│   └── (.)book/[id]/
+│       └── page.tsx &#x3C;-- 가로챘을 때 띄울 모달 내용 (modal로 들어감)
+└── book/
+    └── [id]/
+        └── page.tsx &#x3C;-- 새로고침 시 보여줄 진짜 상세 페이지
+<strong>
+</strong><strong>/*
+</strong>사용자가 book/1 로 접속한다면 원래는 book/1/page.tsx가 렌더링되야하지만
 intercepting route가 동작하고 있으므로
 children은 그냥 기존의 페이지를(상세페이지 클릭 전 페이지) 유지한다.
 그리고 modal이란 값에 intercepting된 페이지 컴포넌트가 들어온다. @/modal/(.)book/[id]/page.tsx
 이때 children과 modal(@/modal/(.)book/[id]/page.tsx)이 병렬로 렌더링된다.
 */
-```
+</code></pre>
 
 ![modal intercepting+parallel](<../.gitbook/assets/modal-intercepting-parallel (2).png>)
 
