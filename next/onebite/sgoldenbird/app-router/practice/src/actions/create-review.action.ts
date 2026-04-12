@@ -31,7 +31,7 @@ export async function createReviewAction(_: any, formData: FormData) {
       throw new Error(response.statusText);
     }
 
-    // revalidatePath, revalidatTag를 사용하면 리렌더를 통해 서버액션의 결과를 화면에 바로 나타낼수 있다.
+    // revalidatePath, revalidateTag를 사용하면 리렌더를 통해 서버액션의 결과를 화면에 바로 나타낼수 있다.
     revalidateTag(`review-${bookId}`, "max");
 
     return {
