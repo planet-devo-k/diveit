@@ -29,7 +29,7 @@ export default function Layout({
 <Link href={"/parallel/setting"}>parallel/setting</Link> 클릭했을때 
 
 - feed slot의 경우 setting/page.tsx 가 props로 전달된다. @feed/setting/page.tsx 
-- sidebar slot의 경우 setting.가 없다. 이럴때 넥스트는 그냥 이전 페이지를 유지하도록 처리 @sidebar/page.tsx
+- sidebar slot의 경우 setting/가 없다. 이럴때 넥스트는 그냥 이전 페이지를 유지하도록 처리 @sidebar/page.tsx
 - children도 이전 페이지 그대로 유지 
 
 결과적으로 feed slot의 페이지만 업데이트되고 나머지 슬롯은 이전 페이지 유지 

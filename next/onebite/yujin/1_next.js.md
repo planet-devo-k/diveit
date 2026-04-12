@@ -1,6 +1,6 @@
 ## 1장. Next.js
 
-### 1.1
+## 1.1
 
 ![alt text](image/image.png)
 
@@ -32,7 +32,7 @@
 
 ---
 
-### 1.2
+## 1.2
 
 ![alt text](image/image-4.png)
 
