@@ -130,11 +130,11 @@
 
 ## Rules
 
-**[Ground Rules](../README.md#rules)**
-| **[Branch & Directory](../README.md#rules)**
-| **[PR](../README.md#rules)**
-| **[Issue](../README.md#rules)**
-| **[GitBook](../README.md#rules)**
+**[Ground Rules](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[Branch & Directory](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[PR](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[Issue](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[GitBook](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
 
 **Commit**
     <table>
