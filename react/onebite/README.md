@@ -1,9 +1,18 @@
 # 한입 리액트
 
+## Introduction
+**목표**
+- 강의를 들으며 리액트 핵심 내용 빠르게 정리 
+**리소스**
+- 한 입 크기로 잘라먹는 리액트 강의 총 94강
+**운영**
+- 일시: 자율
+- 기간: 자율
+- 방식: 팀원별 개인 스케줄에 맞춰 자율적으로 강의 수강 및 학습 내용 정리
+
 ## Schedule
 
-- 본 스터디는 팀원 개별 스케줄에 맞춰 자율적으로 강의를 수강하며, 학습 내용은 개인별 테이블에 기록합니다.
-- 목표: **강의 총 94강**
+- 개인별 토클로 기록합니다.
 
 <details>
 <summary>시은 schedule</summary>
@@ -44,9 +53,9 @@
   <!-- - 조인성 [Insung-Jo](https://github.com/Insung-Jo) -->
   <!-- - 전유진 [yuj2n](https://github.com/yuj2n) -->
 
-## Workflow
+## [Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
 
-- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리. [Study Structure & Workflow 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
+- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리.
 
 ## Rules
 
