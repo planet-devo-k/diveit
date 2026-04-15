@@ -27,9 +27,7 @@
 - 손수진 [pappaya109](https://github.com/pappaya109)
 - 전유진 [yuj2n](https://github.com/yuj2n) 
 
-## Workflow
-
-- [Study Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
+## [Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
 - 각 스터디 별 상세한 workflow는 위의 View Link를 클릭해 해당 스터디의 README에서 확인
 
 ## Rules
