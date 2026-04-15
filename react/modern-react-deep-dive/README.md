@@ -1,10 +1,20 @@
 # Modern React Deep Dive Study
 
+## Introduction 
+**목표**
+- 리액트 기본부터 심화까지 학습
+
+**리소스**
+- 책: 모던 리액트 딥다이브 
+
+**운영**
+- 일시: 매주 일요일 오후 10:30 ~ 12:00
+- 기간: 2025-09-24 ~ 2025-01-18
+- 장소: 온라인 디스코드 Planet Devo K 해당 스터디 채널
+- 방식: 각자 정해진 분량만큼 정리하고 면접 예상 문제 생성, 랜덤 발표, 면접 연습 및 토론 
+
 ## Schedule
 
-- 기간: 2025-09-24 \~ 2025-01-18
-- 매주 일요일 오후 10시
-- 목표: **Chapter 1 \~ 15 완독 및 토론**
 
 <table>
   <thead>
@@ -111,19 +121,22 @@
 - 조인성 [Insung-Jo](https://github.com/Insung-Jo)
 - 전유진 [yuj2n](https://github.com/yuj2n)
 
-## Workflow
+## [Structure & Workflow](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
 
-- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리. [Study Structure & Workflow 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#structure--workflow)
+- 자기 브랜치를 만들고 자기 폴더 안에 내용 정리
 - 발표자는 매주 한 명씩 랜덤으로돌아가며 진행
 - 발표자가 아닌 팀원들은 정리한 내용 중 발표자와 중복되지 않는 내용만 발표
 - 각자 공부한 챕터의 핵심을 **질문으로 변환** → 스터디에서 릴레이식으로 답변
 
 ## Rules
 
-- [그라운드 룰, PR/CR 및 이슈 규칙 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
+**[Ground Rules](../README.md#rules)**
+| **[Branch & Directory](../README.md#rules)**
+| **[PR](../README.md#rules)**
+| **[Issue](../README.md#rules)**
+| **[GitBook](../README.md#rules)**
 
-- 커밋 규칙
-
+**Commit**
     <table>
       <thead>
         <tr>
