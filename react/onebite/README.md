@@ -61,4 +61,9 @@
 
 ## Rules
 
-- [그라운드 룰, PR/CR 및 이슈 규칙, 커밋 규칙 확인](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)
+**[Ground Rules](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[Branch & Directory](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[PR](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[Issue](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[GitBook](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
+| **[Commit](https://github.com/planet-devo-k/diveit/tree/main?tab=readme-ov-file#rules)**
