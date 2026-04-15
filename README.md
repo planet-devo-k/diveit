@@ -70,33 +70,41 @@
 - 폴더 구조
 
   ```
-  [domain]/[topic]/[member]/[content.md]
-  e.g.typescript/sgoldenbird/ch01-introduction.md
+  [domain]/[track]/[member]/[content.md]
+  e.g.typescript/onebite/sgoldenbird/ch1.md
   ```
 
 - 브랜치 갱신 가이드
+  - 이전 학습이 완료되어 main에 머지된 후, 새로운 학습을 시작할 때 반드시 아래 순서대로 브랜치를 최신화합니다.
+  - **Step 1. 구 브랜치 삭제 (정리)**
+    ```
+    로컬과 원격에 남아있는 이전 작업 브랜치를 삭제합니다.
+    
+    로컬 브랜치 삭제
+      git branch -D [예전-브랜치명]
+    
+    원격 브랜치 삭제
+      git push origin --delete [예전-브랜치명]
+    ```
+  - **Step 2. 베이스 브랜치 최신화**
+    ```
+    새로운 학습의 기준이 될 도메인 브랜치로 이동하여 최신 내용을 불러옵니다.
 
-  ```
-  아래와 같은 과정을 거쳐 이전 학습 내용이 main에 merge되면 기존 자신의 브랜치를 삭제하고
-  현재 학습하고자 하는 도메인을 base branch로 하여 새로운 개인 브랜치를 생성합니다.
+    베이스 브랜치로 이동 및 최신화
+    git checkout [학습할 도메인 브랜치(베이스 브랜치)]
+    git pull origin [학습할 도메인 브랜치(베이스 브랜치)]
+    ```
+  - **Step 3. 새 브랜치 생성 및 연결**
+    ```
+    새로운 주제를 학습하기 위한 본인만의 브랜치를 생성하고 원격에 연결합니다.
 
-  # 로컬 브랜치 삭제
-  git branch -D [예전-브랜치명]
+    새로운 자기 브랜치 생성 및 이동
+    git checkout -b [새-브랜치명]
+  
+    원격(GitHub)에 새 브랜치 등록 및 푸시
+    git push -u origin [새-브랜치명]
 
-  # 원격 브랜치 삭제
-  git push origin --delete [예전-브랜치명]
-
-  # 베이스 브랜치로 이동 및 최신화
-  git checkout [학습할 도메인 브랜치(베이스 브랜치)]
-  git pull origin [학습할 도메인 브랜치(베이스 브랜치)]
-
-  # 새로운 자기 브랜치 생성 및 이동
-  git checkout -b [새-브랜치명]
-
-  # 원격(GitHub)에 새 브랜치 등록 및 푸시
-  git push -u origin [새-브랜치명]
-
-  ```
+    ```
 
 - GitHub ↔ GitBook 동기화 흐름
 
@@ -116,6 +124,22 @@
 **Ground Rules**
 
 - [PLANET DEVO K GROUND RULES](https://github.com/planet-devo-k#ground-rules)
+
+**Branch & Directory**
+
+- Branch: 도메인별 브랜치를 기준으로 각자의 작업을 진행한 뒤 통합합니다.
+  - main: 최종 결과물이 통합되는 프로덕션 브랜치
+  - [domain]: 각 도메인의 기준이 되는 베이스 브랜치 
+  - [member]: 각 도메인 브랜치에서 분기한 개인 작업 브랜치 
+
+- Directory: 학습 내용은 도메인과 주제별로 분류하며, 개인별 작업 공간을 보장합니다.
+  - 구조: [domain] / [track] / [member] / [content.md]
+  - domain: 대분류 (예: typescript, react)
+  - track:  (예: onebite, deepdive)
+  - member: 본인의 GitHub ID 또는 닉네임
+  - content.md: 실제 학습 정리 파일
+  - 예시: typescript/onebite/sgoldenbird/ch1.md
+
 
 **PR**
 
