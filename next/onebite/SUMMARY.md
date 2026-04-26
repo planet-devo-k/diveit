@@ -16,3 +16,4 @@
   - [6장](yujin/6_스트리밍&에러핸들링.md)
   - [7장](yujin/7_서버액션&재검증방식.md)
   - [8장](yujin/8_Parallel-Route&Intercepting-Route.md)
+  - [9장](yujin/9_Next.js의-최적화기술.md)
